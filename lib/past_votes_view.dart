@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './theme.dart';
 
 List<Voteringar> voteringar = [
   Voteringar('2022/23 AU10', 'En fortsatt stärkt arbetslöshetsförsäkring', '2023-10-07', true),
@@ -18,12 +19,14 @@ class Voteringar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppColors appColors = AppColors();
+
     return Padding(
       padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 5),
       child: Container(
         padding: EdgeInsets.only(bottom: 5),
         decoration: BoxDecoration(
-          border: Border.all(style: BorderStyle.solid, color: Colors.yellow, width: 1.8), // Update color!
+          border: Border.all(style: BorderStyle.solid, color: appColors.yellow, width: 1.8),
           boxShadow: [
             BoxShadow(
               offset: Offset(0, 3),
@@ -31,20 +34,20 @@ class Voteringar extends StatelessWidget {
               color: Colors.black.withOpacity(0.4),
             ),
           ], 
-          color: Colors.blue[800], // Update color!
+          color: appColors.primaryBlue,
           borderRadius: BorderRadius.circular(20),
           ),
         child: Row(
           children: [
             Expanded(child: 
               Padding(
-                padding: const EdgeInsets.only(left: 10, top: 5),
+                padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(identification),
-                    Text(title),
-                    Text('Beslut $decisionDate')
+                    Text(identification, style: AppFonts.title),
+                    Text(title, style: AppFonts.normalTextWhite),
+                    Text('Beslut $decisionDate', style: AppFonts.smallText)
                   ]
                 ),
               ),
@@ -53,7 +56,7 @@ class Voteringar extends StatelessWidget {
               padding: const EdgeInsets.only(right: 5, left: 5),
               child: Icon(
                 isAccepted ? Icons.check : Icons.close, // Placeholder for icons, update later
-                color: isAccepted ? Colors.green : Colors.red, // Update colors for icons
+                color: isAccepted ? appColors.green : appColors.red,
                 ),
             )
           ],
@@ -65,20 +68,22 @@ class Voteringar extends StatelessWidget {
 
 class VoteringsVy extends StatelessWidget {
   const VoteringsVy({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
+    final AppColors appColors = AppColors();
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.blue[700], // Update color!
-        title: Text('Avslutade voteringar'),
+        backgroundColor: appColors.lightGrey,
+        title: Text('Voteringar', style: AppFonts.header),
         actions: [Padding(
           padding: const EdgeInsets.only(top: 5, bottom: 5, right: 10),
           child: FloatingActionButton(
                 shape: CircleBorder(),
                 tooltip: 'Om appen',
-                backgroundColor: Colors.blue[700], // Update color!
+                backgroundColor: appColors.lightGrey,
                 onPressed: () {
                   aboutAppAlert(context);
                 },
@@ -89,7 +94,7 @@ class VoteringsVy extends StatelessWidget {
       ),
       body: Container(
         height: MediaQuery.of(context).copyWith().size.height,
-        color: Colors.white, // Update color!
+        color: appColors.backgroundColor, // Update color!
         child: ListView.builder(
           itemCount: voteringar.length,
           itemBuilder: (context, index) {
