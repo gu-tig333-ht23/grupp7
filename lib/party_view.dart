@@ -20,10 +20,41 @@ class PartyView extends StatelessWidget {
         child: Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Container(
+                  child: Image.asset("assets/images/socialdemokraterna.png"),
+                  height: 100,
+                  width: 100,
+                ),
                 Text(
                   "Socialdemokraterna",
-                  style: TextStyle(color: Colors.red),
+                  style: AppFonts.headerRed,
+                )
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // lägg till bild på partiledare här
+                ClipOval(
+                  child: Image.network(
+                    'https://data.riksdagen.se/filarkiv/bilder/ledamot/dcc2ab7d-3fc1-4a28-b3c7-be1679c047b3_80.jpg',
+                    width: 50, // Adjust the size as needed
+                    height: 50, // Adjust the size as needed
+                    fit: BoxFit.cover,
+                  ),
+                ),
+
+                Column(
+                  children: [
+                    Text("Partiledare"),
+                    Text("Magdalena Andersson"),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Text("www.socialdemokraterna.se")
+                  ],
                 )
               ],
             )
