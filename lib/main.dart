@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template/info_view.dart';
+import 'package:template/party_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: InfoView(),
+      home: PartyView(),
     );
   }
 }
