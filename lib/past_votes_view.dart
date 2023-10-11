@@ -9,7 +9,7 @@ List<Voteringar> voteringar = [
   Voteringar('2021/22:FöU3', 'Riksrevisionens rapport om projektbidrag från anslag 2:4 Krisberedskap', '2023-08-23', true),
 ];
 
-class Voteringar extends StatelessWidget {
+class Voteringar extends StatelessWidget { // Can be used for UPCOMING votes/voteringar
   final String identification;
   final String title;
   final String decisionDate;
@@ -19,99 +19,154 @@ class Voteringar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppColors appColors = AppColors();
+    final AppColors appColors = AppColors(); // Remove after theme.dart is updated
 
     return Padding(
-      padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 5),
-      child: Container(
-        padding: EdgeInsets.only(bottom: 5),
-        decoration: BoxDecoration(
-          border: Border.all(style: BorderStyle.solid, color: appColors.yellow, width: 1.8),
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(0, 3),
-              blurRadius: 5,
-              color: Colors.black.withOpacity(0.4),
-            ),
-          ], 
-          color: appColors.primaryBlue,
-          borderRadius: BorderRadius.circular(20),
-          ),
-        child: Row(
-          children: [
-            Expanded(child: 
-              Padding(
-                padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(identification, style: AppFonts.title),
-                    Text(title, style: AppFonts.normalTextWhite),
-                    Text('Beslut $decisionDate', style: AppFonts.smallText)
-                  ]
+      padding: EdgeInsets.only(left: 25, right: 25, top: 0, bottom: 0),
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.only(top: 5, bottom: 10, left: 10),
+            decoration: BoxDecoration(
+              border: Border.all(style: BorderStyle.solid, color: appColors.yellow, width: 1.8),
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(0, 3),
+                  blurRadius: 5,
+                  color: Colors.black.withOpacity(0.4),
                 ),
+              ], 
+              color: appColors.primaryBlue,
+              borderRadius: BorderRadius.circular(20),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 5, left: 5),
-              child: Icon(
-                isAccepted ? Icons.check : Icons.close, // Placeholder for icons, update later
-                color: isAccepted ? appColors.green : appColors.red,
+            child: Row(
+              children: [
+                Expanded(child: 
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(identification, style: AppFonts.title),
+                      Text(title, style: AppFonts.normalTextWhite),
+                      Text('Beslut $decisionDate', style: AppFonts.smallText)
+                    ]
+                  ),
                 ),
-            )
-          ],
-        ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 5, left: 5),
+                  child: Icon(
+                    isAccepted ? Icons.check : Icons.close, // Placeholder for icons, update later
+                    color: isAccepted ? appColors.green : appColors.red,
+                    ),
+                )
+              ],
+            ),
+          ),
+          Divider(),
+        ],
       )
     );
   }
 }
+final List<bool> selectedVotering = <bool>[true, false];
 
-class VoteringsVy extends StatelessWidget {
+class VoteringsVy extends StatefulWidget {
   const VoteringsVy({super.key});
   
   @override
+  State<VoteringsVy> createState() => _VoteringsVyState();
+}
+
+class _VoteringsVyState extends State<VoteringsVy> {
+  @override
   Widget build(BuildContext context) {
-    final AppColors appColors = AppColors();
+    final AppColors appColors = AppColors(); // Remove after theme.dart is updated
+    
+    const List<Widget> voteringsDisplay = <Widget>[
+      Text('Genomförda'),
+      Text('Kommande'),
+    ];
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: appColors.lightGrey,
         title: Text('Voteringar', style: AppFonts.header),
-        actions: [Padding(
-          padding: const EdgeInsets.only(top: 5, bottom: 5, right: 10),
-          child: FloatingActionButton(
-                shape: CircleBorder(),
-                tooltip: 'Om appen',
-                backgroundColor: appColors.lightGrey,
-                onPressed: () {
-                  aboutAppAlert(context);
-                },
-                child: const Icon(Icons.info)
-              ),
-        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(top: 5, bottom: 5, right: 10),
+            child: FloatingActionButton(
+              shape: CircleBorder(),
+              tooltip: 'Om appen',
+              backgroundColor: appColors.lightGrey,
+              onPressed: () {
+                aboutAppAlert(context);
+              },
+              child: const Icon(Icons.info)
+            ),
+          ),
         ]
       ),
       body: Container(
         height: MediaQuery.of(context).copyWith().size.height,
-        color: appColors.backgroundColor, // Update color!
-        child: ListView.builder(
-          itemCount: voteringar.length,
-          itemBuilder: (context, index) {
-          return Voteringar(
-            voteringar[index].identification,
-            voteringar[index].title,
-            voteringar[index].decisionDate,
-            voteringar[index].isAccepted,
-            );
-          },
+        color: appColors.backgroundColor,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              child: Image.asset('assets/images/kollkollen_logo.png', width: 75, height: 75),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: voteringar.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () { 
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => VoteringsVy()),
+                      );
+                    },
+                    child: Voteringar(
+                      voteringar[index].identification,
+                      voteringar[index].title,
+                      voteringar[index].decisionDate,
+                      voteringar[index].isAccepted,
+                    ), 
+                  );
+                },
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 10, bottom: 50),
+              child: ToggleButtons(
+                direction: Axis.horizontal,
+                onPressed: (int index) {
+                  setState(() {
+                  for (int i = 0; i < selectedVotering.length; i++) {
+                      selectedVotering[i] = i == index;}
+                      });
+                },
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                selectedBorderColor: appColors.darkGrey,
+                selectedColor: appColors.lightGrey,
+                fillColor: appColors.mediumGrey,
+                color: appColors.black,
+                constraints: const BoxConstraints(
+                  minHeight: 40,
+                  minWidth: 100,
+                ),
+                isSelected: selectedVotering,
+                children: voteringsDisplay,
+              )
+            )
+          ]
         ),
       ),
     );
   }
 }
 
-Widget aboutAppAlert(context) {   // Pop-up window when user doesn't give any input in TextField
+Widget aboutAppAlert(context) {   // Pop-up window (About the app with reference to riksdag.se)
     Widget confirmButton = TextButton(child: Text('Ok'),
       onPressed: () => Navigator.pop(context),
       );
