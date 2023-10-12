@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:template/info_view.dart';
 import 'package:template/past_votes_view.dart';
+import 'votering_api.dart';
+import 'dart:async';
 
 void main() {
+  getVotingResult();
   runApp(const MyApp());
 }
 
@@ -12,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: InfoView(),
+      home: VoteringsVy(),
     );
   }
 }
