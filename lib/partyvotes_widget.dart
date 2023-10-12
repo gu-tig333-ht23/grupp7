@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:template/theme.dart';
 
+
 class PartyInfo {
   var partyImage;
   final String votesNum;
