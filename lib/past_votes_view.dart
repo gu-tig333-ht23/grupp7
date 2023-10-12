@@ -1,31 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:template/info_view.dart';
 import './theme.dart';
 
 List<Voteringar> voteringar = [
-  Voteringar('2022/23 AU10', 'En fortsatt stärkt arbetslöshetsförsäkring',
-      '2023-10-07', true),
+  Voteringar('2022/23 AU10', 'En fortsatt stärkt arbetslöshetsförsäkring', '2023-10-07', true),
   Voteringar('2022/23 AU5', 'Arbetsrätt', '2023-09-28', true),
   Voteringar('2022/23 AU5', 'Integration', '2023-09-20', false),
-  Voteringar(
-      '2022/23 CU7', 'Ersättningsrätt och insolvensrätt', '2023-09-07', false),
-  Voteringar(
-      '2021/22:FöU3',
-      'Riksrevisionens rapport om projektbidrag från anslag 2:4 Krisberedskap',
-      '2023-08-23',
-      true),
+  Voteringar('2022/23 CU7', 'Ersättningsrätt och insolvensrätt', '2023-09-07', false),
+  Voteringar('2021/22:FöU3', 'Riksrevisionens rapport om projektbidrag från anslag 2:4 Krisberedskap', '2023-08-23', true),
 ];
-
 
 class Voteringar extends StatelessWidget { // Can be used for UPCOMING votes/voteringar
   final String identification;
   final String title;
   final String decisionDate;
-  final bool
-      isAccepted; // To display whether the proposition was accepted or rejected
+  final bool isAccepted; // To display whether the proposition was accepted or rejected
 
-  Voteringar(
-      this.identification, this.title, this.decisionDate, this.isAccepted,
-      {super.key});
+  Voteringar(this.identification, this.title, this.decisionDate, this.isAccepted, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -80,15 +71,15 @@ final List<bool> selectedVotering = <bool>[true, false];
 
 class VoteringsVy extends StatefulWidget {
   const VoteringsVy({super.key});
-
+  
   @override
   State<VoteringsVy> createState() => _VoteringsVyState();
 }
 
-
 class _VoteringsVyState extends State<VoteringsVy> {
   @override
   Widget build(BuildContext context) {
+
 
     const List<Widget> voteringsDisplay = <Widget>[
       Text('Genomförda'),
@@ -97,7 +88,6 @@ class _VoteringsVyState extends State<VoteringsVy> {
 
     return Scaffold(
       appBar: AppBar(
-
         centerTitle: true,
         backgroundColor: AppColors.lightGrey,
         title: Text('Voteringar', style: AppFonts.header),
@@ -133,7 +123,7 @@ class _VoteringsVyState extends State<VoteringsVy> {
                     onTap: () { 
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => VoteringsVy()),
+                        MaterialPageRoute(builder: (context) => InfoView()),
                       );
                     },
                     child: Voteringar(
@@ -152,7 +142,6 @@ class _VoteringsVyState extends State<VoteringsVy> {
                 direction: Axis.horizontal,
                 onPressed: (int index) {
                   setState(() {
-
                   for (int i = 0; i < selectedVotering.length; i++) {
                       selectedVotering[i] = i == index;}
                       });
@@ -169,7 +158,6 @@ class _VoteringsVyState extends State<VoteringsVy> {
                 ),
                 isSelected: selectedVotering,
                 children: voteringsDisplay,
-
               )
             )
           ]
@@ -178,7 +166,6 @@ class _VoteringsVyState extends State<VoteringsVy> {
     );
   }
 }
-
 
 Widget aboutAppAlert(context) {   // Pop-up window (About the app with reference to riksdag.se)
     Widget confirmButton = TextButton(child: Text('Ok'),
@@ -192,4 +179,3 @@ Widget aboutAppAlert(context) {   // Pop-up window (About the app with reference
     showDialog(context: context, builder: (BuildContext context){return alert;});
       return alert;
   }
-
