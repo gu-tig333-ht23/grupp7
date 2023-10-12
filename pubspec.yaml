@@ -38,6 +38,7 @@ dependencies:
   hexcolor: ^3.0.1
   google_fonts: ^6.1.0
   pie_chart: ^5.3.2
+  read_more_text: ^0.0.5
 
 
 dev_dependencies:
