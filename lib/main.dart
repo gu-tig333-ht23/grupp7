@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template/info_view.dart';
+import 'package:template/past_votes_view.dart';
 
 void main() {
   runApp(const MyApp());

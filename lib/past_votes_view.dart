@@ -20,6 +20,7 @@ class Voteringar extends StatelessWidget { // Can be used for UPCOMING votes/vot
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: EdgeInsets.only(left: 25, right: 25, top: 0, bottom: 0),
       child: Column(
@@ -77,7 +78,9 @@ class VoteringsVy extends StatefulWidget {
 
 class _VoteringsVyState extends State<VoteringsVy> {
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
+
+
     const List<Widget> voteringsDisplay = <Widget>[
       Text('Genomförda'),
       Text('Kommande'),
@@ -148,6 +151,7 @@ class _VoteringsVyState extends State<VoteringsVy> {
                 selectedColor: AppColors.lightGrey,
                 fillColor: AppColors.mediumGrey,
                 color: AppColors.black,
+
                 constraints: const BoxConstraints(
                   minHeight: 40,
                   minWidth: 100,

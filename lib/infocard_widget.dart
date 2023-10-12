@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'theme.dart';
+import 'package:read_more_text/read_more_text.dart';
 
 class InfoCard extends StatelessWidget {
   const InfoCard({super.key});
@@ -36,8 +37,11 @@ class InfoCard extends StatelessWidget {
                         'Rubrik',
                         style: AppFonts.header,
                       ),
-                      Text(
-                        'Utskottet ställer sig bakom regeringens förslag till ändringar i lagen om arbetslöshetsförsäkring. I propositionen föreslås att vissa tidigare beslutade lagändringar ska utgå och att tidigare tillfälligt beslutade bestämmelser ska gälla tills vidare. Regeringens förslag innebär att de tillfälliga lättnaderna i arbetsvillkoret och karensvillkoret inte ska upphöra... visa mer',
+                      ReadMoreText(
+                        'Utskottet ställer sig bakom regeringens förslag till ändringar i lagen om arbetslöshetsförsäkring. I propositionen föreslås att vissa tidigare beslutade lagändringar ska utgå och att tidigare tillfälligt beslutade bestämmelser ska gälla tills vidare. Regeringens förslag innebär att de tillfälliga lättnaderna i arbetsvillkoret och karensvillkoret inte ska upphöra att gälla, utan ska i stället gälla tills vidare. Detsamma gäller den tillfälliga möjligheten för regeringen eller den myndighet som regeringen bestämmer att meddela föreskrifter om undantag från lagens begränsning av företagares möjlighet att få arbetslöshetsersättning vid upprepade uppehåll i näringsverksamheten, den s.k. femårsregeln. Utskottet anser att riksdagen bör avslå motionsyrkandena. I betänkandet finns två reservationer (V, C) och två särskilda yttranden (S, MP)',
+                        numLines: 5,
+                        readMoreText: 'Visa mer',
+                        readLessText: 'Visa mindre',
                         style: AppFonts.normalTextWhite,
                       ),
                     ],
