@@ -14,9 +14,16 @@ class AppColors {
   static final red = HexColor('d1382b');
   static final green = HexColor('01a87c');
   static final yellow = HexColor('fecb00');
+
+  //Partier
   static final socialdemokraternaRed = HexColor('e7132c');
   static final moderaternaBlue = HexColor('213a8f');
   static final sverigedemokraternaBlue = HexColor('322667');
+  static final vansterpartietRed = HexColor('ff0000');
+  static final liberalernaBlue = HexColor('006ab3');
+  static final centerpartietGreen = HexColor('006ab3');
+  static final miljopartietGreen = HexColor('4c983e');
+  static final kristdemokraterna = HexColor('0b5ea1');
 }
 
 class AppFonts {

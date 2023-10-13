@@ -11,10 +11,10 @@ const String forslagspunkt = '1';
 
 class PartiVotering {
   final String party;
-  final String yes;
-  final String no;
-  final String abscent;
-  final String pass;
+  String yes;
+  String no;
+  String abscent;
+  String pass;
 
   PartiVotering(
       {required this.party,
@@ -22,6 +22,8 @@ class PartiVotering {
       required this.no,
       required this.abscent,
       required this.pass});
+
+
 
   factory PartiVotering.fromJson(Map<String, dynamic> json) {
     return PartiVotering(
@@ -46,7 +48,7 @@ Future<List<PartiVotering>> getVotingResult() async {
 
       List<PartiVotering> partiVoteringList =
           voteringList.map((json) => PartiVotering.fromJson(json)).toList();
-      
+
       return partiVoteringList;
     } else {
       throw Exception('Data format is incorrect');
@@ -55,6 +57,7 @@ Future<List<PartiVotering>> getVotingResult() async {
     throw Exception('Failed to load data');
   }
 }
+
 
 //REQUIREMENTSS
 //Datum
