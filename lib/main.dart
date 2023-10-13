@@ -3,10 +3,15 @@ import 'package:template/info_view.dart';
 import 'package:template/past_votes_view.dart';
 import 'votering_api.dart';
 import 'dart:async';
+import 'package:provider/provider.dart';
+import 'mystate.dart';
 
 void main() {
-  getVotingResult();
-  runApp(const MyApp());
+  MyState state = MyState();
+
+  runApp(
+    ChangeNotifierProvider(create: (context) => state, child: MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -15,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: VoteringsVy(),
+      home: InfoView(),
     );
   }
 }

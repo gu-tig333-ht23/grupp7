@@ -45,15 +45,10 @@ Future<List<PartiVotering>> getVotingResult() async {
 }
 
 
-
-
-
-
-
-
-
 //REQUIREMENTSS
 //Datum
 //Beteckning
 //Förslagspunkt
+
+
 
