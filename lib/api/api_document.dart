@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import './past_votes_view.dart';
+import '../past_votes_view.dart';
 
 DateTime todaysDate = DateTime.now();
 DateTime startSearchDate = todaysDate.subtract(Duration(days:30 * 6));

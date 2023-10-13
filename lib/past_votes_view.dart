@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './info_view.dart';
 import './theme.dart';
-import './provider_voteringsvy.dart';
+import 'provider/provider_voteringsvy.dart';
 
 class Voteringar extends StatelessWidget {
   final String identification;
@@ -41,7 +41,7 @@ class Voteringar extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => InfoView(
-              voteringar: context.read<ProviderVoteringsVy>().voteringar[index],
+              //voteringar: context.read<ProviderVoteringsVy>().voteringar[index],
             ),
           ),
         );

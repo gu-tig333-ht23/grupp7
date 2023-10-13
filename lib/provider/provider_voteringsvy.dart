@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './document_api.dart';
-import './past_votes_view.dart';
+import '../api/api_document.dart';
+import '../past_votes_view.dart';
 
 class ProviderVoteringsVy extends ChangeNotifier {
   List<Voteringar> _voteringar = [];
