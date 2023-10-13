@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:template/info_view.dart';
 import 'package:template/party_view.dart';
+import './provider/provider_ledamot.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(

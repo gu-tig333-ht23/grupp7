@@ -41,6 +41,7 @@ dependencies:
   read_more_text: ^0.0.5
   provider: any
   xml: any
+  url_launcher: any
 
 
 dev_dependencies:
