@@ -10,14 +10,10 @@ class MyState extends ChangeNotifier {
   //GET
   List<PartiVotering> get partiVotering => _partiVoteringar;
 
-  MyState() {
-    fetchPartiVotering();
+  void fetchVotingresult() async {
+    var votering = await getVotingResult();
+    _partiVoteringar = votering;
   }
-
-  void fetchPartiVotering() async {
-    var partiVotering = await getVotingResult();
-    _partiVoteringar = partiVotering;
-
-    notifyListeners();
-  }
+  
+  
 }

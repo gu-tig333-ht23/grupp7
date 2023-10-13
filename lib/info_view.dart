@@ -12,7 +12,9 @@ class InfoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var voteringinfo = context.watch<MyState>().partiVotering;
+    var getvoteringinfo = context.read<MyState>().fetchVotingresult();
+
+    
 
     return Scaffold(
       appBar: AppBar(
@@ -33,8 +35,6 @@ class InfoView extends StatelessWidget {
             VoteResult(),
             PartyVotes(),
             FloatingActionButton(onPressed: () {
-              voteringinfo;
-              print(voteringinfo);
             })
           ],
         ),
