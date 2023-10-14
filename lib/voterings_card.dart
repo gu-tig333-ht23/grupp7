@@ -37,7 +37,7 @@ class Voteringar extends StatelessWidget {
                   ),
                 ],
                 color: AppColors.primaryBlue,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
                 children: [
