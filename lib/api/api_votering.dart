@@ -3,11 +3,9 @@ import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart';
 import '../class_votering.dart';
 
-Future<List<voteringar>> apiGetList(iid) async {
-  final String antal = '100';
+Future<List<voteringar>> apiGetList(iid, antal) async {
   final String url =
       'https://data.riksdagen.se/voteringlista/?rm=&bet=&punkt=&valkrets=&rost=&iid=$iid&sz=$antal&utformat=json&gruppering=';
-
   try {
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -60,7 +58,6 @@ Future<Map<String, String>?> fetchDataFromXML(
           final utskottsforslagElements =
               document.findAllElements('utskottsforslag');
 
-          // Loop through utskottsforslag elements
           for (final utskottsforslagElement in utskottsforslagElements) {
             final punktElement =
                 utskottsforslagElement.findElements('punkt').firstOrNull;

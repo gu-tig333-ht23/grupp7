@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'theme.dart';
 
 class Voteringar extends StatelessWidget {
-  // Can be used for UPCOMING votes/voteringar
   final String identification;
   final String title;
+  final String subTitle;
   final String decisionDate;
-  final String
-      isAccepted; // To display whether the proposition was accepted or rejected
+  final String isAccepted;
 
   Voteringar(
       {required this.identification,
       required this.title,
+      required this.subTitle,
       required this.decisionDate,
       required this.isAccepted,
       super.key});
@@ -45,8 +45,9 @@ class Voteringar extends StatelessWidget {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(identification, style: AppFonts.title),
-                          Text(title, style: AppFonts.normalTextWhite),
+                          Text(identification + ' ' + title,
+                              style: AppFonts.title),
+                          Text(subTitle, style: AppFonts.normalTextWhite),
                           Text('Beslut $decisionDate',
                               style: AppFonts.smallText)
                         ]),
@@ -54,8 +55,7 @@ class Voteringar extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(right: 5, left: 5),
                     child: Icon(
-                      Icons
-                          .radio_button_checked, // You can set a default icon here if none of the conditions match.
+                      Icons.radio_button_checked,
                       color: isAccepted == 'Ja'
                           ? AppColors.green
                           : isAccepted == 'Nej'
@@ -64,8 +64,7 @@ class Voteringar extends StatelessWidget {
                                   ? AppColors.purple
                                   : isAccepted == 'Frånvarande'
                                       ? AppColors.blue
-                                      : AppColors
-                                          .black, // Set appropriate colors for each condition.
+                                      : AppColors.black,
                     ),
                   )
                 ],

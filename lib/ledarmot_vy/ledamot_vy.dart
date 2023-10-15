@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:template/theme.dart';
 import '../api/api_votering.dart';
 import '../class_votering.dart';
 import '../provider/provider_ledamot.dart';
@@ -24,7 +25,8 @@ class LedamotVy extends StatelessWidget {
           future: fetchData(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator(); // Display a loading indicator while data is fetched.
+              return Center(
+                  child: CircularProgressIndicator(color: AppColors.blue));
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -36,8 +38,7 @@ class LedamotVy extends StatelessWidget {
                   if (index == 0) {
                     return LedamotVyInfo();
                   } else if (index == 1) {
-                    return LedamotVyStatBar(
-                        theList: context.watch<ProviderLedamot>().theList);
+                    return LedamotVyStatBar(theList: snapshot.data!);
                   }
                   int adjustedIndex = index - 2;
 
@@ -46,13 +47,38 @@ class LedamotVy extends StatelessWidget {
                       ? rawDatum.substring(0, 10)
                       : rawDatum;
 
-                  return Voteringar(
-                      identification: snapshot.data![index - 2].beteckning +
-                          ' ' +
-                          snapshot.data![index - 2].titel,
-                      title: snapshot.data![index - 2].underTitel,
-                      decisionDate: datum,
-                      isAccepted: snapshot.data![adjustedIndex].rost);
+                  return FutureBuilder<voteringar>(
+                    future: context
+                        .read<ProviderLedamot>()
+                        .setTitle(snapshot.data![adjustedIndex]),
+                    builder: (context, cardSnapshot) {
+                      if (cardSnapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return Voteringar(
+                          identification: '',
+                          title: '',
+                          subTitle: '',
+                          decisionDate: '',
+                          isAccepted: '',
+                        );
+                      } else if (cardSnapshot.hasError) {
+                        return Text('Error: ${cardSnapshot.error}');
+                      } else if (!cardSnapshot.hasData ||
+                          cardSnapshot.data == null) {
+                        return Text(
+                            'No additional data available for this card.');
+                      } else {
+                        return Voteringar(
+                          identification:
+                              snapshot.data![adjustedIndex].beteckning,
+                          title: snapshot.data![adjustedIndex].titel,
+                          subTitle: snapshot.data![adjustedIndex].underTitel,
+                          decisionDate: datum,
+                          isAccepted: snapshot.data![adjustedIndex].rost,
+                        );
+                      }
+                    },
+                  );
                 },
               );
             }
