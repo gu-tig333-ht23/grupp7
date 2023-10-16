@@ -72,7 +72,7 @@ class Voteringar extends StatelessWidget {
                       children: [
                         Text(identification, style: AppFonts.title),
                         Text(title, style: AppFonts.normalTextWhite),
-                        Text('Beslut $decisionDate', style: AppFonts.smallText)
+                        Text('Beslut: $decisionDate', style: AppFonts.smallText)
                       ]
                     ),
                   ),
