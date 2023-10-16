@@ -123,42 +123,7 @@ class PartyView extends StatelessWidget {
                       ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryBlue,
-                    border: Border.all(
-                      color: AppColors.yellow, // Outline color
-                      width: 1.0, // Outline width
-                    ),
-                    borderRadius:
-                        BorderRadius.circular(10.0), // Rounded corners
-                  ),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: ClipOval(
-                          child: Image.network(
-                            'https://data.riksdagen.se/filarkiv/bilder/ledamot/dcc2ab7d-3fc1-4a28-b3c7-be1679c047b3_80.jpg',
-                            width: 60, // Adjust the size as needed
-                            height: 60, // Adjust the size as needed
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 50,
-                      ),
-                      Text(
-                        "Hanna Westerén",
-                        style: TextStyle(color: Colors.white),
-                      )
-                    ],
-                  ),
-                ),
-              )
+              LedamotItem()
             ],
           ),
         ),
@@ -166,3 +131,52 @@ class PartyView extends StatelessWidget {
     );
   }
 }
+
+class LedamotItem extends StatelessWidget {
+  // Widget to build list of ledamöter in party_view.dart depending
+  // on what party is selected from infovy.dart
+  const LedamotItem({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.primaryBlue,
+          border: Border.all(
+            color: AppColors.yellow, // Outline color
+            width: 1.0, // Outline width
+          ),
+          borderRadius: BorderRadius.circular(10.0), // Rounded corners
+        ),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: ClipOval(
+                child: Image.network(
+                  'https://data.riksdagen.se/filarkiv/bilder/ledamot/dcc2ab7d-3fc1-4a28-b3c7-be1679c047b3_80.jpg',
+                  width: 60, // Adjust the size as needed
+                  height: 60, // Adjust the size as needed
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 50,
+            ),
+            Text(
+              "Hanna Westerén",
+              style: TextStyle(color: Colors.white),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class LedamotPlaceholder {}
