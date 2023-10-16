@@ -123,7 +123,13 @@ class PartyView extends StatelessWidget {
                       ),
                 ),
               ),
-              LedamotItem()
+              //LedamotItem()
+              ListView.builder(
+                itemBuilder: (context, index) {
+                  return LedamotItem(ledamotList[index]);
+                },
+                itemCount: ledamotList.length,
+              )
             ],
           ),
         ),
@@ -135,7 +141,9 @@ class PartyView extends StatelessWidget {
 class LedamotItem extends StatelessWidget {
   // Widget to build list of ledamöter in party_view.dart depending
   // on what party is selected from infovy.dart
-  const LedamotItem({
+  final LedamotPlaceholder ledamotPlaceholder;
+  LedamotItem(
+    this.ledamotPlaceholder, {
     super.key,
   });
 
@@ -179,4 +187,32 @@ class LedamotItem extends StatelessWidget {
   }
 }
 
-class LedamotPlaceholder {}
+class LedamotPlaceholder {
+  final String name;
+  final String imageUrl;
+
+  LedamotPlaceholder(this.name, this.imageUrl);
+}
+
+List<LedamotPlaceholder> ledamotList = [
+  LedamotPlaceholder("Hanna Westerén",
+      "https://data.riksdagen.se/filarkiv/bilder/ledamot/ed3399e1-7bce-4ea4-baf6-587f722710f5_80.jpg"),
+  LedamotPlaceholder("Ardala Shekarabi",
+      "https://data.riksdagen.se/filarkiv/bilder/ledamot/b2bb1d34-0f20-4daf-b26e-8916bb911075_80.jpg"),
+  LedamotPlaceholder("Adnan Dibrani",
+      "https://data.riksdagen.se/filarkiv/bilder/ledamot/2eb5b5ce-2e8c-4063-a2c2-d03b50ff4c5d_80.jpg"),
+  LedamotPlaceholder("Fredrik Olovsson",
+      "https://data.riksdagen.se/filarkiv/bilder/ledamot/bc5c4354-fca3-4071-8096-acd9b7b1d09a_80.jpg"),
+  LedamotPlaceholder("Lars Mejern Larsson",
+      "https://data.riksdagen.se/filarkiv/bilder/ledamot/3badc18d-3c4a-4068-921a-b5fa8a9652d6_80.jpg"),
+  LedamotPlaceholder("Gunilla Carlsson",
+      "https://data.riksdagen.se/filarkiv/bilder/ledamot/11d950d5-e41f-4e94-af86-ae8a1996d81b_80.jpg"),
+  LedamotPlaceholder("Kenneth G Forslund",
+      "https://data.riksdagen.se/filarkiv/bilder/ledamot/f1484855-05d7-498f-8872-5a0c33ad535b_80.jpg"),
+  LedamotPlaceholder("Johan Andersson",
+      "https://data.riksdagen.se/filarkiv/bilder/ledamot/fff74c6c-fae3-4977-a472-cfe2b6ae257a_80.jpg"),
+  LedamotPlaceholder("Petter Löberg",
+      "https://data.riksdagen.se/filarkiv/bilder/ledamot/7826c819-d0da-4e4a-a16b-ffa3d8e9b155_80.jpg"),
+  LedamotPlaceholder("Johan Löfstrand",
+      "https://data.riksdagen.se/filarkiv/bilder/ledamot/eaf0fa85-8858-4e0e-97d8-daee0a771d1f_80.jpg"),
+];
