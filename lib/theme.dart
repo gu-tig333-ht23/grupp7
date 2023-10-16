@@ -21,7 +21,7 @@ class AppColors {
   static final sverigedemokraternaBlue = HexColor('322667');
   static final vansterpartietRed = HexColor('ff0000');
   static final liberalernaBlue = HexColor('006ab3');
-  static final centerpartietGreen = HexColor('006ab3');
+  static final centerpartietGreen = HexColor('114838');
   static final miljopartietGreen = HexColor('4c983e');
   static final kristdemokraternaBlue = HexColor('0b5ea1');
 }
@@ -53,11 +53,12 @@ class AppImages {
 
   static const imageSocialdemokraterna = 'assets/images/socialdemokraterna.png';
 
-  static const imageCenterpartiet = 'assets/images/centerpartiet.png';
+  static const imageCenterpartietWhite =
+      'assets/images/centerpartiet_white.png';
 
   static const imageModeraterna = 'assets/images/moderaterna.png';
 
-  static const imageLiberalerna = 'assets/images/liberalerna.png';
+  static const imageLiberalerna = 'assets/images/liberalerna.webp';
 
   static const imageVansterpartiet = 'assets/images/vansterpartiet.png';
 

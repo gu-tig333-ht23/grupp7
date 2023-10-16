@@ -42,7 +42,7 @@ class MyState extends ChangeNotifier {
   void replaceNullValues() {
     for (PartiVotering partiVotering in _partiVoteringar) {
       if (partiVotering.yes == '') {
-        partiVotering.yes = '0'; // Add a semicolon here
+        partiVotering.yes = '0';
       }
       if (partiVotering.no == '') {
         partiVotering.no = '0';
@@ -56,6 +56,41 @@ class MyState extends ChangeNotifier {
     }
   }
 
+  //Takes in a object or instance as input.
+  //Returns two values 'highestVoteCount' and 'majorityResult'. The highestVoteCount variable shows the highest amount od vote for each party.
+  //highestVoteCount returns 'JA', 'NEJ', 'AVSTÅR', 'FRÅNVARANDE' as in figma design.
+
+  Map<String, dynamic> sortVotevalues(PartiVotering partiVotering) {
+    List<int> sortList = [
+      int.parse(partiVotering.yes),
+      int.parse(partiVotering.no),
+      int.parse(partiVotering.abscent),
+      int.parse(partiVotering.pass),
+    ];
+
+    sortList.sort((a, b) => b.compareTo(a));
+
+    int highestVoteCount = sortList[0];
+
+    String majorityResult = '';
+
+    if (int.parse(partiVotering.yes) == highestVoteCount) {
+      majorityResult = 'JA';
+    } else if (int.parse(partiVotering.no) == highestVoteCount) {
+      majorityResult = 'NEJ';
+    } else if (int.parse(partiVotering.abscent) == highestVoteCount) {
+      majorityResult = 'FRÅNVARANDE';
+    } else if (int.parse(partiVotering.pass) == highestVoteCount) {
+      majorityResult = 'AVSTÅR';
+    }
+
+    return {
+      'highestVoteCount': highestVoteCount,
+      'majorityResult': majorityResult
+    };
+  }
+
+//Setting partycolors and images to class.
   setPartyColorAndImage(PartiVotering partiVotering) {
     switch (partiVotering.party) {
       case 'SD':
@@ -64,7 +99,7 @@ class MyState extends ChangeNotifier {
         break;
       case 'C':
         partiVotering.partyColor = AppColors.centerpartietGreen;
-        partiVotering.partyImage = AppImages.imageCenterpartiet;
+        partiVotering.partyImage = AppImages.imageCenterpartietWhite;
         break;
       case 'KD':
         partiVotering.partyColor = AppColors.kristdemokraternaBlue;
@@ -93,48 +128,6 @@ class MyState extends ChangeNotifier {
       default:
       // Handle the case where the party value is not recognized or return a default value.
     }
-  }
-
-  //Takes in a object or instance as input.
-  //Returns two values 'highestVoteCount' and 'majorityResult'. The highestVoteCount variable shows the highest amount od vote for each party.
-  //highestVoteCount returns 'JA', 'NEJ', 'AVSTÅR', 'FRÅNVARANDE' as in figma design.
-
-  Map<String, dynamic> sortVotevalues(PartiVotering partiVotering) {
-    List<int> sortList = [
-      int.parse(partiVotering.yes),
-      int.parse(partiVotering.no),
-      int.parse(partiVotering.abscent),
-      int.parse(partiVotering.pass),
-    ];
-
-    sortList.sort((a, b) => b.compareTo(a));
-
-    // Antal röster för partiet:
-    // Gestturedetect(Object object)
-    // SD
-    //YES
-    //NO
-    //Absent
-    //Pass
-
-    int highestVoteCount = sortList[0];
-
-    String majorityResult = '';
-
-    if (int.parse(partiVotering.yes) == highestVoteCount) {
-      majorityResult = 'JA';
-    } else if (int.parse(partiVotering.no) == highestVoteCount) {
-      majorityResult = 'NEJ';
-    } else if (int.parse(partiVotering.abscent) == highestVoteCount) {
-      majorityResult = 'FRÅNVARANDE';
-    } else if (int.parse(partiVotering.pass) == highestVoteCount) {
-      majorityResult = 'AVSTÅR';
-    }
-
-    return {
-      'highestVoteCount': highestVoteCount,
-      'majorityResult': majorityResult
-    };
   }
 
   //Print instance in list partiVoteringar

@@ -36,12 +36,12 @@ class InfoView extends StatelessWidget {
             InfoCard(),
             VoteResult(),
             ListView.builder(
-              shrinkWrap: true, 
-              physics: NeverScrollableScrollPhysics(), 
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
               itemCount: partiVoteringar.length,
               itemBuilder: (context, index) {
-                final PartiVotering = partiVoteringar[index];
-                return PartyVotes(PartiVotering);
+                final partiVotering = partiVoteringar[index];
+                return PartyVotes(partiVotering);
               },
             ),
             FloatingActionButton(

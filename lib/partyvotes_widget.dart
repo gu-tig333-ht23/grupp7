@@ -9,16 +9,17 @@ import 'package:template/votering_api.dart';
 class PartyVotes extends StatelessWidget {
   final PartiVotering partiVotering;
 
-  PartyVotes(this.partiVotering);
+  PartyVotes(this.partiVotering, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 25, right: 25, top: 30, bottom: 5),
+      padding: EdgeInsets.only(left: 25, right: 25, top: 5, bottom: 5),
       child: Container(
         height: 75,
         decoration: BoxDecoration(
-          color: AppColors.moderaternaBlue,
+          //Color: partiVotering.partiColor
+          color: partiVotering.partyColor,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Padding(
@@ -29,8 +30,11 @@ class PartyVotes extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 10, right: 25),
                 child: Container(
-                  child: Image.asset('assets/images/socialdemokraterna.png',
-                      width: 50, height: 50),
+                  child: Image.asset(
+                      partiVotering.partyImage ??
+                          'assets/images/kollkollen_logo.png',
+                      width: 50,
+                      height: 50),
                 ),
               ),
               Expanded(
@@ -55,7 +59,7 @@ class PartyVotes extends StatelessWidget {
                           ),
                           //This is where highestvote will be
                           Text(
-                            '17',
+                            partiVotering.highestValue.toString(),
                             style: AppFonts.headerBlack,
                           ),
                         ],
@@ -69,8 +73,15 @@ class PartyVotes extends StatelessWidget {
                           ),
                           //This is where mojorityresult will be
                           Text(
-                            'NEJ',
-                            style: AppFonts.headerRed,
+                            partiVotering.majorityResult ?? 'None',
+                            style: TextStyle(
+                              color: partiVotering.majorityResult == 'JA'
+                                  ? Colors.green
+                                  : partiVotering.majorityResult == 'NEJ'
+                                      ? Colors.red
+                                      : Color.fromARGB(255, 35, 35, 35),
+                              // Other text styles like fontSize, fontWeight, etc.
+                            ),
                           )
                         ],
                       )
