@@ -23,7 +23,7 @@ class AppColors {
   static final liberalernaBlue = HexColor('006ab3');
   static final centerpartietGreen = HexColor('006ab3');
   static final miljopartietGreen = HexColor('4c983e');
-  static final kristdemokraterna = HexColor('0b5ea1');
+  static final kristdemokraternaBlue = HexColor('0b5ea1');
 }
 
 class AppFonts {
@@ -45,4 +45,23 @@ class AppFonts {
       GoogleFonts.roboto(fontSize: 14, color: HexColor('000000'));
   static final smallText = GoogleFonts.roboto(
       fontSize: 12, fontStyle: FontStyle.italic, color: HexColor('ffffff'));
+}
+
+class AppImages {
+  static const imageSverigedemokraterna =
+      'assets/images/sverigedemokraterna.png';
+
+  static const imageSocialdemokraterna = 'assets/images/socialdemokraterna.png';
+
+  static const imageCenterpartiet = 'assets/images/centerpartiet.png';
+
+  static const imageModeraterna = 'assets/images/moderaterna.png';
+
+  static const imageLiberalerna = 'assets/images/liberalerna.png';
+
+  static const imageVansterpartiet = 'assets/images/vansterpartiet.png';
+
+  static const imageKristdemokraterna = 'assets/images/kristdemokraterna.png';
+
+  static const imageMiljopartiet = 'assets/images/miljopartiet.png';
 }

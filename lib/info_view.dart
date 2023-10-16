@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:template/theme.dart';
 import 'package:template/votering_api.dart';
 import 'infocard_widget.dart';
 import 'voteresult_piechart_widget.dart';
@@ -10,9 +9,14 @@ import 'mystate.dart';
 class InfoView extends StatelessWidget {
   InfoView({super.key});
 
+  //party
+  //highest count
+  //majorityresult
+
   @override
   Widget build(BuildContext context) {
-    var partyList = context.watch<MyState>().partiVotering;
+    List<PartiVotering> partiVoteringar =
+        context.watch<MyState>().partiVotering;
 
     return Scaffold(
       appBar: AppBar(
@@ -24,24 +28,31 @@ class InfoView extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             InfoCard(),
             VoteResult(),
-            PartyVotes(),
+            ListView.builder(
+              shrinkWrap: true, 
+              physics: NeverScrollableScrollPhysics(), 
+              itemCount: partiVoteringar.length,
+              itemBuilder: (context, index) {
+                final PartiVotering = partiVoteringar[index];
+                return PartyVotes(PartiVotering);
+              },
+            ),
             FloatingActionButton(
               onPressed: () {
                 context.read<MyState>().fetchVotingresult();
                 context.read<MyState>().printPartiVotering();
               },
-            )
+            ),
           ],
         ),
       ),
     );
   }
 }
-

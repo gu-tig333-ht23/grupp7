@@ -1,3 +1,4 @@
+import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -15,15 +16,22 @@ class PartiVotering {
   String no;
   String abscent;
   String pass;
+  int? highestValue;
+  String? majorityResult;
+  HexColor? partyColor;
+  String? partyImage;
 
-  PartiVotering(
-      {required this.party,
-      required this.yes,
-      required this.no,
-      required this.abscent,
-      required this.pass});
-
-
+  PartiVotering({
+    required this.party,
+    required this.yes,
+    required this.no,
+    required this.abscent,
+    required this.pass,
+    this.highestValue,
+    this.majorityResult,
+    this.partyColor,
+    this.partyImage,
+  });
 
   factory PartiVotering.fromJson(Map<String, dynamic> json) {
     return PartiVotering(

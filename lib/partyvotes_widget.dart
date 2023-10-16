@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:template/mystate.dart';
 import 'package:template/theme.dart';
+import 'package:template/votering_api.dart';
 
 //Color
 
 class PartyVotes extends StatelessWidget {
-  PartyVotes({super.key});
+  final PartiVotering partiVotering;
+
+  PartyVotes(this.partiVotering);
 
   @override
   Widget build(BuildContext context) {
-    
-
     return Padding(
       padding: EdgeInsets.only(left: 25, right: 25, top: 30, bottom: 5),
       child: Container(
@@ -52,6 +53,7 @@ class PartyVotes extends StatelessWidget {
                             'Röster',
                             style: AppFonts.normalTextBlack,
                           ),
+                          //This is where highestvote will be
                           Text(
                             '17',
                             style: AppFonts.headerBlack,
@@ -65,6 +67,7 @@ class PartyVotes extends StatelessWidget {
                             'Majoritetsröst',
                             style: AppFonts.normalTextBlack,
                           ),
+                          //This is where mojorityresult will be
                           Text(
                             'NEJ',
                             style: AppFonts.headerRed,
