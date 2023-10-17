@@ -31,6 +31,7 @@ Future<List<voteringar>> apiGetList(iid, antal) async {
 }
 
 Future<Map<String, String>?> fetchTitle(String URL, String punktNum) async {
+  print('nytt call');
   final url = URL;
   final response = await http.get(Uri.parse(url));
 
