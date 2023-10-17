@@ -15,7 +15,8 @@ class AppColors {
   static final green = HexColor('01a87c');
   static final yellow = HexColor('fecb00');
 
-  //Partier
+  static final purple = Colors.purple;
+  static final blue = Colors.blue;
   static final socialdemokraternaRed = HexColor('e7132c');
   static final moderaternaBlue = HexColor('213a8f');
   static final sverigedemokraternaBlue = HexColor('322667');
