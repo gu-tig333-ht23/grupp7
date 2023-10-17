@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:template/theme.dart';
 import '../../api/api_ledamotview/api_ledarmot_vy_votering.dart';
-import '../../class_votering.dart';
+import '../../models/model_ledamotview_votering.dart';
 import '../../provider/provider_ledamot.dart';
-import '../../voterings_card.dart';
+import '../../widgets/widget_voterings_card.dart';
 import './ledamot_vy_info.dart';
 import 'ledarmot_vy_stat_bar.dart';
 

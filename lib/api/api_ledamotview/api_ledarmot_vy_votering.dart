@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart';
-import '../../class_votering.dart';
+import '../../models/model_ledamotview_votering.dart';
 
 Future<List<voteringar>> apiGetList(iid, antal) async {
   final String url =

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../class_votering.dart';
+import '../../models/model_ledamotview_votering.dart';
 import '../../theme.dart';
 
 class LedamotVyStatBar extends StatelessWidget {
