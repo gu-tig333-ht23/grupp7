@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../class_votering.dart';
-import '../api/api_votering.dart';
-import '../api/api_ledarmot.dart';
+import '../api/api_ledarmot_vy_votering.dart';
+import '../api/api_ledarmot_vy_ledarmot.dart';
 
 class ProviderLedamot extends ChangeNotifier {
   List<voteringar> _list = [];
