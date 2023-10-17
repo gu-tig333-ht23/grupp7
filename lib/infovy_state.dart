@@ -1,13 +1,31 @@
 import 'package:flutter/material.dart';
+import 'all_votering_api.dart';
+import 'infovy_model.dart';
 import 'votering_api.dart';
 import 'theme.dart';
 
 class MyState extends ChangeNotifier {
   //VAR
   List<PartiVotering> _partiVoteringar = [];
+  List<AllPartiVotering> _allPartiVoteringar = [];
 
   //GET
   List<PartiVotering> get partiVotering => _partiVoteringar;
+  List<AllPartiVotering> get allPartiVoteringar => _allPartiVoteringar;
+
+  //Fetch all party votes
+  void fetchAllPartyVotes() async {
+    var allPartiVotering = await getAllVotingResult();
+    _allPartiVoteringar = allPartiVoteringar;
+
+    _partiVoteringar.removeWhere((partiVotering) => partiVotering.party == '-');
+
+    replaceNullValues();
+    
+    
+
+    notifyListeners();
+  }
 
   //Fetch from api function.
   void fetchVotingresult() async {

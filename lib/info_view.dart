@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:template/votering_api.dart';
 import 'infocard_widget.dart';
+import 'infovy_model.dart';
 import 'voteresult_piechart_widget.dart';
 import 'partyvotes_widget.dart';
-import 'mystate.dart';
+import 'infovy_state.dart';
 
 class InfoView extends StatelessWidget {
   InfoView({super.key});

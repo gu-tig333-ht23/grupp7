@@ -58,8 +58,6 @@ class VoteResult extends StatelessWidget {
                   showChartValuesOutside: false,
                   decimalPlaces: 0,
                 ),
-                // gradientList: ---To add gradient colors---
-                // emptyColorGradient: ---Empty Color gradient---
               ),
             ),
           ],

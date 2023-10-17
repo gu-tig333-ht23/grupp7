@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:template/mystate.dart';
 import 'package:template/theme.dart';
-import 'package:template/votering_api.dart';
-
-//Color
+import 'infovy_model.dart';
 
 class PartyVotes extends StatelessWidget {
   final PartiVotering partiVotering;
@@ -18,7 +14,6 @@ class PartyVotes extends StatelessWidget {
       child: Container(
         height: 75,
         decoration: BoxDecoration(
-          //Color: partiVotering.partiColor
           color: partiVotering.partyColor,
           borderRadius: BorderRadius.circular(20),
         ),
@@ -57,7 +52,6 @@ class PartyVotes extends StatelessWidget {
                             'Röster',
                             style: AppFonts.normalTextBlack,
                           ),
-                          //This is where highestvote will be
                           Text(
                             partiVotering.highestValue.toString(),
                             style: AppFonts.headerBlack,
@@ -71,16 +65,15 @@ class PartyVotes extends StatelessWidget {
                             'Majoritetsröst',
                             style: AppFonts.normalTextBlack,
                           ),
-                          //This is where mojorityresult will be
                           Text(
                             partiVotering.majorityResult ?? 'None',
                             style: TextStyle(
+                              fontWeight: FontWeight.bold,
                               color: partiVotering.majorityResult == 'JA'
                                   ? Colors.green
                                   : partiVotering.majorityResult == 'NEJ'
                                       ? Colors.red
                                       : Color.fromARGB(255, 35, 35, 35),
-                              // Other text styles like fontSize, fontWeight, etc.
                             ),
                           )
                         ],
@@ -90,7 +83,6 @@ class PartyVotes extends StatelessWidget {
                 ),
               ))
             ],
-            //Text('Röster'), Text('Majoritets resultat')
           ),
         ),
       ),
