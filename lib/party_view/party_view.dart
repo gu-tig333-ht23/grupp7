@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:template/ledarmot_vy/ledamot_vy.dart';
 import 'package:template/party_view/party_provider.dart';
 import '../theme.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -229,42 +230,48 @@ class LedamotItem extends StatelessWidget {
     final String imageUrl = ledamot.bildUrl80;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.primaryBlue,
-          border: Border.all(
-            color: AppColors.yellow, // Outline color
-            width: 1.0, // Outline width
-          ),
-          borderRadius: BorderRadius.circular(10.0), // Rounded corners
-        ),
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: ClipOval(
-                child: CachedNetworkImage(
-                  imageUrl: imageUrl,
-                  placeholder: (context, url) => CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                  width: 40,
-                  height: 40,
-                  fit: BoxFit.cover,
-                ),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: GestureDetector(
+          onTap: () {
+            print('hejhopp');
+            //MaterialPageRoute(builder: (context) => LedamotVy(ledamot.intressentId));
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              color: AppColors.primaryBlue,
+              border: Border.all(
+                color: AppColors.yellow, // Outline color
+                width: 1.0, // Outline width
               ),
+              borderRadius: BorderRadius.circular(10.0), // Rounded corners
             ),
-            SizedBox(
-              width: 50,
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: ClipOval(
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                      width: 40,
+                      height: 40,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 50,
+                ),
+                Text(
+                  fullName,
+                  style: TextStyle(color: Colors.white),
+                )
+              ],
             ),
-            Text(
-              fullName,
-              style: TextStyle(color: Colors.white),
-            )
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }
 
