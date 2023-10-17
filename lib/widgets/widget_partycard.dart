@@ -41,7 +41,7 @@ class PartyVotes extends StatelessWidget {
                     color: Colors.white,
                   ),
                   width: 150,
-                  height: 50,
+                  height: 54,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
