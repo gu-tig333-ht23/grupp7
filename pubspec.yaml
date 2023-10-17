@@ -41,6 +41,7 @@ dependencies:
   read_more_text: ^0.0.5
   provider: any
   xml: any
+  html: ^0.15.0
 
 
 dev_dependencies:
