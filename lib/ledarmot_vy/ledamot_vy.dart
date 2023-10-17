@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:template/theme.dart';
-import '../api/api_ledarmot_vy_votering.dart';
+import '../api/api_ledamotview/api_ledarmot_vy_votering.dart';
 import '../class_votering.dart';
 import '../provider/provider_ledamot.dart';
 import '../voterings_card.dart';
