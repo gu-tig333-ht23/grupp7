@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'all_votering_api.dart';
-import 'infovy_model.dart';
-import 'votering_api.dart';
-import 'theme.dart';
+import '../api/api_infoview/api_all_votes.dart';
+import '../models/model_infoview.dart';
+import '../api/api_infoview/api_single_votes.dart';
+import '../theme.dart';
 
-class MyState extends ChangeNotifier {
+class ProviderInfoView extends ChangeNotifier {
   //VAR
   List<PartiVotering> _partiVoteringar = [];
   List<AllPartiVotering> _allPartiVoteringar = [];

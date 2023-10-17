@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template/theme.dart';
-import 'infovy_model.dart';
+import '../models/model_infoview.dart';
 
 class PartyVotes extends StatelessWidget {
   final PartiVotering partiVotering;

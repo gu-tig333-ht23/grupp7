@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'ledarmot_vy/ledamot_vy.dart';
+import 'package:template/provider/provider_infoview.dart';
 import './provider/provider_ledamot.dart';
-import './provider/provider_voteringsvy.dart';
+import 'provider/provider_votesview.dart';
+import 'screens/home_view.dart';
 
 void main() {
   runApp(
@@ -13,6 +14,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (_) => ProviderVoteringsVy(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ProviderInfoView(),
         ),
       ],
       child: const MyApp(),
@@ -31,7 +35,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LedamotVy(),
+      home: VoteringsVy(),
     );
   }
 }

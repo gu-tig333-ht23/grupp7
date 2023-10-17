@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 
-import 'infovy_model.dart';
+import '../../models/model_infoview.dart';
 
 const String endPoint =
     'https://data.riksdagen.se/voteringlista/?rm=2022%2F23&bet=$beteckning&punkt=$forslagspunkt&valkrets=&rost=&iid=&sz=500&utformat=json&gruppering=parti';

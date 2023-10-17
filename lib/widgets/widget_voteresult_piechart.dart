@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
-import 'theme.dart';
+import '../theme.dart';
 
 class VoteResult extends StatelessWidget {
   VoteResult({super.key});

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:template/votering_api.dart';
-import 'infocard_widget.dart';
-import 'infovy_model.dart';
-import 'voteresult_piechart_widget.dart';
-import 'partyvotes_widget.dart';
-import 'infovy_state.dart';
+import '../widgets/widget_votesummary.dart';
+import '../models/model_infoview.dart';
+import '../widgets/widget_voteresult_piechart.dart';
+import '../widgets/widget_partycard.dart';
+import '../provider/provider_infoview.dart';
 
 class InfoView extends StatelessWidget {
   InfoView({super.key});
@@ -17,7 +16,7 @@ class InfoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<PartiVotering> partiVoteringar =
-        context.watch<MyState>().partiVotering;
+        context.watch<ProviderInfoView>().partiVotering;
 
     return Scaffold(
       appBar: AppBar(
@@ -47,8 +46,8 @@ class InfoView extends StatelessWidget {
             ),
             FloatingActionButton(
               onPressed: () {
-                context.read<MyState>().fetchVotingresult();
-                context.read<MyState>().printPartiVotering();
+                context.read<ProviderInfoView>().fetchVotingresult();
+                context.read<ProviderInfoView>().printPartiVotering();
               },
             ),
           ],

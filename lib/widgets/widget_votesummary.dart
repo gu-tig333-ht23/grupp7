@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'theme.dart';
+import '../theme.dart';
 import 'package:read_more_text/read_more_text.dart';
 
 class InfoCard extends StatelessWidget {

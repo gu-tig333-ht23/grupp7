@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:template/past_votes_view.dart';
-import 'package:template/provider/provider_kalender.dart';
+import 'package:template/screens/home_view.dart';
+import 'package:template/provider/provider_calendar.dart';
 import 'package:template/theme.dart';
 
 class CalendarEvents extends StatelessWidget {

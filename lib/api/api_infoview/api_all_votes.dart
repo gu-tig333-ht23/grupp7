@@ -1,5 +1,4 @@
 import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -33,7 +32,7 @@ class AllPartiVotering {
 }
 
 Future<List<AllPartiVotering>> getAllVotingResult() async {
-  final response = await http.get(Uri.parse('$endPoint'));
+  final response = await http.get(Uri.parse(endPoint));
   if (response.statusCode == 200) {
     String body = response.body;
     final Map<String, dynamic> jsonData = jsonDecode(body);
