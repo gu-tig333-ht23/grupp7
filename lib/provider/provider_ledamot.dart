@@ -18,18 +18,21 @@ class ProviderLedamot extends ChangeNotifier {
     final String Url =
         'https://data.riksdagen.se/utskottsforslag/HA01' + item.beteckning;
     final punkt = item.punkt;
-    final Map<String, String>? data = await fetchTitle(Url, punkt);
 
-    if (data != null) {
-      item.titel = data['title'] ?? "N/A";
-    } else {
-      print('Error fetching or parsing data for URL: $Url');
-    }
+    if (item.titel == '' || item.underTitel == '') {
+      final Map<String, String>? data = await fetchTitle(Url, punkt);
 
-    if (data != null) {
-      item.underTitel = data['rubrik'] ?? "N/A";
-    } else {
-      print('Error fetching or parsing data for URL: $Url');
+      if (data != null) {
+        item.titel = data['title'] ?? '';
+      } else {
+        print('Error fetching or parsing data for URL: $Url');
+      }
+
+      if (data != null) {
+        item.underTitel = data['rubrik'] ?? '';
+      } else {
+        print('Error fetching or parsing data for URL: $Url');
+      }
     }
 
     return item;
