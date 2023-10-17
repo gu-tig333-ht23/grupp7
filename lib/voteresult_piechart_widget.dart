@@ -22,7 +22,7 @@ class VoteResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.only(top: 20, bottom: 20),
       child: Container(
         child: Column(
           children: [
@@ -58,8 +58,6 @@ class VoteResult extends StatelessWidget {
                   showChartValuesOutside: false,
                   decimalPlaces: 0,
                 ),
-                // gradientList: ---To add gradient colors---
-                // emptyColorGradient: ---Empty Color gradient---
               ),
             ),
           ],

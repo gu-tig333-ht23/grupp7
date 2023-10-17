@@ -1,37 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:template/theme.dart';
-
-
-class PartyInfo {
-  var partyImage;
-  final String votesNum;
-  final String votesMajority;
-  final Color partyColor;
-
-  PartyInfo(
-      this.partyImage, this.votesNum, this.votesMajority, this.partyColor);
-}
-
-List<PartyInfo> parties = [
-  PartyInfo('assets/images/socialdemokraterna.png', '17', 'NEJ',
-      AppColors.socialdemokraternaRed),
-  PartyInfo(
-      'assets/images/moderaterna.png', '15', 'JA', AppColors.moderaternaBlue),
-  PartyInfo('assets/images/sverigedemokraterna', '12', 'JA',
-      AppColors.sverigedemokraternaBlue),
-];
+import 'infovy_model.dart';
 
 class PartyVotes extends StatelessWidget {
-  PartyVotes({super.key});
+  final PartiVotering partiVotering;
+
+  PartyVotes(this.partiVotering, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 25, right: 25, top: 30, bottom: 5),
+      padding: EdgeInsets.only(left: 25, right: 25, top: 5, bottom: 5),
       child: Container(
         height: 75,
         decoration: BoxDecoration(
-          color: AppColors.socialdemokraternaRed,
+          color: partiVotering.partyColor,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Padding(
@@ -42,8 +25,11 @@ class PartyVotes extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 10, right: 25),
                 child: Container(
-                  child: Image.asset('assets/images/socialdemokraterna.png',
-                      width: 50, height: 50),
+                  child: Image.asset(
+                      partiVotering.partyImage ??
+                          'assets/images/kollkollen_logo.png',
+                      width: 50,
+                      height: 50),
                 ),
               ),
               Expanded(
@@ -67,7 +53,7 @@ class PartyVotes extends StatelessWidget {
                             style: AppFonts.normalTextBlack,
                           ),
                           Text(
-                            '17',
+                            partiVotering.highestValue.toString(),
                             style: AppFonts.headerBlack,
                           ),
                         ],
@@ -80,8 +66,15 @@ class PartyVotes extends StatelessWidget {
                             style: AppFonts.normalTextBlack,
                           ),
                           Text(
-                            'NEJ',
-                            style: AppFonts.headerRed,
+                            partiVotering.majorityResult ?? 'None',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: partiVotering.majorityResult == 'JA'
+                                  ? Colors.green
+                                  : partiVotering.majorityResult == 'NEJ'
+                                      ? Colors.red
+                                      : Color.fromARGB(255, 35, 35, 35),
+                            ),
                           )
                         ],
                       )
@@ -90,7 +83,6 @@ class PartyVotes extends StatelessWidget {
                 ),
               ))
             ],
-            //Text('Röster'), Text('Majoritets resultat')
           ),
         ),
       ),
