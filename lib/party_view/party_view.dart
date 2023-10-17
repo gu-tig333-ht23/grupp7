@@ -1,27 +1,40 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'theme.dart';
+import 'package:template/party_view/party_provider.dart';
+import '../theme.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'ledarmot_vy/ledarmot_vy_stat_bar.dart';
-import '../provider/provider_ledamot.dart';
+import '../ledarmot_vy/ledarmot_vy_stat_bar.dart';
+import '../../provider/provider_ledamot.dart';
 import 'package:provider/provider.dart';
+import 'api_ledamot_list.dart';
+import 'party_provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class PartyView extends StatelessWidget {
-  PartyView({super.key});
+  final String selectedParty;
+  PartyView(
+      {required this.selectedParty,
+      // required this.selectedProposal,
+      super.key});
 
-  String partyWebPage = "https://www.socialdemokraterna.se";
-  final Uri partyUrl = Uri.parse("https://www.socialdemokraterna.se");
-  String proposal = "En fortsatt stärkt arbetslöshetsförsäkring";
+  String selectedProposal = "En fortsatt stärkt arbetslöshetsförsäkring";
   final TextEditingController _textEditingController = TextEditingController();
-  String selectedParty = "Socialdemokraterna";
+
+  //Future<List<Ledamot>> ledamotList = fetchLedamotList();
 
   @override
   Widget build(BuildContext context) {
+    final partyViewState = context.watch<PartyViewState>();
+
+    // Trigger the data fetching when the widget is built
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      partyViewState.fetchPartyMembers(selectedParty);
+    });
     // Find the corresponding PartyAppBarTheme
     PartyAppBarTheme selectedTheme = partyList.firstWhere(
-      (theme) => theme.name == selectedParty,
+      (theme) => theme.id == selectedParty,
       orElse: () => PartyAppBarTheme(
-          "Default", "", Colors.blue), // Default theme if not found
+          "", "Default", "", Colors.blue, ""), // Default theme if not found
     );
 
     return Scaffold(
@@ -50,6 +63,12 @@ class PartyView extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          //  fetchPlaceHolder();
+          print(partyViewState.ledamotList.length);
+        },
+      ),
       body: ListView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         children: [
@@ -75,6 +94,7 @@ class PartyView extends StatelessWidget {
                       //    )
                       //  ],
                       //),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -100,16 +120,15 @@ class PartyView extends StatelessWidget {
                               SizedBox(height: 16),
                               RichText(
                                 text: TextSpan(
-                                  text: partyWebPage,
+                                  text: selectedTheme.webPage,
                                   style: TextStyle(
-                                    color:
-                                        Colors.blue, // Set the hyperlink color
+                                    color: Colors.blue,
                                     decoration: TextDecoration.underline,
                                   ),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
-                                      // Implement the action you want when the link is tapped
-                                      launchUrl(partyUrl);
+                                      launchUrl(Uri.parse(selectedTheme
+                                          .webPage)); // Open party website
                                     },
                                 ),
                               ),
@@ -125,7 +144,7 @@ class PartyView extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "Partiets reslutat i frågan: $proposal.",
+                        "Partiets reslutat i frågan: $selectedProposal.",
                         textAlign: TextAlign.center,
                       ),
                       LedamotVyStatBar(
@@ -142,27 +161,19 @@ class PartyView extends StatelessWidget {
                         child: TextField(
                           controller: _textEditingController,
                           decoration: InputDecoration(
-                              labelText: "Sök ledamot",
+                              labelText: "  Sök ledamot",
                               filled: true,
-                              fillColor: Colors.grey[200], // Background color
+                              fillColor: Colors.grey[200],
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                    10.0), // Rounded edges
+                                borderRadius: BorderRadius.circular(10.0), //
                               ),
                               suffixIcon: Icon(Icons.search),
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 4) // Search icon to the right
+                              contentPadding:
+                                  EdgeInsets.symmetric(vertical: 4) //
                               ),
                         ),
                       ),
-                      ListView.builder(
-                        itemBuilder: (context, index) {
-                          return LedamotItem(ledamotList[index]);
-                        },
-                        itemCount: ledamotList.length,
-                        shrinkWrap: true,
-                        physics: ScrollPhysics(),
-                      ),
+                      ListViewBuilder(ledamotList: partyViewState.ledamotList),
                     ],
                   ),
                 ),
@@ -176,17 +187,47 @@ class PartyView extends StatelessWidget {
   }
 }
 
+class ListViewBuilder extends StatelessWidget {
+  const ListViewBuilder({
+    super.key,
+    required this.ledamotList,
+  });
+
+  final List<Ledamot> ledamotList;
+
+  @override
+  Widget build(BuildContext context) {
+    final List<Ledamot> ledamotList =
+        context.watch<PartyViewState>().ledamotList;
+    final itemCount = ledamotList.length;
+
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return LedamotItem(ledamotList[index]);
+      },
+      itemCount: itemCount,
+      shrinkWrap: true,
+      physics: ScrollPhysics(),
+    );
+  }
+}
+
 class LedamotItem extends StatelessWidget {
   // Widget to build list of ledamöter in party_view.dart depending
   // on what party is selected from infovy.dart
-  final LedamotPlaceholder ledamotPlaceholder;
+
+  final Ledamot ledamot;
+
   LedamotItem(
-    this.ledamotPlaceholder, {
+    this.ledamot, {
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
+    final String fullName = '${ledamot.tilltalsnamn} ${ledamot.efternamn}';
+    final String imageUrl = ledamot.bildUrl80;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Container(
@@ -203,10 +244,12 @@ class LedamotItem extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: ClipOval(
-                child: Image.network(
-                  ledamotPlaceholder.imageUrl,
-                  width: 60, // Adjust the size as needed
-                  height: 60, // Adjust the size as needed
+                child: CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  width: 40,
+                  height: 40,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -215,7 +258,7 @@ class LedamotItem extends StatelessWidget {
               width: 50,
             ),
             Text(
-              ledamotPlaceholder.name,
+              fullName,
               style: TextStyle(color: Colors.white),
             )
           ],
@@ -225,67 +268,35 @@ class LedamotItem extends StatelessWidget {
   }
 }
 
-class LedamotPlaceholder {
-  final String name;
-  final String imageUrl;
-
-  LedamotPlaceholder(this.name, this.imageUrl);
-}
-
-List<LedamotPlaceholder> ledamotList = [
-  LedamotPlaceholder("Hanna Westerén",
-      "https://data.riksdagen.se/filarkiv/bilder/ledamot/ed3399e1-7bce-4ea4-baf6-587f722710f5_80.jpg"),
-  LedamotPlaceholder("Ardalan Shekarabi",
-      "https://data.riksdagen.se/filarkiv/bilder/ledamot/b2bb1d34-0f20-4daf-b26e-8916bb911075_80.jpg"),
-  LedamotPlaceholder("Adnan Dibrani",
-      "https://data.riksdagen.se/filarkiv/bilder/ledamot/2eb5b5ce-2e8c-4063-a2c2-d03b50ff4c5d_80.jpg"),
-  LedamotPlaceholder("Fredrik Olovsson",
-      "https://data.riksdagen.se/filarkiv/bilder/ledamot/bc5c4354-fca3-4071-8096-acd9b7b1d09a_80.jpg"),
-  LedamotPlaceholder("Lars Mejern Larsson",
-      "https://data.riksdagen.se/filarkiv/bilder/ledamot/3badc18d-3c4a-4068-921a-b5fa8a9652d6_80.jpg"),
-  LedamotPlaceholder("Gunilla Carlsson",
-      "https://data.riksdagen.se/filarkiv/bilder/ledamot/11d950d5-e41f-4e94-af86-ae8a1996d81b_80.jpg"),
-  LedamotPlaceholder("Kenneth G Forslund",
-      "https://data.riksdagen.se/filarkiv/bilder/ledamot/f1484855-05d7-498f-8872-5a0c33ad535b_80.jpg"),
-  LedamotPlaceholder("Johan Andersson",
-      "https://data.riksdagen.se/filarkiv/bilder/ledamot/fff74c6c-fae3-4977-a472-cfe2b6ae257a_80.jpg"),
-  LedamotPlaceholder("Petter Löberg",
-      "https://data.riksdagen.se/filarkiv/bilder/ledamot/7826c819-d0da-4e4a-a16b-ffa3d8e9b155_80.jpg"),
-  LedamotPlaceholder("Johan Löfstrand",
-      "https://data.riksdagen.se/filarkiv/bilder/ledamot/eaf0fa85-8858-4e0e-97d8-daee0a771d1f_80.jpg"),
-];
-
 class PartyAppBarTheme {
+  final String id;
   final String name;
   final String assetImage;
   final Color color;
+  final String webPage;
 
-  PartyAppBarTheme(this.name, this.assetImage, this.color);
+  PartyAppBarTheme(
+      this.id, this.name, this.assetImage, this.color, this.webPage);
 }
 
 List<PartyAppBarTheme> partyList = [
-  PartyAppBarTheme("Socialdemokraterna", "assets/images/socialdemokraterna.png",
-      AppColors.socialdemokraternaRed),
   PartyAppBarTheme(
+      "S",
+      "Socialdemokraterna",
+      "assets/images/socialdemokraterna.png",
+      AppColors.socialdemokraternaRed,
+      "https://www.socialdemokraterna.se"),
+  PartyAppBarTheme(
+      "SD",
       "Sverigedemokraterna",
       "assets/images/sverigedemokraterna.png",
-      AppColors.sverigedemokraternaBlue),
-  PartyAppBarTheme("Moderaterna", "assets/images/moderaterna.png",
-      AppColors.moderaternaBlue),
+      AppColors.sverigedemokraternaBlue,
+      "https://www.sverigedemokraterna.se"),
+  PartyAppBarTheme("M", "Moderaterna", "assets/images/moderaterna.png",
+      AppColors.moderaternaBlue, "https://www.moderaterna.se"),
   //PartyAppBarTheme("KD", "assets/images/kristdemokraterna.png", color),
   //PartyAppBarTheme("L", "assets/images/liberalerna.png", color),
   //PartyAppBarTheme("C", "assets/images/centerpartiet.png", color),
   //PartyAppBarTheme("MP", "assets/images/miljopartiet.png", color),
   //PartyAppBarTheme("V", "assets/images/vansterpartiet.png", color),
 ];
-Color getSelectedPartyColor(selectedParty) {
-  // Find the corresponding PartyAppBarTheme
-  PartyAppBarTheme selectedTheme = partyList.firstWhere(
-    (theme) => theme.name == selectedParty,
-    orElse: () => PartyAppBarTheme(
-        "Default", "", Colors.blue), // Default theme if not found
-  );
-
-  // Return the color from the selected theme
-  return selectedTheme.color;
-}
