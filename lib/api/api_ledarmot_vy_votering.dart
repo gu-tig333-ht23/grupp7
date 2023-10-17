@@ -30,8 +30,7 @@ Future<List<voteringar>> apiGetList(iid, antal) async {
   }
 }
 
-Future<Map<String, String>?> fetchDataFromXML(
-    String URL, String punktNum) async {
+Future<Map<String, String>?> fetchTitle(String URL, String punktNum) async {
   final url = URL;
   final response = await http.get(Uri.parse(url));
 

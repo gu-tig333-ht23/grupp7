@@ -18,7 +18,7 @@ class ProviderLedamot extends ChangeNotifier {
     final String Url =
         'https://data.riksdagen.se/utskottsforslag/HA01' + item.beteckning;
     final punkt = item.punkt;
-    final Map<String, String>? data = await fetchDataFromXML(Url, punkt);
+    final Map<String, String>? data = await fetchTitle(Url, punkt);
 
     if (data != null) {
       item.titel = data['title'] ?? "N/A";
