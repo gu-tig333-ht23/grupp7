@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart';
-import '../class_votering.dart';
+import '../../models/model_ledamotview_votering.dart';
 
 Future<List<voteringar>> apiGetList(iid, antal) async {
   final String url =
@@ -30,8 +30,8 @@ Future<List<voteringar>> apiGetList(iid, antal) async {
   }
 }
 
-Future<Map<String, String>?> fetchDataFromXML(
-    String URL, String punktNum) async {
+Future<Map<String, String>?> fetchTitle(String URL, String punktNum) async {
+  print('nytt call');
   final url = URL;
   final response = await http.get(Uri.parse(url));
 

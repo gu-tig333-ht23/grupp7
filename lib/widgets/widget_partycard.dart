@@ -47,7 +47,7 @@ class PartyVotes extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.white,
                   ),
-                  width: 50,
+                  width: 150,
                   height: 50,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
