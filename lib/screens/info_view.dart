@@ -44,12 +44,6 @@ class InfoView extends StatelessWidget {
                 return PartyVotes(partiVotering);
               },
             ),
-            FloatingActionButton(
-              onPressed: () {
-                context.read<ProviderInfoView>().fetchVotingresult();
-                context.read<ProviderInfoView>().printPartiVotering();
-              },
-            ),
           ],
         ),
       ),
