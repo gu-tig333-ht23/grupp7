@@ -7,15 +7,13 @@ import './provider/provider_ledamot.dart';
 import 'provider/provider_votesview.dart';
 import 'screens/home_view.dart';
 
-
 void main() {
   runApp(
     MultiProvider(
       providers: [
-
-
-        ChangeNotifierProvider(create: (_) => PartyViewState(),),
-        
+        ChangeNotifierProvider(
+          create: (_) => PartyViewState(),
+        ),
         ChangeNotifierProvider(
           create: (_) => ProviderLedamot(),
         ),
@@ -25,7 +23,6 @@ void main() {
         ChangeNotifierProvider(
           create: (_) => ProviderInfoView(),
         ),
-
       ],
       child: const MyApp(),
     ),
@@ -39,7 +36,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: VoteringsVy(),
+      home: PartyView(
+        selectedParty: "S",
+      ),
     );
   }
 }

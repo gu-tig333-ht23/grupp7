@@ -64,7 +64,12 @@ class PartyView extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           //  fetchPlaceHolder();
-          print(partyViewState.ledamotList.length);
+
+          partyViewState.ledamotList
+              .where((ledamot) => ledamot.partiLedare)
+              .forEach((partiLedare) {
+            print(partiLedare.efternamn);
+          });
         },
       ),
       body: ListView(
@@ -83,7 +88,11 @@ class PartyView extends StatelessWidget {
                           // lägg till bild på partiledare här
                           ClipOval(
                             child: Image.network(
-                              'https://data.riksdagen.se/filarkiv/bilder/ledamot/dcc2ab7d-3fc1-4a28-b3c7-be1679c047b3_80.jpg',
+                              context
+                                      .watch<PartyViewState>()
+                                      .partiLedare
+                                      ?.bildUrl80 ??
+                                  '',
                               width: 60, // Adjust the size as needed
                               height: 60, // Adjust the size as needed
                               fit: BoxFit.cover,
@@ -94,11 +103,15 @@ class PartyView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Partiledare:",
+                                selectedParty == 'MP'
+                                    ? 'Språkrör'
+                                    : "Partiledare:",
                                 textAlign: TextAlign.left,
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Text("Magdalena Andersson"),
+                              Text(
+                                '${context.watch<PartyViewState>().partiLedare?.tilltalsnamn ?? ''} ${context.watch<PartyViewState>().partiLedare?.efternamn ?? ''}',
+                              ),
                               SizedBox(height: 16),
                               RichText(
                                 text: TextSpan(
