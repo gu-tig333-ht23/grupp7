@@ -18,8 +18,6 @@ class PartyView extends StatelessWidget {
   String selectedProposal = "En fortsatt stärkt arbetslöshetsförsäkring";
   final TextEditingController _textEditingController = TextEditingController();
 
-  //Future<List<Ledamot>> ledamotList = fetchLedamotList();
-
   @override
   Widget build(BuildContext context) {
     final partyViewState = context.watch<PartyViewState>();
@@ -85,20 +83,7 @@ class PartyView extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // lägg till bild på partiledare här
-                          ClipOval(
-                            child: Image.network(
-                              context
-                                      .watch<PartyViewState>()
-                                      .partiLedare
-                                      ?.bildUrl80 ??
-                                  '',
-                              width: 60, // Adjust the size as needed
-                              height: 60, // Adjust the size as needed
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-
+                          buildPartyLeaderImage(context),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -147,6 +132,11 @@ class PartyView extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
                           controller: _textEditingController,
+                          onChanged: (searchTerm) {
+                            context
+                                .read<PartyViewState>()
+                                .getLedamotListSearch(searchTerm);
+                          },
                           decoration: InputDecoration(
                               labelText: "  Sök ledamot",
                               filled: true,
@@ -293,3 +283,20 @@ List<PartyAppBarTheme> partyList = [
   PartyAppBarTheme("V", "Vänsterpartiet", AppImages.imageVansterpartiet,
       AppColors.vansterpartietRed, "https://www.vansterpartiet.se"),
 ];
+
+Widget buildPartyLeaderImage(BuildContext context) {
+  final partiLedare = context.watch<PartyViewState>().partiLedare;
+
+  if (partiLedare != null) {
+    return ClipOval(
+      child: Image.network(
+        partiLedare.bildUrl80,
+        width: 60,
+        height: 60,
+        fit: BoxFit.cover,
+      ),
+    );
+  } else {
+    return CircularProgressIndicator();
+  }
+}

@@ -19,11 +19,25 @@ class PartyViewState extends ChangeNotifier {
     return ledamotList;
   }
 
-  Future<void> getPartiLedare(selectedParty) async {
-    await fetchPartyMembers(selectedParty); // Ensure data is loaded
-    _partiLedare = _ledamotList.firstWhere((ledamot) => ledamot.partiLedare);
+  //Future<void> getPartiLedare(selectedParty) async {
+  //  await fetchPartyMembers(selectedParty); // Ensure data is loaded
+  //  _partiLedare = _ledamotList.firstWhere((ledamot) => ledamot.partiLedare);
+  //  notifyListeners();
+  //  //    orElse: () => null);
+  //}
+
+  void getLedamotListSearch(String searchTerm) {
+    // Implement the logic to filter the list based on the searchTerm
+    // For example, you can update the _ledamotList based on the search term
+    // and then notify listeners.
+    _ledamotList = _ledamotList
+        .where((ledamot) =>
+            ledamot.efternamn.contains(searchTerm) ||
+            ledamot.tilltalsnamn.contains(searchTerm))
+        .toList();
+
+    // Notify listeners to update the UI
     notifyListeners();
-    //    orElse: () => null);
   }
 
   Ledamot? _partiLedare;
