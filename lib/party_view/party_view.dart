@@ -1,10 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:template/ledarmot_vy/ledamot_vy.dart';
+//import 'package:template/ledarmot_vy/ledamot_vy.dart';
 import 'package:template/party_view/party_provider.dart';
 import '../theme.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../ledarmot_vy/ledarmot_vy_stat_bar.dart';
+//import '../ledarmot_vy/ledarmot_vy_stat_bar.dart';
 import '../../provider/provider_ledamot.dart';
 import 'package:provider/provider.dart';
 import 'api_ledamot_list.dart';
@@ -148,15 +148,15 @@ class PartyView extends StatelessWidget {
                         "Partiets reslutat i frågan: $selectedProposal.",
                         textAlign: TextAlign.center,
                       ),
-                      LedamotVyStatBar(
-                          theList: context.watch<ProviderLedamot>().theList),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Divider(
-                          thickness: 1,
-                          color: Colors.black,
-                        ),
-                      ),
+                      //LedamotVyStatBar(
+                      //    theList: context.watch<ProviderLedamot>().theList),
+                      //Padding(
+                      //  padding: const EdgeInsets.all(8.0),
+                      //  child: Divider(
+                      //    thickness: 1,
+                      //    color: Colors.black,
+                      //  ),
+                      //),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
