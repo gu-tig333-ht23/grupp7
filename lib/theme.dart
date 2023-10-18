@@ -14,9 +14,9 @@ class AppColors {
   static final red = HexColor('d1382b');
   static final green = HexColor('01a87c');
   static final yellow = HexColor('fecb00');
+  static final purple = HexColor('522e91');
+  static final blue = HexColor('0099d3');
 
-  static final purple = Colors.purple;
-  static final blue = Colors.blue;
   static final socialdemokraternaRed = HexColor('e7132c');
   static final moderaternaBlue = HexColor('213a8f');
   static final sverigedemokraternaBlue = HexColor('322667');
@@ -34,6 +34,8 @@ class AppFonts {
       GoogleFonts.roboto(fontSize: 24, color: HexColor('ffffff'));
   static final headerBlack =
       GoogleFonts.roboto(fontSize: 24, color: HexColor('000000'));
+  static final numberBlack = GoogleFonts.roboto(
+      fontSize: 20, color: HexColor('000000'));
   static final headerRed =
       GoogleFonts.roboto(fontSize: 24, color: HexColor('d1382b'));
   static final headerGreen =

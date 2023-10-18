@@ -6,17 +6,17 @@ class VoteResult extends StatelessWidget {
   VoteResult({super.key});
 
   Map<String, double> dataMap = {
-    "Ja": 5,
-    "Nej": 3,
-    "Avstår": 2,
-    "Frånvarande": 2,
+    "Ja": 6,
+    "Nej": 6,
+    "Avstår": 3,
+    "Frånvarande": 85,
   };
 
   List<Color> colorList = [
     AppColors.green,
     AppColors.red,
     AppColors.yellow,
-    AppColors.mediumGrey
+    AppColors.blue
   ];
 
   @override
@@ -55,7 +55,7 @@ class VoteResult extends StatelessWidget {
                   showChartValueBackground: true,
                   showChartValues: true,
                   showChartValuesInPercentage: true,
-                  showChartValuesOutside: false,
+                  showChartValuesOutside: true,
                   decimalPlaces: 0,
                 ),
               ),

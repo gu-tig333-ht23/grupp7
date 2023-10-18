@@ -14,6 +14,13 @@ class PartyVotes extends StatelessWidget {
       child: Container(
         height: 75,
         decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(0, 3),
+              blurRadius: 5,
+              color: Colors.black.withOpacity(0.4),
+            ),
+          ],
           color: partiVotering.partyColor,
           borderRadius: BorderRadius.circular(20),
         ),
@@ -40,7 +47,7 @@ class PartyVotes extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.white,
                   ),
-                  width: 150,
+                  width: 50,
                   height: 50,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -54,7 +61,7 @@ class PartyVotes extends StatelessWidget {
                           ),
                           Text(
                             partiVotering.highestValue.toString(),
-                            style: AppFonts.headerBlack,
+                            style: AppFonts.numberBlack,
                           ),
                         ],
                       ),
@@ -68,6 +75,7 @@ class PartyVotes extends StatelessWidget {
                           Text(
                             partiVotering.majorityResult ?? 'None',
                             style: TextStyle(
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: partiVotering.majorityResult == 'JA'
                                   ? Colors.green
