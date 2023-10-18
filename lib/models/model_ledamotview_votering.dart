@@ -20,6 +20,8 @@ class voteringar {
   final String voteringUrlXml;
   final String dokId;
   final String systemdatum;
+  String titel = '';
+  String underTitel = '';
 
   voteringar({
     required this.hangarId,

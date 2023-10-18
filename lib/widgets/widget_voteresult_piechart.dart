@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
-import 'theme.dart';
+import '../theme.dart';
 
 class VoteResult extends StatelessWidget {
   VoteResult({super.key});
 
   Map<String, double> dataMap = {
-    "Ja": 5,
-    "Nej": 3,
-    "Avstår": 2,
-    "Frånvarande": 2,
+    "Ja": 6,
+    "Nej": 6,
+    "Avstår": 3,
+    "Frånvarande": 85,
   };
 
   List<Color> colorList = [
     AppColors.green,
     AppColors.red,
     AppColors.yellow,
-    AppColors.mediumGrey
+    AppColors.blue
   ];
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.only(top: 20, bottom: 20),
       child: Container(
         child: Column(
           children: [
@@ -55,11 +55,9 @@ class VoteResult extends StatelessWidget {
                   showChartValueBackground: true,
                   showChartValues: true,
                   showChartValuesInPercentage: true,
-                  showChartValuesOutside: false,
+                  showChartValuesOutside: true,
                   decimalPlaces: 0,
                 ),
-                // gradientList: ---To add gradient colors---
-                // emptyColorGradient: ---Empty Color gradient---
               ),
             ),
           ],

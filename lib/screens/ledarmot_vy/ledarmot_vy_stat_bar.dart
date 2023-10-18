@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../class_votering.dart';
-import '../theme.dart';
+import '../../models/model_ledamotview_votering.dart';
+import '../../theme.dart';
 
 class LedamotVyStatBar extends StatelessWidget {
   LedamotVyStatBar({
@@ -46,42 +46,47 @@ class LedamotVyStatBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        StatBar(
-          antalJa: antalJa,
-          antalNej: antalNej,
-          antalAvstar: antalAvstar,
-          antalFranvarande: antalFranvarande,
-        ),
-        Center(
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.radio_button_checked,
-                color: AppColors.green,
-              ),
-              Text('Ja  '),
-              Icon(
-                Icons.radio_button_checked,
-                color: AppColors.red,
-              ),
-              Text('Nej '),
-              Icon(
-                Icons.radio_button_checked,
-                color: AppColors.purple,
-              ),
-              Text('Avstår  '),
-              Icon(
-                Icons.radio_button_checked,
-                color: AppColors.blue,
-              ),
-              Text('Frånvarande'),
-            ],
+    return Padding(
+      padding: const EdgeInsets.only(
+        bottom: 20,
+      ),
+      child: Column(
+        children: [
+          StatBar(
+            antalJa: antalJa,
+            antalNej: antalNej,
+            antalAvstar: antalAvstar,
+            antalFranvarande: antalFranvarande,
           ),
-        ),
-      ],
+          Center(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.radio_button_checked,
+                  color: AppColors.green,
+                ),
+                Text('Ja  '),
+                Icon(
+                  Icons.radio_button_checked,
+                  color: AppColors.red,
+                ),
+                Text('Nej '),
+                Icon(
+                  Icons.radio_button_checked,
+                  color: AppColors.purple,
+                ),
+                Text('Avstår  '),
+                Icon(
+                  Icons.radio_button_checked,
+                  color: AppColors.blue,
+                ),
+                Text('Frånvarande'),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -105,7 +110,8 @@ class StatBar extends StatelessWidget {
     final double screenWidth =
         ((MediaQuery.of(context).size.width) - padding * 2) / 100;
     return Container(
-      padding: EdgeInsets.all(padding),
+      padding: EdgeInsets.only(
+          bottom: 5, top: padding, left: padding, right: padding),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8.0),
         child: Row(

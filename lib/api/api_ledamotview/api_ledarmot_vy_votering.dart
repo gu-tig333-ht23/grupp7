@@ -1,12 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart';
-import '../class_votering.dart';
+import '../../models/model_ledamotview_votering.dart';
 
-Future<List<voteringar>> apiGetList(iid) async {
-  final url =
-      'https://data.riksdagen.se/voteringlista/?rm=&bet=&punkt=&valkrets=&rost=&iid=$iid&sz=10000&utformat=json&gruppering=';
-
+Future<List<voteringar>> apiGetList(iid, antal) async {
+  final String url =
+      'https://data.riksdagen.se/voteringlista/?rm=&bet=&punkt=&valkrets=&rost=&iid=$iid&sz=$antal&utformat=json&gruppering=';
   try {
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -31,13 +30,15 @@ Future<List<voteringar>> apiGetList(iid) async {
   }
 }
 
-Future<Map<String, String>?> fetchAndParseXML(String URL) async {
+Future<Map<String, String>?> fetchTitle(String URL, String punktNum) async {
+  print('nytt call');
   final url = URL;
   final response = await http.get(Uri.parse(url));
 
   if (response.statusCode == 200) {
     final document = XmlDocument.parse(response.body);
-    final voteringElement = document.findElements('votering').firstOrNull;
+    final voteringElement =
+        document.findElements('utskottsforslag').firstOrNull;
 
     if (voteringElement != null) {
       final dokumentElement =
@@ -53,6 +54,27 @@ Future<Map<String, String>?> fetchAndParseXML(String URL) async {
             'title': titleElement.text,
             'datum': systemdatumElement.text,
           };
+
+          final utskottsforslagElements =
+              document.findAllElements('utskottsforslag');
+
+          for (final utskottsforslagElement in utskottsforslagElements) {
+            final punktElement =
+                utskottsforslagElement.findElements('punkt').firstOrNull;
+
+            if (punktElement != null && punktElement.text == punktNum) {
+              final rubrikElement =
+                  utskottsforslagElement.findElements('rubrik').firstOrNull;
+
+              if (rubrikElement != null) {
+                data['rubrik'] = rubrikElement.text;
+              } else {
+                print('No <rubrik> tag found for punkt $punktNum.');
+                return null;
+              }
+            }
+          }
+
           return data;
         } else {
           print('No <titel> or <systemdatum> tag found in the XML.');
