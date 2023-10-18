@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:template/api/api_infoview/api_html_infoview.dart';
 import '../api/api_infoview/api_all_votes.dart';
 import '../models/model_infoview.dart';
 import '../api/api_infoview/api_single_votes.dart';
@@ -8,28 +10,51 @@ class ProviderInfoView extends ChangeNotifier {
   //VAR
   List<PartiVotering> _partiVoteringar = [];
   List<AllPartiVotering> _allPartiVoteringar = [];
+  String _beteckning = '';
+  String _title = '';
+  String _summary = '';
+  // String forslagspunkt = '';   Om vi vill sortera på förslagspunkter senare
 
   //GET
   List<PartiVotering> get partiVotering => _partiVoteringar;
   List<AllPartiVotering> get allPartiVoteringar => _allPartiVoteringar;
+  String get beteckning => _beteckning;
+  String get title => _title;
+  String get summary => _summary;
+
+  void fetchSummary(selectedBeteckning) async {
+    // hämtar sammanfattningen av förslaget från HTML-api
+    _summary = await getSummary(selectedBeteckning);
+    notifyListeners();
+  }
+
+  void fetchTitle(selectedTitle) {
+    // hämtar förslagets titel från home_view.dart
+    _title = selectedTitle;
+    notifyListeners();
+  }
+
+  void fetchBeteckning(String selectedBeteckning) {
+    // hämtar förslagets beteckning från home_view.dart
+    _beteckning = selectedBeteckning;
+    notifyListeners();
+  }
 
   //Fetch all party votes
   void fetchAllPartyVotes() async {
-    var allPartiVotering = await getAllVotingResult();
+    var allPartiVoteringar = await getAllVotingResult(beteckning);
     _allPartiVoteringar = allPartiVoteringar;
 
     _partiVoteringar.removeWhere((partiVotering) => partiVotering.party == '-');
 
     replaceNullValues();
-    
-    
 
     notifyListeners();
   }
 
   //Fetch from api function.
   void fetchVotingresult() async {
-    var partiVotering = await getVotingResult();
+    var partiVotering = await getVotingResult(beteckning);
     _partiVoteringar = partiVotering;
 
     //Remove where party name == '-', blank non existent party in the parlament.
@@ -48,7 +73,6 @@ class ProviderInfoView extends ChangeNotifier {
       partiVotering.highestValue = voteValues['highestVoteCount'];
       partiVotering.majorityResult = voteValues['majorityResult'];
     }
-
     for (PartiVotering partiVotering in _partiVoteringar) {
       setPartyColorAndImage(partiVotering);
     }

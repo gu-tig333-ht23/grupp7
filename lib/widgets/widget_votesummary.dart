@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:template/provider/provider_infoview.dart';
 import '../theme.dart';
 import 'package:read_more_text/read_more_text.dart';
 
@@ -7,6 +9,8 @@ class InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var title = context.watch<ProviderInfoView>().title; // Titeln på summeringskortet
+    var summary = context.watch<ProviderInfoView>().summary; // Summeringen hämtad från HTML
     return Padding(
         padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 5),
         child: Container(
@@ -34,11 +38,11 @@ class InfoCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Rubrik',
+                        title,
                         style: AppFonts.header,
                       ),
                       ReadMoreText(
-                        'Utskottet ställer sig bakom regeringens förslag till ändringar i lagen om arbetslöshetsförsäkring. I propositionen föreslås att vissa tidigare beslutade lagändringar ska utgå och att tidigare tillfälligt beslutade bestämmelser ska gälla tills vidare. Regeringens förslag innebär att de tillfälliga lättnaderna i arbetsvillkoret och karensvillkoret inte ska upphöra att gälla, utan ska i stället gälla tills vidare. Detsamma gäller den tillfälliga möjligheten för regeringen eller den myndighet som regeringen bestämmer att meddela föreskrifter om undantag från lagens begränsning av företagares möjlighet att få arbetslöshetsersättning vid upprepade uppehåll i näringsverksamheten, den s.k. femårsregeln. Utskottet anser att riksdagen bör avslå motionsyrkandena. I betänkandet finns två reservationer (V, C) och två särskilda yttranden (S, MP)',
+                        summary,
                         numLines: 5,
                         readMoreText: 'Visa mer',
                         readLessText: 'Visa mindre',
