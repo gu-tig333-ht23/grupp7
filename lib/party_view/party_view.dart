@@ -1,11 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-//import 'package:template/ledarmot_vy/ledamot_vy.dart';
-import 'package:template/party_view/party_provider.dart';
+import 'package:template/widgets/widget_voteresult_piechart.dart';
 import '../theme.dart';
 import 'package:url_launcher/url_launcher.dart';
-//import '../ledarmot_vy/ledarmot_vy_stat_bar.dart';
-import '../../provider/provider_ledamot.dart';
 import 'package:provider/provider.dart';
 import 'api_ledamot_list.dart';
 import 'party_provider.dart';
@@ -80,22 +77,6 @@ class PartyView extends StatelessWidget {
                 Center(
                   child: Column(
                     children: [
-                      //Row(
-                      //  mainAxisAlignment: MainAxisAlignment.center,
-                      //  children: [
-                      //    SizedBox(
-                      //      height: 60,
-                      //      width: 60,
-                      //      child: Image.asset(
-                      //          "assets/images/socialdemokraterna.png"),
-                      //    ),
-                      //    Text(
-                      //      "Socialdemokraterna",
-                      //      style: AppFonts.headerRed,
-                      //    )
-                      //  ],
-                      //),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -121,7 +102,7 @@ class PartyView extends StatelessWidget {
                               SizedBox(height: 16),
                               RichText(
                                 text: TextSpan(
-                                  text: selectedTheme.webPage,
+                                  text: "Webbplats",
                                   style: TextStyle(
                                     color: Colors.blue,
                                     decoration: TextDecoration.underline,
@@ -148,15 +129,7 @@ class PartyView extends StatelessWidget {
                         "Partiets reslutat i frågan: $selectedProposal.",
                         textAlign: TextAlign.center,
                       ),
-                      //LedamotVyStatBar(
-                      //    theList: context.watch<ProviderLedamot>().theList),
-                      //Padding(
-                      //  padding: const EdgeInsets.all(8.0),
-                      //  child: Divider(
-                      //    thickness: 1,
-                      //    color: Colors.black,
-                      //  ),
-                      //),
+                      VoteResult(),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
@@ -178,7 +151,6 @@ class PartyView extends StatelessWidget {
                     ],
                   ),
                 ),
-                //LedamotItem()
               ],
             ),
           ),
@@ -230,7 +202,7 @@ class LedamotItem extends StatelessWidget {
     final String imageUrl = ledamot.bildUrl80;
 
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
         child: GestureDetector(
           onTap: () {
             print('hejhopp');
@@ -287,23 +259,24 @@ class PartyAppBarTheme {
 }
 
 List<PartyAppBarTheme> partyList = [
-  PartyAppBarTheme(
-      "S",
-      "Socialdemokraterna",
-      "assets/images/socialdemokraterna.png",
-      AppColors.socialdemokraternaRed,
-      "https://www.socialdemokraterna.se"),
+  PartyAppBarTheme("S", "Socialdemokraterna", AppImages.imageSocialdemokraterna,
+      AppColors.socialdemokraternaRed, "https://www.socialdemokraterna.se"),
   PartyAppBarTheme(
       "SD",
       "Sverigedemokraterna",
       "assets/images/sverigedemokraterna.png",
       AppColors.sverigedemokraternaBlue,
       "https://www.sverigedemokraterna.se"),
-  PartyAppBarTheme("M", "Moderaterna", "assets/images/moderaterna.png",
+  PartyAppBarTheme("M", "Moderaterna", AppImages.imageModeraterna,
       AppColors.moderaternaBlue, "https://www.moderaterna.se"),
-  //PartyAppBarTheme("KD", "assets/images/kristdemokraterna.png", color),
-  //PartyAppBarTheme("L", "assets/images/liberalerna.png", color),
-  //PartyAppBarTheme("C", "assets/images/centerpartiet.png", color),
-  //PartyAppBarTheme("MP", "assets/images/miljopartiet.png", color),
-  //PartyAppBarTheme("V", "assets/images/vansterpartiet.png", color),
+  PartyAppBarTheme("KD", "Kristdemokraterna", AppImages.imageKristdemokraterna,
+      AppColors.kristdemokraternaBlue, "https://www.kristdemokraterna.se"),
+  PartyAppBarTheme("L", "Liberalerna", AppImages.imageLiberalerna,
+      AppColors.liberalernaBlue, "https://www.liberalerna.se"),
+  PartyAppBarTheme("C", "Centerpartiet", AppImages.imageCenterpartietWhite,
+      AppColors.centerpartietGreen, "https://www.centerpartiet.se"),
+  PartyAppBarTheme("MP", "Miljöpartiet de gröna", AppImages.imageMiljopartiet,
+      AppColors.miljopartietGreen, "https://www.mp.se"),
+  PartyAppBarTheme("V", "Vänsterpartiet", AppImages.imageVansterpartiet,
+      AppColors.vansterpartietRed, "https://www.vansterpartiet.se"),
 ];
