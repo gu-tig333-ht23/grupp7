@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:provider/provider.dart';
+import 'package:template/provider/provider_infoview.dart';
 import '../theme.dart';
 
 class VoteResult extends StatelessWidget {
-  VoteResult({super.key});
+  @override
+  Widget build(BuildContext context) {
+  
+  ProviderInfoView provider = Provider.of<ProviderInfoView>(context);
 
   Map<String, double> dataMap = {
-    "Ja": 6,
-    "Nej": 6,
-    "Avstår": 3,
-    "Frånvarande": 85,
+      "Ja": provider.partiVotering.fold(0, (sum, vote) => sum + int.parse(vote.yes)),
+      "Nej": provider.partiVotering.fold(0, (sum, vote) => sum + int.parse(vote.no)),
+      "Avstår": provider.partiVotering.fold(0, (sum, vote) => sum + int.parse(vote.pass)),
+      "Frånvarande": provider.partiVotering.fold(0, (sum, vote) => sum + int.parse(vote.abscent)),
   };
 
   List<Color> colorList = [
@@ -19,8 +24,7 @@ class VoteResult extends StatelessWidget {
     AppColors.blue
   ];
 
-  @override
-  Widget build(BuildContext context) {
+  
     return Padding(
       padding: const EdgeInsets.only(top: 20, bottom: 20),
       child: Container(
