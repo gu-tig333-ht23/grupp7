@@ -5,7 +5,6 @@ import '../models/model_infoview.dart';
 import '../widgets/widget_voteresult_piechart.dart';
 import '../widgets/widget_partycard.dart';
 import '../provider/provider_infoview.dart';
-import 'package:template/theme.dart';
 
 class InfoView extends StatelessWidget {
   InfoView({super.key});
@@ -23,9 +22,9 @@ class InfoView extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'InfoView',
-          style: AppFonts.header,
+          style: TextStyle(color: Colors.black),
         ),
-        backgroundColor: AppColors.lightGrey,
+        backgroundColor: Colors.transparent,
         centerTitle: true,
         elevation: 0,
       ),
@@ -35,7 +34,24 @@ class InfoView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             InfoCard(),
-            VoteResult(),
+            VoteResult(
+              ja: context
+                  .read<ProviderInfoView>()
+                  .partiVotering
+                  .fold(0, (sum, vote) => sum + int.parse(vote.yes)),
+              nej: context
+                  .read<ProviderInfoView>()
+                  .partiVotering
+                  .fold(0, (sum, vote) => sum + int.parse(vote.no)),
+              avstar: context
+                  .read<ProviderInfoView>()
+                  .partiVotering
+                  .fold(0, (sum, vote) => sum + int.parse(vote.pass)),
+              franvarande: context
+                  .read<ProviderInfoView>()
+                  .partiVotering
+                  .fold(0, (sum, vote) => sum + int.parse(vote.abscent)),
+            ),
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),

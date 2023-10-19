@@ -130,7 +130,12 @@ class PartyView extends StatelessWidget {
                         "Partiets reslutat i frågan: $selectedProposal.",
                         textAlign: TextAlign.center,
                       ),
-                      VoteResult(),
+                      VoteResult(
+                        ja: 25.0,
+                        nej: 25.0,
+                        avstar: 25.0,
+                        franvarande: 25.0,
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
