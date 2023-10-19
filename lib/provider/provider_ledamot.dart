@@ -9,6 +9,11 @@ class ProviderLedamot extends ChangeNotifier {
 
   List<voteringar> get theList => _list;
 
+  void setIid(String newIid) {
+    iid = newIid;
+    notifyListeners();
+  }
+
   Future<List<voteringar>> getList() async {
     final List<voteringar> rList = await apiGetList(iid, 10000);
     return rList;

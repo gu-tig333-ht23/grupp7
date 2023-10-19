@@ -1,31 +1,29 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-//import 'package:template/ledarmot_vy/ledamot_vy.dart';
-import 'package:template/party_view/party_provider.dart';
+import 'package:template/widgets/widget_voteresult_piechart.dart';
+import '../screens/ledarmot_vy/ledamot_vy.dart';
 import '../theme.dart';
 import 'package:url_launcher/url_launcher.dart';
-//import '../ledarmot_vy/ledarmot_vy_stat_bar.dart';
-import '../../provider/provider_ledamot.dart';
 import 'package:provider/provider.dart';
 import 'api_ledamot_list.dart';
 import 'party_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import '../provider/provider_ledamot.dart';
 
 class PartyView extends StatelessWidget {
-  final String selectedParty;
   PartyView(
-      {required this.selectedParty,
+      {
       // required this.selectedProposal,
       super.key});
 
   String selectedProposal = "En fortsatt stärkt arbetslöshetsförsäkring";
   final TextEditingController _textEditingController = TextEditingController();
 
-  //Future<List<Ledamot>> ledamotList = fetchLedamotList();
-
   @override
   Widget build(BuildContext context) {
     final partyViewState = context.watch<PartyViewState>();
+
+    final String selectedParty = context.watch<PartyViewState>().selectedParty;
 
     // Trigger the data fetching when the widget is built
     WidgetsBinding.instance!.addPostFrameCallback((_) {
@@ -67,7 +65,12 @@ class PartyView extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           //  fetchPlaceHolder();
-          print(partyViewState.ledamotList.length);
+
+          partyViewState.ledamotList
+              .where((ledamot) => ledamot.partiLedare)
+              .forEach((partiLedare) {
+            print(partiLedare.efternamn);
+          });
         },
       ),
       body: ListView(
@@ -80,48 +83,27 @@ class PartyView extends StatelessWidget {
                 Center(
                   child: Column(
                     children: [
-                      //Row(
-                      //  mainAxisAlignment: MainAxisAlignment.center,
-                      //  children: [
-                      //    SizedBox(
-                      //      height: 60,
-                      //      width: 60,
-                      //      child: Image.asset(
-                      //          "assets/images/socialdemokraterna.png"),
-                      //    ),
-                      //    Text(
-                      //      "Socialdemokraterna",
-                      //      style: AppFonts.headerRed,
-                      //    )
-                      //  ],
-                      //),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // lägg till bild på partiledare här
-                          ClipOval(
-                            child: Image.network(
-                              'https://data.riksdagen.se/filarkiv/bilder/ledamot/dcc2ab7d-3fc1-4a28-b3c7-be1679c047b3_80.jpg',
-                              width: 60, // Adjust the size as needed
-                              height: 60, // Adjust the size as needed
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-
+                          buildPartyLeaderImage(context),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Partiledare:",
+                                selectedParty == 'MP'
+                                    ? 'Språkrör'
+                                    : "Partiledare:",
                                 textAlign: TextAlign.left,
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Text("Magdalena Andersson"),
+                              Text(
+                                '${context.watch<PartyViewState>().partiLedare?.tilltalsnamn ?? ''} ${context.watch<PartyViewState>().partiLedare?.efternamn ?? ''}',
+                              ),
                               SizedBox(height: 16),
                               RichText(
                                 text: TextSpan(
-                                  text: selectedTheme.webPage,
+                                  text: "Webbplats",
                                   style: TextStyle(
                                     color: Colors.blue,
                                     decoration: TextDecoration.underline,
@@ -148,19 +130,16 @@ class PartyView extends StatelessWidget {
                         "Partiets reslutat i frågan: $selectedProposal.",
                         textAlign: TextAlign.center,
                       ),
-                      //LedamotVyStatBar(
-                      //    theList: context.watch<ProviderLedamot>().theList),
-                      //Padding(
-                      //  padding: const EdgeInsets.all(8.0),
-                      //  child: Divider(
-                      //    thickness: 1,
-                      //    color: Colors.black,
-                      //  ),
-                      //),
+                      VoteResult(),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
                           controller: _textEditingController,
+                          onChanged: (searchTerm) {
+                            context
+                                .read<PartyViewState>()
+                                .getLedamotListSearch(searchTerm);
+                          },
                           decoration: InputDecoration(
                               labelText: "  Sök ledamot",
                               filled: true,
@@ -178,7 +157,6 @@ class PartyView extends StatelessWidget {
                     ],
                   ),
                 ),
-                //LedamotItem()
               ],
             ),
           ),
@@ -230,11 +208,14 @@ class LedamotItem extends StatelessWidget {
     final String imageUrl = ledamot.bildUrl80;
 
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
         child: GestureDetector(
+          // Set iid for provider_ledamot and jump to page LedamotVy
           onTap: () {
-            print('hejhopp');
-            //MaterialPageRoute(builder: (context) => LedamotVy(ledamot.intressentId));
+            context.read<ProviderLedamot>().setIid(ledamot.intressentId);
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => LedamotVy()));
+            print("hej");
           },
           child: Container(
             decoration: BoxDecoration(
@@ -287,23 +268,41 @@ class PartyAppBarTheme {
 }
 
 List<PartyAppBarTheme> partyList = [
-  PartyAppBarTheme(
-      "S",
-      "Socialdemokraterna",
-      "assets/images/socialdemokraterna.png",
-      AppColors.socialdemokraternaRed,
-      "https://www.socialdemokraterna.se"),
+  PartyAppBarTheme("S", "Socialdemokraterna", AppImages.imageSocialdemokraterna,
+      AppColors.socialdemokraternaRed, "https://www.socialdemokraterna.se"),
   PartyAppBarTheme(
       "SD",
       "Sverigedemokraterna",
       "assets/images/sverigedemokraterna.png",
       AppColors.sverigedemokraternaBlue,
       "https://www.sverigedemokraterna.se"),
-  PartyAppBarTheme("M", "Moderaterna", "assets/images/moderaterna.png",
+  PartyAppBarTheme("M", "Moderaterna", AppImages.imageModeraterna,
       AppColors.moderaternaBlue, "https://www.moderaterna.se"),
-  //PartyAppBarTheme("KD", "assets/images/kristdemokraterna.png", color),
-  //PartyAppBarTheme("L", "assets/images/liberalerna.png", color),
-  //PartyAppBarTheme("C", "assets/images/centerpartiet.png", color),
-  //PartyAppBarTheme("MP", "assets/images/miljopartiet.png", color),
-  //PartyAppBarTheme("V", "assets/images/vansterpartiet.png", color),
+  PartyAppBarTheme("KD", "Kristdemokraterna", AppImages.imageKristdemokraterna,
+      AppColors.kristdemokraternaBlue, "https://www.kristdemokraterna.se"),
+  PartyAppBarTheme("L", "Liberalerna", AppImages.imageLiberalerna,
+      AppColors.liberalernaBlue, "https://www.liberalerna.se"),
+  PartyAppBarTheme("C", "Centerpartiet", AppImages.imageCenterpartietWhite,
+      AppColors.centerpartietGreen, "https://www.centerpartiet.se"),
+  PartyAppBarTheme("MP", "Miljöpartiet de gröna", AppImages.imageMiljopartiet,
+      AppColors.miljopartietGreen, "https://www.mp.se"),
+  PartyAppBarTheme("V", "Vänsterpartiet", AppImages.imageVansterpartiet,
+      AppColors.vansterpartietRed, "https://www.vansterpartiet.se"),
 ];
+
+Widget buildPartyLeaderImage(BuildContext context) {
+  final partiLedare = context.watch<PartyViewState>().partiLedare;
+
+  if (partiLedare != null) {
+    return ClipOval(
+      child: Image.network(
+        partiLedare.bildUrl80,
+        width: 60,
+        height: 60,
+        fit: BoxFit.cover,
+      ),
+    );
+  } else {
+    return CircularProgressIndicator();
+  }
+}
