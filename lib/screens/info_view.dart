@@ -5,6 +5,7 @@ import '../models/model_infoview.dart';
 import '../widgets/widget_voteresult_piechart.dart';
 import '../widgets/widget_partycard.dart';
 import '../provider/provider_infoview.dart';
+import 'package:template/theme.dart';
 
 class InfoView extends StatelessWidget {
   InfoView({super.key});
@@ -22,9 +23,9 @@ class InfoView extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'InfoView',
-          style: TextStyle(color: Colors.black),
+          style: AppFonts.header,
         ),
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColors.lightGrey,
         centerTitle: true,
         elevation: 0,
       ),
