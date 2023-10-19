@@ -5,9 +5,48 @@ import '../api/api_ledamotview/api_ledarmot_vy_ledarmot.dart';
 
 class ProviderLedamot extends ChangeNotifier {
   List<voteringar> _list = [];
+  double antalJa = 25;
+  double antalNej = 25;
+  double antalAvstar = 25;
+  double antalFranvarande = 25;
+
   String iid = '051207517226';
+  Map antalSvarMap = {
+    'antalJa': 25.0,
+    'antalNej': 25.0,
+    'antalAvstar': 25.0,
+    'antalFranvarande': 25.0,
+  };
 
   List<voteringar> get theList => _list;
+
+  void setStat(List<voteringar>? voteList) {
+    int antalTotal = 0;
+
+    double ledarmotAntal(rostTyp) {
+      List svarLista = _list;
+      double antalSvar = 0;
+
+      svarLista.forEach((element) {
+        if (element.rost == rostTyp) {
+          antalSvar += 1;
+        }
+      });
+      print('$rostTyp $antalSvar');
+      return antalSvar;
+    }
+
+    antalTotal = voteList?.length ?? 1;
+    antalJa =
+        antalTotal == 0 ? 0 : ((100 / antalTotal) * (ledarmotAntal('Ja')));
+    antalNej =
+        antalTotal == 0 ? 0 : ((100 / antalTotal) * (ledarmotAntal('Nej')));
+    antalAvstar =
+        antalTotal == 0 ? 0 : ((100 / antalTotal) * (ledarmotAntal('Avstår')));
+    antalFranvarande = antalTotal == 0
+        ? 0
+        : ((100 / antalTotal) * (ledarmotAntal('Frånvarande')));
+  }
 
   void setIid(String newIid) {
     iid = newIid;
@@ -16,6 +55,7 @@ class ProviderLedamot extends ChangeNotifier {
 
   Future<List<voteringar>> getList() async {
     final List<voteringar> rList = await apiGetList(iid, 10000);
+    _list = rList;
     return rList;
   }
 

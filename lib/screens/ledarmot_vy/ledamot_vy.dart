@@ -7,6 +7,7 @@ import '../../provider/provider_ledamot.dart';
 import '../../widgets/widget_voterings_card.dart';
 import './ledamot_vy_info.dart';
 import 'ledarmot_vy_stat_bar.dart';
+import '../../widgets/widget_voteresult_piechart.dart';
 
 class LedamotVy extends StatelessWidget {
   @override
@@ -16,6 +17,7 @@ class LedamotVy extends StatelessWidget {
     Future<List<voteringar>> fetchData() async {
       final List<voteringar> data =
           await context.read<ProviderLedamot>().getList();
+      context.read<ProviderLedamot>().setStat(data);
       return data;
     }
 
@@ -38,7 +40,16 @@ class LedamotVy extends StatelessWidget {
                   if (index == 0) {
                     return LedamotVyInfo();
                   } else if (index == 1) {
-                    return LedamotVyStatBar(theList: snapshot.data!);
+                    Map votesNumbers =
+                        context.watch<ProviderLedamot>().antalSvarMap;
+
+                    return VoteResult(
+                      ja: context.watch<ProviderLedamot>().antalJa,
+                      nej: context.watch<ProviderLedamot>().antalNej,
+                      avstar: context.watch<ProviderLedamot>().antalAvstar,
+                      franvarande:
+                          context.watch<ProviderLedamot>().antalFranvarande,
+                    );
                   }
                   int adjustedIndex = index - 2;
 

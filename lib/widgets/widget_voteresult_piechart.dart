@@ -5,26 +5,34 @@ import 'package:template/provider/provider_infoview.dart';
 import '../theme.dart';
 
 class VoteResult extends StatelessWidget {
+  final double ja;
+  final double nej;
+  final double avstar;
+  final double franvarande;
+
+  VoteResult({
+    required this.ja,
+    required this.nej,
+    required this.avstar,
+    required this.franvarande,
+  });
+
   @override
   Widget build(BuildContext context) {
-  
-  ProviderInfoView provider = Provider.of<ProviderInfoView>(context);
+    Map<String, double> dataMap = {
+      "Ja": ja,
+      "Nej": nej,
+      "Avstår": avstar,
+      "Frånvarande": franvarande,
+    };
 
-  Map<String, double> dataMap = {
-      "Ja": provider.partiVotering.fold(0, (sum, vote) => sum + int.parse(vote.yes)),
-      "Nej": provider.partiVotering.fold(0, (sum, vote) => sum + int.parse(vote.no)),
-      "Avstår": provider.partiVotering.fold(0, (sum, vote) => sum + int.parse(vote.pass)),
-      "Frånvarande": provider.partiVotering.fold(0, (sum, vote) => sum + int.parse(vote.abscent)),
-  };
+    List<Color> colorList = [
+      AppColors.green,
+      AppColors.red,
+      AppColors.yellow,
+      AppColors.blue
+    ];
 
-  List<Color> colorList = [
-    AppColors.green,
-    AppColors.red,
-    AppColors.yellow,
-    AppColors.blue
-  ];
-
-  
     return Padding(
       padding: const EdgeInsets.only(top: 20, bottom: 20),
       child: Container(
