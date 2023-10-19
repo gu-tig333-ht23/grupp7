@@ -46,12 +46,13 @@ class Voteringar extends StatelessWidget {
         context.read<ProviderInfoView>().fetchBeteckning(selectedBeteckning);
         context.read<ProviderInfoView>().fetchTitle(selectedTitle);
         context.read<ProviderInfoView>().fetchSummary(selectedBeteckning);
-        context.read<ProviderInfoView>().fetchVotingresult(); // hämtar röstresultat när vi navigerar till infovyn
+        context
+            .read<ProviderInfoView>()
+            .fetchVotingresult(); // hämtar röstresultat när vi navigerar till infovyn
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => InfoView(
-                ),
+            builder: (context) => InfoView(),
           ),
         );
       },
@@ -181,6 +182,66 @@ class VoteringsVy extends StatelessWidget {
                 children: voteringsDisplay,
               ))
         ]),
+      ),
+      drawer: Drawer(
+        width: MediaQuery.of(context).size.width,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            Container(
+              // container to set height of DrawerHeader!
+              height: 100,
+              child: DrawerHeader(
+                decoration: BoxDecoration(color: AppColors.primaryBlue),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Rubrik'),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, bottom: 10),
+                      child: Image.asset('assets/images/kollkollen_logo.png',
+                          width: 75, height: 75),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.clear),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding:
+                  EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: AppColors.secondaryYellow,
+                    borderRadius: BorderRadius.circular(20)),
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                      'Vänligen notera att all data i denna app hämtas från riksdagen.se. Vi strävar efter att tillhandahålla korrekt och uppdaterad information, men vi kan inte garantera dess fullständighet eller aktualitet.\nOm du har frågor eller behöver ytterligare information, vänligen besök riksdagen.se för att verifiera uppgifterna.\n\nTack för att du använder vår app!\nMed vänliga hälsningar, App Teamet'),
+                ),
+              ),
+            ),
+            Padding(
+              padding:
+                  EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: AppColors.secondaryYellow,
+                    borderRadius: BorderRadius.circular(20)),
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                      'Förklaring till appen och dess syfte: \nAppen presenterar voteringar blablabla... \nExempel: \nJuU = Justitieutskottet'),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
