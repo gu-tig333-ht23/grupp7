@@ -1,17 +1,18 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:template/widgets/widget_voteresult_piechart.dart';
+import '../screens/ledarmot_vy/ledamot_vy.dart';
 import '../theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
 import 'api_ledamot_list.dart';
 import 'party_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import '../provider/provider_ledamot.dart';
 
 class PartyView extends StatelessWidget {
-  final String selectedParty;
   PartyView(
-      {required this.selectedParty,
+      {
       // required this.selectedProposal,
       super.key});
 
@@ -21,6 +22,8 @@ class PartyView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final partyViewState = context.watch<PartyViewState>();
+
+    final String selectedParty = context.watch<PartyViewState>().selectedParty;
 
     // Trigger the data fetching when the widget is built
     WidgetsBinding.instance!.addPostFrameCallback((_) {
@@ -207,9 +210,10 @@ class LedamotItem extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
         child: GestureDetector(
+          // Set iid for provider_ledamot and jump to page LedamotVy
           onTap: () {
-            print('hejhopp');
-            //MaterialPageRoute(builder: (context) => LedamotVy(ledamot.intressentId));
+            context.read<ProviderLedamot>().setIid(ledamot.intressentId);
+            MaterialPageRoute(builder: (context) => LedamotVy());
           },
           child: Container(
             decoration: BoxDecoration(

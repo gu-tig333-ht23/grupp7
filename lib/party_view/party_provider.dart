@@ -4,6 +4,16 @@ import 'package:flutter/material.dart';
 class PartyViewState extends ChangeNotifier {
   List<Ledamot> _ledamotList = [];
 
+  String _selectedParty = 'S';
+
+  String get selectedParty => _selectedParty;
+
+  void setSelectedParty(String selectedParty) {
+    // sets selected party for party_view. updates from selection in info_view.
+    _selectedParty = selectedParty;
+    notifyListeners();
+  }
+
   Future<void> fetchPartyMembers(selectedParty) async {
     var ledamotList = await fetchLedamotList(selectedParty);
     _partiLedare = ledamotList.firstWhere((ledamot) => ledamot.partiLedare);
