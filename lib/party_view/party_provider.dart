@@ -1,15 +1,55 @@
-import 'package:provider/provider.dart';
 import 'package:template/party_view/api_ledamot_list.dart';
 import 'package:flutter/material.dart';
 
 class PartyViewState extends ChangeNotifier {
   List<Ledamot> _ledamotList = [];
 
-  List<Ledamot> get ledamotList => _ledamotList; // Add a return statement here
+  String _selectedParty = 'S';
+
+  String get selectedParty => _selectedParty;
+
+  void setSelectedParty(String selectedParty) {
+    // sets selected party for party_view. updates from selection in info_view.
+    _selectedParty = selectedParty;
+    notifyListeners();
+  }
 
   Future<void> fetchPartyMembers(selectedParty) async {
     var ledamotList = await fetchLedamotList(selectedParty);
-    _ledamotList = ledamotList;
+    _partiLedare = ledamotList.firstWhere((ledamot) => ledamot.partiLedare);
+    _ledamotList = sortLedamotList(ledamotList);
     notifyListeners();
   }
+
+  List<Ledamot> get ledamotList => _ledamotList; // Returns sorted list
+
+  List<Ledamot> sortLedamotList(List<Ledamot> ledamotList) {
+    // sort on last name
+    ledamotList.sort((a, b) => a.efternamn.compareTo(b.efternamn));
+    return ledamotList;
+  }
+
+  //Future<void> getPartiLedare(selectedParty) async {
+  //  await fetchPartyMembers(selectedParty); // Ensure data is loaded
+  //  _partiLedare = _ledamotList.firstWhere((ledamot) => ledamot.partiLedare);
+  //  notifyListeners();
+  //  //    orElse: () => null);
+  //}
+
+  void getLedamotListSearch(String searchTerm) {
+    // Implement the logic to filter the list based on the searchTerm
+    // For example, you can update the _ledamotList based on the search term
+    // and then notify listeners.
+    _ledamotList = _ledamotList
+        .where((ledamot) =>
+            ledamot.efternamn.contains(searchTerm) ||
+            ledamot.tilltalsnamn.contains(searchTerm))
+        .toList();
+
+    // Notify listeners to update the UI
+    notifyListeners();
+  }
+
+  Ledamot? _partiLedare;
+  Ledamot? get partiLedare => _partiLedare;
 }
