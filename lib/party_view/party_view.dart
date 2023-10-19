@@ -213,7 +213,9 @@ class LedamotItem extends StatelessWidget {
           // Set iid for provider_ledamot and jump to page LedamotVy
           onTap: () {
             context.read<ProviderLedamot>().setIid(ledamot.intressentId);
-            MaterialPageRoute(builder: (context) => LedamotVy());
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => LedamotVy()));
+            print("hej");
           },
           child: Container(
             decoration: BoxDecoration(
