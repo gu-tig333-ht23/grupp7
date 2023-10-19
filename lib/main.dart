@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:template/party_view/party_provider.dart';
-import 'package:template/party_view/party_view.dart';
 import 'package:provider/provider.dart';
-import 'package:template/provider/provider_infoview.dart';
+import './party_view/party_provider.dart';
+import './provider/provider_infoview.dart';
 import 'package:template/screens/info_view.dart';
 import './provider/provider_ledamot.dart';
-import 'provider/provider_votesview.dart';
+import './provider/provider_calendar.dart';
+import 'provider/provider_homeview.dart';
 import 'screens/home_view.dart';
 
 void main() {
@@ -19,10 +19,13 @@ void main() {
           create: (_) => ProviderLedamot(),
         ),
         ChangeNotifierProvider(
-          create: (_) => ProviderVoteringsVy(),
+          create: (_) => ProviderHomeView(),
         ),
         ChangeNotifierProvider(
           create: (_) => ProviderInfoView(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ProviderCalendarView(),
         ),
       ],
       child: const MyApp(),
@@ -37,7 +40,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: VoteringsVy(),
+      home: HomeView(),
     );
   }
 }

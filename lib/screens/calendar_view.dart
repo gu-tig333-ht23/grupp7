@@ -1,62 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:template/screens/home_view.dart';
 import 'package:template/provider/provider_calendar.dart';
 import 'package:template/theme.dart';
+import 'package:template/widgets/widget_vote_card.dart';
+import '../widgets/widget_about_app.dart';
 
 class CalendarEvents extends StatelessWidget {
   final String title;
   final String description;
   final String decisionDate;
-  final int index;
 
   CalendarEvents({
     super.key,
     required this.title,
     required this.description,
     required this.decisionDate,
-    this.index = 0,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 25, right: 25, top: 0, bottom: 0),
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.only(top: 5, bottom: 10, left: 10, right: 10),
-            decoration: BoxDecoration(
-              border: Border.all(style: BorderStyle.solid, color: AppColors.yellow, width: 1.8),
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(0, 3),
-                  blurRadius: 5,
-                  color: Colors.black.withOpacity(0.4),
-                ),
-              ], 
-              color: AppColors.primaryBlue,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              children: [
-                Expanded(child: 
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(title, style: AppFonts.title),
-                      Text(description, style: AppFonts.normalTextWhite),
-                      Text('Datum: $decisionDate', style: AppFonts.smallText)
-                    ]
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Divider(),
-        ],
-      )
-    );
+    return voteCard(context, title, decisionDate, description);
   }
 }
 
@@ -82,10 +45,10 @@ class CalendarView extends StatelessWidget {
               onPressed: () async {
                 aboutAppAlert(context);
               },
-              child: const Icon(Icons.info)
+              child: const Icon(Icons.info),
             ),
           ),
-        ]
+        ],
       ),
       body: Container(
         height: MediaQuery.of(context).copyWith().size.height,
@@ -94,7 +57,8 @@ class CalendarView extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 10, bottom: 10),
-              child: Image.asset('assets/images/kollkollen_logo.png', width: 75, height: 75),
+              child: Image.asset('assets/images/kollkollen_logo.png',
+                  width: 75, height: 75),
             ),
             Expanded(
               child: ListView.builder(
@@ -104,14 +68,13 @@ class CalendarView extends StatelessWidget {
                     title: calendarEvents[index].title,
                     description: calendarEvents[index].description,
                     decisionDate: calendarEvents[index].decisionDate,
-                    index: index,
                   );
                 },
               ),
             ),
           ],
-        )
-      )
+        ),
+      ),
     );
   }
 }
