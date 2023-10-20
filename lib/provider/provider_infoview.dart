@@ -13,6 +13,7 @@ class ProviderInfoView extends ChangeNotifier {
   String _beteckning = '';
   String _title = '';
   String _summary = '';
+
   // String forslagspunkt = '';   Om vi vill sortera på förslagspunkter senare
 
   //GET

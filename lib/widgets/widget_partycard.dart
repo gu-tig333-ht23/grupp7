@@ -17,22 +17,11 @@ class PartyVotes extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           context.read<PartyViewState>().setSelectedParty(partiVotering.party);
+          context.read<PartyViewState>().setPieChartValues(partiVotering.yes,
+              partiVotering.no, partiVotering.pass, partiVotering.abscent);
+
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => PartyView()));
-          print(partiVotering);
-          print('Party: ${partiVotering.party}');
-          print('Yes: ${partiVotering.yes}');
-          print('No: ${partiVotering.no}');
-          print('Absent: ${partiVotering.abscent}');
-          print('Pass: ${partiVotering.pass}');
-
-          print('Highestvote: ${partiVotering.highestValue}');
-          print('majorityResult: ${partiVotering.majorityResult}');
-
-          print('partyColor: ${partiVotering.partyColor}');
-          print('PartyImage: ${partiVotering.partyImage}');
-
-          print('\n');
         },
         child: Container(
           height: 75,
