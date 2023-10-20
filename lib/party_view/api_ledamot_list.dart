@@ -1,10 +1,16 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:template/provider/provider_infoview.dart';
 
 Future<List<Ledamot>> fetchLedamotList(selectedParty) async {
   final String party;
+
   final url = Uri.parse(
-      'https://data.riksdagen.se/personlista/?iid=&fnamn=&enamn=&f_ar=&kn=&parti=$selectedParty&valkrets=&org=&utformat=json');
+
+//'https://data.riksdagen.se/personlista/?iid=&fnamn=&enamn=&f_ar=&kn=&parti=$selectedParty&valkrets=&org=&utformat=json');
+
+      'https://data.riksdagen.se/personlista/?iid=&fnamn=&enamn=&f_ar=&kn=&parti=$selectedParty&valkrets=&rdlstatus=samtliga&org=&utformat=json&sort=sorteringsnamn&sortorder=asc&termlista=');
 
   try {
     final response = await http.get(url);
@@ -14,8 +20,14 @@ Future<List<Ledamot>> fetchLedamotList(selectedParty) async {
 
       final List<dynamic> persons = data['personlista']['person'];
 
-      // Convert the list of persons into a list of Ledamot
-      List<Ledamot> ledamotList = persons.map((person) {
+// Convert the list of persons into a list of Ledamot
+
+      List<Ledamot> ledamotList = persons
+          //  .where((person) =>
+          //      person['status'].contains("jänstgörande") ||
+          //      (person['status'].contains("minister") &&
+          //          !person['status'].contains("Tidigare")))
+          .map((person) {
         return Ledamot.fromJson(person);
       }).toList();
 
@@ -24,8 +36,10 @@ Future<List<Ledamot>> fetchLedamotList(selectedParty) async {
       throw Exception('Failed to load data');
     }
   } catch (error) {
-    // Handle network errors or other exceptions
+// Handle network errors or other exceptions
+
     print('Error: $error');
+
     throw error;
   }
 }
@@ -51,11 +65,10 @@ class Ledamot {
     final List<dynamic> uppdragList = json['personuppdrag']['uppdrag'] ?? [];
 
     // Check if any "uppdrag" has "roll_kod" = "Partiledare"
-    final bool isPartiLedare = uppdragList.any(
-      (uppdrag) =>
-          uppdrag['roll_kod'] == 'Partiledare' ||
-          uppdrag['roll_kod'] == 'Språkrör',
-    );
+    final bool isPartiLedare = uppdragList.any((uppdrag) =>
+        (uppdrag['roll_kod'] == 'Partiledare' ||
+            uppdrag['roll_kod'] == 'Språkrör') &&
+        uppdrag['tom'] == "");
 
     return Ledamot(
         tilltalsnamn: json['tilltalsnamn'] ?? '',
@@ -64,5 +77,62 @@ class Ledamot {
         party: json['party'] ?? '',
         intressentId: json['intressent_id'],
         partiLedare: isPartiLedare);
+  }
+}
+
+class LedamotResult {
+  final String namn;
+  final String party;
+  final String intressentId;
+  final String punkt;
+  final String vote;
+
+  LedamotResult(
+      {required this.namn,
+      required this.party,
+      required this.intressentId,
+      required this.punkt,
+      required this.vote});
+
+  factory LedamotResult.fromJson(Map<String, dynamic> json) {
+    // Extracting the list of "uppdrag" from "personuppdrag"
+
+    return LedamotResult(
+        namn: json['namn'] ?? '',
+        party: json['parti'] ?? '',
+        intressentId: json['intressent_id'],
+        punkt: json['punkt'],
+        vote: json['rost']);
+  }
+}
+
+Future<List<LedamotResult>> fetchLedamotListVotes(
+    selectedParty, beteckning) async {
+  final url = Uri.parse(
+      "https://data.riksdagen.se/voteringlista/?rm=2022%2F23&bet=$beteckning&punkt=&parti=$selectedParty&valkrets=&rost=&iid=&sz=10000&utformat=json&gruppering=");
+  try {
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+
+      final List<dynamic> persons = data['voteringlista']['votering'];
+
+// Convert the list of persons into a list of Ledamot
+
+      List<LedamotResult> ledamotList = persons.map((person) {
+        return LedamotResult.fromJson(person);
+      }).toList();
+
+      return ledamotList;
+    } else {
+      throw Exception('Failed to load data');
+    }
+  } catch (error) {
+// Handle network errors or other exceptions
+
+    print('Error: $error');
+
+    throw error;
   }
 }

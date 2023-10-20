@@ -3,10 +3,49 @@ import 'package:flutter/material.dart';
 
 class PartyViewState extends ChangeNotifier {
   List<Ledamot> _ledamotList = [];
+  List<LedamotResult> _ledamotResultList = [];
+  List<LedamotResult> _originalLedamotResultList = [];
 
   String _selectedParty = 'S';
 
   String get selectedParty => _selectedParty;
+
+  Future<void> fetchPartyMemberVotes(selectedParty, beteckning) async {
+    var ledamotResultList =
+        await fetchLedamotListVotes(selectedParty, beteckning);
+
+    // Preserve the original unfiltered list
+    _originalLedamotResultList = ledamotResultList;
+
+    // Set the filtered list initially to the original list
+    _ledamotResultList = _originalLedamotResultList;
+
+    // Notify listeners to update the UI
+    notifyListeners();
+  }
+
+  List<LedamotResult> get ledamotResultList => _ledamotResultList;
+
+  List<LedamotResult> sortLedamotResultList(
+      List<LedamotResult> ledamotResultList) {
+    // sort on last name
+    ledamotResultList.sort();
+    return ledamotResultList;
+  }
+
+  Ledamot findLedamotByIntressentId(String intressentId) {
+    // returns instance of ledamot matched on iid
+    return ledamotList.firstWhere(
+      (ledamot) => ledamot.intressentId == intressentId,
+      orElse: () => Ledamot(
+          tilltalsnamn: '',
+          efternamn: '',
+          bildUrl80: // placeholder
+              'https://www.pngjoy.com/pngm/52/1165788_female-blank-facebook-profile-picture-female-transparent-png.png',
+          party: '',
+          intressentId: ''),
+    );
+  }
 
   void setSelectedParty(String selectedParty) {
     // sets selected party for party_view. updates from selection in info_view.
@@ -38,12 +77,12 @@ class PartyViewState extends ChangeNotifier {
 
   void getLedamotListSearch(String searchTerm) {
     // Implement the logic to filter the list based on the searchTerm
-    // For example, you can update the _ledamotList based on the search term
-    // and then notify listeners.
-    _ledamotList = _ledamotList
-        .where((ledamot) =>
-            ledamot.efternamn.contains(searchTerm) ||
-            ledamot.tilltalsnamn.contains(searchTerm))
+    // Update _ledamotResultList based on the search term and then notify listeners.
+
+    searchTerm = searchTerm.toLowerCase();
+
+    _ledamotResultList = _originalLedamotResultList
+        .where((ledamot) => ledamot.namn.toLowerCase().contains(searchTerm))
         .toList();
 
     // Notify listeners to update the UI
