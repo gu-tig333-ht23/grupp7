@@ -68,6 +68,11 @@ class PartyView extends StatelessWidget {
         onPressed: () {
           //  fetchPlaceHolder();
 
+          var partySInstances = context
+              .read<ProviderInfoView>()
+              .getPartiVoteringForParty(selectedParty);
+          print(partySInstances);
+
           print(_textEditingController.text);
           print("hej");
         },
@@ -130,11 +135,27 @@ class PartyView extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                       VoteResult(
-                        ja: 25.0,
-                        nej: 25.0,
-                        avstar: 25.0,
-                        franvarande: 25.0,
-                      ),
+                          ja: context
+                              .read<ProviderInfoView>()
+                              .getPartiVoteringForParty(selectedParty)
+                              .fold(
+                                  0, (sum, vote) => sum + int.parse(vote.yes)),
+                          nej: context
+                              .read<ProviderInfoView>()
+                              .getPartiVoteringForParty(selectedParty)
+                              .fold(0, (sum, vote) => sum + int.parse(vote.no)),
+                          avstar: context
+                              .read<ProviderInfoView>()
+                              .getPartiVoteringForParty(selectedParty)
+                              .fold(
+                                  0, (sum, vote) => sum + int.parse(vote.pass)),
+                          franvarande: context
+                              .read<ProviderInfoView>()
+                              .getPartiVoteringForParty(selectedParty)
+                              .fold(
+                                  0,
+                                  (sum, vote) =>
+                                      sum + int.parse(vote.abscent))),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(

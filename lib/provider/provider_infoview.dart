@@ -190,4 +190,11 @@ class ProviderInfoView extends ChangeNotifier {
       print('\n');
     }
   }
+
+  // Get instances of PartiVotering where party is 'S'
+  List<PartiVotering> getPartiVoteringForParty(selectedParty) {
+    return _partiVoteringar
+        .where((partiVotering) => partiVotering.party == selectedParty)
+        .toList();
+  }
 }
