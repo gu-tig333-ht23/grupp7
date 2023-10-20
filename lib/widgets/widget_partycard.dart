@@ -4,6 +4,7 @@ import 'package:template/party_view/party_view.dart';
 import 'package:template/theme.dart';
 import '../models/model_infoview.dart';
 import '../party_view/party_provider.dart';
+import '../provider/provider_infoview.dart';
 
 class PartyVotes extends StatelessWidget {
   final PartiVotering partiVotering;
@@ -19,6 +20,14 @@ class PartyVotes extends StatelessWidget {
           context.read<PartyViewState>().setSelectedParty(partiVotering.party);
           context.read<PartyViewState>().setPieChartValues(partiVotering.yes,
               partiVotering.no, partiVotering.pass, partiVotering.abscent);
+          
+          String selection = context.read<PartyViewState>().selectedParty;
+          context.read<PartyViewState>().fetchPartyMembers(selection);
+          var beteckning = context.read<ProviderInfoView>().beteckning;
+          context
+              .read<PartyViewState>()
+              .fetchPartyMemberVotes(selection, beteckning);
+
 
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => PartyView()));

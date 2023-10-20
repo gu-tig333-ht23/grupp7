@@ -1,6 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:template/widgets/widget_voteresult_piechart.dart';
+import '../provider/provider_homeview.dart';
+import '../provider/provider_infoview.dart';
+import '../screens/home_view.dart';
 import '../screens/ledarmot_vy/ledamot_vy.dart';
 import '../theme.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -16,7 +19,6 @@ class PartyView extends StatelessWidget {
       // required this.selectedProposal,
       super.key});
 
-  String selectedProposal = "En fortsatt stärkt arbetslöshetsförsäkring";
   final TextEditingController _textEditingController = TextEditingController();
 
   @override
@@ -25,10 +27,10 @@ class PartyView extends StatelessWidget {
 
     final String selectedParty = context.watch<PartyViewState>().selectedParty;
 
-    // Trigger the data fetching when the widget is built
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      partyViewState.fetchPartyMembers(selectedParty);
-    });
+    var selectedTitle = context
+        .watch<ProviderInfoView>()
+        .title; // gets title from selected proposal
+
     // Find the corresponding PartyAppBarTheme
     PartyAppBarTheme selectedTheme = partyList.firstWhere(
       (theme) => theme.id == selectedParty,
@@ -66,11 +68,13 @@ class PartyView extends StatelessWidget {
         onPressed: () {
           //  fetchPlaceHolder();
 
-          partyViewState.ledamotList
-              .where((ledamot) => ledamot.partiLedare)
-              .forEach((partiLedare) {
-            print(partiLedare.efternamn);
-          });
+          var partySInstances = context
+              .read<ProviderInfoView>()
+              .getPartiVoteringForParty(selectedParty);
+          print(partySInstances);
+
+          print(_textEditingController.text);
+          print("hej");
         },
       ),
       body: ListView(
@@ -127,7 +131,7 @@ class PartyView extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "Partiets reslutat i frågan: $selectedProposal.",
+                        "Partiets reslutat i frågan: $selectedTitle.",
                         textAlign: TextAlign.center,
                       ),
                       VoteResult(
@@ -136,17 +140,17 @@ class PartyView extends StatelessWidget {
                               context.watch<PartyViewState>().PieChartValues[1],
                           avstar:
                               context.watch<PartyViewState>().PieChartValues[2],
-                          franvarande: context
-                              .watch<PartyViewState>()
-                              .PieChartValues[3]),
+                          franvarande: context.watch<PartyViewState>().PieChartValues[3],
+                      ),
+
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
                           controller: _textEditingController,
                           onChanged: (searchTerm) {
-                            context
-                                .read<PartyViewState>()
-                                .getLedamotListSearch(searchTerm);
+                            print('changed');
+                            context.read<PartyViewState>().getLedamotListSearch(
+                                _textEditingController.text);
                           },
                           decoration: InputDecoration(
                               labelText: "  Sök ledamot",
@@ -161,7 +165,8 @@ class PartyView extends StatelessWidget {
                               ),
                         ),
                       ),
-                      ListViewBuilder(ledamotList: partyViewState.ledamotList),
+                      ListViewBuilder(
+                          ledamotList: partyViewState.ledamotResultList),
                     ],
                   ),
                 ),
@@ -180,22 +185,67 @@ class ListViewBuilder extends StatelessWidget {
     required this.ledamotList,
   });
 
-  final List<Ledamot> ledamotList;
+  final List<LedamotResult> ledamotList;
 
   @override
   Widget build(BuildContext context) {
-    final List<Ledamot> ledamotList =
-        context.watch<PartyViewState>().ledamotList;
-    final itemCount = ledamotList.length;
+    final List<LedamotResult> ledamotList =
+        context.watch<PartyViewState>().ledamotResultList;
 
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        return LedamotItem(ledamotList[index]);
-      },
-      itemCount: itemCount,
+    // Group the list by 'namn'
+    final Map<String, List<LedamotResult>> groupedByName =
+        groupByName(ledamotList);
+
+    // Flatten the grouped data to create a list for the ListView
+    final List<Widget> items = [];
+
+    groupedByName.forEach((namn, results) {
+      items.add(
+        Column(
+          children: [
+            LedamotItem(results.first), // Display the common 'namn' and 'image'
+            for (var result in results)
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text(
+                        "Punkt ${result.punkt}: ${result.vote}",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ),
+      );
+    });
+
+    return ListView(
+      children: items,
       shrinkWrap: true,
       physics: ScrollPhysics(),
     );
+  }
+
+  Map<String, List<LedamotResult>> groupByName(
+      List<LedamotResult> ledamotList) {
+    Map<String, List<LedamotResult>> groupedMap = {};
+
+    for (var result in ledamotList) {
+      if (groupedMap.containsKey(result.namn)) {
+        groupedMap[result.namn]!.add(result);
+      } else {
+        groupedMap[result.namn] = [result];
+      }
+    }
+
+    return groupedMap;
   }
 }
 
@@ -203,7 +253,7 @@ class LedamotItem extends StatelessWidget {
   // Widget to build list of ledamöter in party_view.dart depending
   // on what party is selected from infovy.dart
 
-  final Ledamot ledamot;
+  final LedamotResult ledamot;
 
   LedamotItem(
     this.ledamot, {
@@ -212,8 +262,12 @@ class LedamotItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String fullName = '${ledamot.tilltalsnamn} ${ledamot.efternamn}';
-    final String imageUrl = ledamot.bildUrl80;
+    PartyViewState partyViewState = context.watch<PartyViewState>();
+    //final String fullName = '${ledamot.tilltalsnamn} ${ledamot.efternamn}';
+    final Ledamot ledamotImage =
+        partyViewState.findLedamotByIntressentId(ledamot.intressentId);
+
+    final String imageUrl = ledamotImage.bildUrl80;
 
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
@@ -223,7 +277,7 @@ class LedamotItem extends StatelessWidget {
             context.read<ProviderLedamot>().setIid(ledamot.intressentId);
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => LedamotVy()));
-            print("hej");
+            print(ledamot.intressentId);
           },
           child: Container(
             decoration: BoxDecoration(
@@ -234,29 +288,54 @@ class LedamotItem extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(10.0), // Rounded corners
             ),
-            child: Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: ClipOval(
-                    child: CachedNetworkImage(
-                      imageUrl: imageUrl,
-                      placeholder: (context, url) =>
-                          CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                      width: 40,
-                      height: 40,
-                      fit: BoxFit.cover,
+                Row(
+                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: ClipOval(
+                        child: CachedNetworkImage(
+                          imageUrl: imageUrl,
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                          width: 40,
+                          height: 40,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
-                  ),
+                    SizedBox(
+                      width: 50,
+                    ),
+                    SizedBox(
+                      width: 200,
+                      child: Text(
+                        ledamot.namn,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 100,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            "Punkt ${ledamot.punkt}: ${ledamot.vote}",
+                            style: AppFonts.normalTextWhite,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
-                SizedBox(
-                  width: 50,
-                ),
-                Text(
-                  fullName,
-                  style: TextStyle(color: Colors.white),
-                )
               ],
             ),
           ),
