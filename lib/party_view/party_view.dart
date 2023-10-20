@@ -135,27 +135,14 @@ class PartyView extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                       VoteResult(
-                          ja: context
-                              .read<ProviderInfoView>()
-                              .getPartiVoteringForParty(selectedParty)
-                              .fold(
-                                  0, (sum, vote) => sum + int.parse(vote.yes)),
-                          nej: context
-                              .read<ProviderInfoView>()
-                              .getPartiVoteringForParty(selectedParty)
-                              .fold(0, (sum, vote) => sum + int.parse(vote.no)),
-                          avstar: context
-                              .read<ProviderInfoView>()
-                              .getPartiVoteringForParty(selectedParty)
-                              .fold(
-                                  0, (sum, vote) => sum + int.parse(vote.pass)),
-                          franvarande: context
-                              .read<ProviderInfoView>()
-                              .getPartiVoteringForParty(selectedParty)
-                              .fold(
-                                  0,
-                                  (sum, vote) =>
-                                      sum + int.parse(vote.abscent))),
+                          ja: context.watch<PartyViewState>().PieChartValues[0],
+                          nej:
+                              context.watch<PartyViewState>().PieChartValues[1],
+                          avstar:
+                              context.watch<PartyViewState>().PieChartValues[2],
+                          franvarande: context.watch<PartyViewState>().PieChartValues[3],
+                      ),
+
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(

@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 
 class PartyViewState extends ChangeNotifier {
   List<Ledamot> _ledamotList = [];
+
+  List _PieChartValues = [0, 0, 0, 0];
   List<LedamotResult> _ledamotResultList = [];
   List<LedamotResult> _originalLedamotResultList = [];
 
   String _selectedParty = 'S';
 
   String get selectedParty => _selectedParty;
+  List get PieChartValues => _PieChartValues;
 
   Future<void> fetchPartyMemberVotes(selectedParty, beteckning) async {
     var ledamotResultList =
@@ -51,6 +54,13 @@ class PartyViewState extends ChangeNotifier {
     // sets selected party for party_view. updates from selection in info_view.
     _selectedParty = selectedParty;
     notifyListeners();
+  }
+
+  void setPieChartValues(yes, no, pass, abscent) {
+    _PieChartValues[0] = int.parse(yes);
+    _PieChartValues[1] = int.parse(no);
+    _PieChartValues[2] = int.parse(pass);
+    _PieChartValues[3] = int.parse(abscent);
   }
 
   Future<void> fetchPartyMembers(selectedParty) async {

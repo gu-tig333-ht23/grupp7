@@ -18,12 +18,16 @@ class PartyVotes extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           context.read<PartyViewState>().setSelectedParty(partiVotering.party);
+          context.read<PartyViewState>().setPieChartValues(partiVotering.yes,
+              partiVotering.no, partiVotering.pass, partiVotering.abscent);
+          
           String selection = context.read<PartyViewState>().selectedParty;
           context.read<PartyViewState>().fetchPartyMembers(selection);
           var beteckning = context.read<ProviderInfoView>().beteckning;
           context
               .read<PartyViewState>()
               .fetchPartyMemberVotes(selection, beteckning);
+
 
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => PartyView()));
