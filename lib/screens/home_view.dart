@@ -45,18 +45,10 @@ class Voteringar extends StatelessWidget {
             context.read<ProviderHomeView>().voteringar[index];
         String selectedBeteckning = selectedVote.beteckning;
         String selectedTitle = selectedVote.title;
-        context.read<ProviderInfoView>().fetchBeteckning(selectedBeteckning);
-        context.read<ProviderInfoView>().fetchTitle(selectedTitle);
-        context.read<ProviderInfoView>().fetchSummary(selectedBeteckning);
-        context
-            .read<ProviderInfoView>()
-            .fetchVotingresult(); // hämtar röstresultat när vi navigerar till infovyn
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => InfoView(),
-          ),
-        );
+        context.read<ProviderInfoView>().toInfoview(
+            beteckning: selectedBeteckning,
+            title: selectedTitle,
+            context: context);
       },
       child: voteCard(context, utskott, decisionDate, title, beteckning),
     );

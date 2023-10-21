@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class PartyViewState extends ChangeNotifier {
   List<Ledamot> _ledamotList = [];
 
-  List _PieChartValues = [0, 0, 0, 0];
+  List<double> _PieChartValues = [0, 0, 0, 0];
   List<LedamotResult> _ledamotResultList = [];
   List<LedamotResult> _originalLedamotResultList = [];
 
@@ -57,10 +57,10 @@ class PartyViewState extends ChangeNotifier {
   }
 
   void setPieChartValues(yes, no, pass, abscent) {
-    _PieChartValues[0] = int.parse(yes);
-    _PieChartValues[1] = int.parse(no);
-    _PieChartValues[2] = int.parse(pass);
-    _PieChartValues[3] = int.parse(abscent);
+    _PieChartValues[0] = double.parse(yes);
+    _PieChartValues[1] = double.parse(no);
+    _PieChartValues[2] = double.parse(pass);
+    _PieChartValues[3] = double.parse(abscent);
   }
 
   Future<void> fetchPartyMembers(selectedParty) async {
