@@ -49,6 +49,11 @@ class InfoView extends StatelessWidget {
               mainAxisAlignment:
                   MainAxisAlignment.center, // center the buttons horizontally
               children: buttonList.map((buttonLabel) {
+                String punkt = context.read<ProviderInfoView>().punkt;
+                Color color = AppColors.lightGrey;
+                if (buttonLabel == punkt) {
+                  color = AppColors.darkGrey;
+                }
                 return Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 4.0), // some spacing between buttons
@@ -57,6 +62,9 @@ class InfoView extends StatelessWidget {
                       context.read<ProviderInfoView>().nypunkt(buttonLabel);
                     },
                     child: Text(buttonLabel),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(color),
+                    ),
                   ),
                 );
               }).toList(),
