@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import '../theme.dart';
 import '../provider/provider_infoview.dart';
 import 'package:provider/provider.dart';
+import '../api/api_infoview/api_single_votes.dart';
+import '../screens/info_view.dart';
+import '.././provider/provider_infoview.dart';
 
 class Voteringar extends StatelessWidget {
   final String identification;
@@ -25,14 +28,10 @@ class Voteringar extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           context.read<ProviderInfoView>().toInfoview(
-              beteckning: identification, title: title, context: context);
-
-          int timesToPop = 2;
-          for (var i = 0; i < timesToPop; i++) {
-            if (Navigator.canPop(context)) {
-              Navigator.of(context).pop();
-            }
-          }
+              beteckning: identification,
+              title: title,
+              context: context,
+              goBack: true);
         },
         child: Column(
           children: [
