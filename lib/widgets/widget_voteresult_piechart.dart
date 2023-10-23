@@ -9,12 +9,14 @@ class VoteResult extends StatelessWidget {
   final double nej;
   final double avstar;
   final double franvarande;
+  final String titel;
 
   VoteResult({
     required this.ja,
     required this.nej,
     required this.avstar,
     required this.franvarande,
+    required this.titel,
   });
 
   @override
@@ -39,7 +41,7 @@ class VoteResult extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              'Resultat:',
+              titel,
               style: AppFonts.headerBlack,
             ),
             Padding(

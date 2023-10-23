@@ -44,6 +44,7 @@ class LedamotVy extends StatelessWidget {
                         context.watch<ProviderLedamot>().antalSvarMap;
 
                     return VoteResult(
+                      titel: 'TBA',
                       ja: context.watch<ProviderLedamot>().antalJa,
                       nej: context.watch<ProviderLedamot>().antalNej,
                       avstar: context.watch<ProviderLedamot>().antalAvstar,
