@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/model_ledamotview_votering.dart';
 import '../api/api_ledamotview/api_ledarmot_vy_votering.dart';
 import '../api/api_ledamotview/api_ledarmot_vy_ledarmot.dart';
+import '.././models/model_ledarmot_info.dart';
 
 class ProviderLedamot extends ChangeNotifier {
   List<voteringar> _list = [];
@@ -9,8 +10,15 @@ class ProviderLedamot extends ChangeNotifier {
   double antalNej = 25;
   double antalAvstar = 25;
   double antalFranvarande = 25;
+  var _ledamotInfo = LedamotInfo(
+    imageUrl: '',
+    ledamotNamn: '',
+    ledamotStatus: '',
+    ledamotParti: '',
+  );
 
   String iid = '051207517226';
+
   Map antalSvarMap = {
     'antalJa': 25.0,
     'antalNej': 25.0,
@@ -54,7 +62,9 @@ class ProviderLedamot extends ChangeNotifier {
   }
 
   Future<List<voteringar>> getList() async {
-    final List<voteringar> rList = await apiGetList(iid, 10000);
+    String antal = '1000'; //1000 = around one year
+
+    final List<voteringar> rList = await apiGetList(iid, antal);
     _list = rList;
     return rList;
   }
@@ -83,12 +93,17 @@ class ProviderLedamot extends ChangeNotifier {
     return item;
   }
 
-  Future<Map<String, dynamic>> getLedarmot() async {
+  get ledamotInfo => _ledamotInfo;
+
+  Future<LedamotInfo> getLedarmot() async {
     try {
       Map<String, dynamic> apiResponse = await apiGetLedarmot(iid);
-      return apiResponse;
-    } catch (e) {
-      print(e);
+
+      _ledamotInfo = LedamotInfo.fromMap(apiResponse);
+
+      return ledamotInfo;
+    } catch (error) {
+      print(error);
       throw Exception('Failed to load API response');
     }
   }
