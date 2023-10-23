@@ -5,6 +5,9 @@ import '../api/api_infoview/api_all_votes.dart';
 import '../models/model_infoview.dart';
 import '../api/api_infoview/api_single_votes.dart';
 import '../theme.dart';
+import '../models/model_ledamotview_votering.dart';
+import '../api/api_infoview/api_punkt_list.dart';
+import '../screens/info_view.dart';
 
 class ProviderInfoView extends ChangeNotifier {
   //VAR
@@ -13,6 +16,97 @@ class ProviderInfoView extends ChangeNotifier {
   String _beteckning = '';
   String _title = '';
   String _summary = '';
+  List _punktList = ['1'];
+  String _punkt = '1';
+  Map _partiVoteNum = {
+    '-': {
+      'Ja': 0,
+      'Nej': 0,
+      'Avstår': 0,
+      'Frånvarande': 0,
+    },
+    'C': {
+      'Ja': 0,
+      'Nej': 0,
+      'Avstår': 0,
+      'Frånvarande': 0,
+    },
+    'KD': {
+      'Ja': 0,
+      'Nej': 0,
+      'Avstår': 0,
+      'Frånvarande': 0,
+    },
+    'L': {
+      'Ja': 0,
+      'Nej': 0,
+      'Avstår': 0,
+      'Frånvarande': 0,
+    },
+    'M': {
+      'Ja': 0,
+      'Nej': 0,
+      'Avstår': 0,
+      'Frånvarande': 0,
+    },
+    'MP': {
+      'Ja': 0,
+      'Nej': 0,
+      'Avstår': 0,
+      'Frånvarande': 0,
+    },
+    'S': {
+      'Ja': 0,
+      'Nej': 0,
+      'Avstår': 0,
+      'Frånvarande': 0,
+    },
+    'SD': {
+      'Ja': 0,
+      'Nej': 0,
+      'Avstår': 0,
+      'Frånvarande': 0,
+    },
+    'V': {
+      'Ja': 0,
+      'Nej': 0,
+      'Avstår': 0,
+      'Frånvarande': 0,
+    },
+  };
+  Map _partiVotetotal = {
+    'ja': 0.0,
+    'nej': 0.0,
+    'avs': 0.0,
+    'fr': 0.0,
+  };
+
+  //whene home>>infoview
+  toInfoview({required beteckning, required title, required context}) async {
+    fetchBeteckning(beteckning);
+    fetchTitle(title);
+    fetchSummary(beteckning);
+    await fetchPunktList();
+    if (_punktList.isNotEmpty) {
+      _punkt = _punktList[0];
+    } else {
+      print(_punktList);
+    }
+    fetchVotingresult();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => InfoView(),
+      ),
+    );
+  }
+
+  //ny punkt
+  nypunkt(punkt) {
+    _punkt = punkt;
+    fetchVotingresult();
+    notifyListeners();
+  }
 
   // String forslagspunkt = '';   Om vi vill sortera på förslagspunkter senare
 
@@ -22,6 +116,13 @@ class ProviderInfoView extends ChangeNotifier {
   String get beteckning => _beteckning;
   String get title => _title;
   String get summary => _summary;
+  Map get partiVoteNum => _partiVoteNum;
+  Map get partiVotetotal => _partiVotetotal;
+  List get punktList => _punktList;
+  String get punkt => _punkt;
+  set punkt(String value) {
+    _punkt = value;
+  }
 
   void fetchSummary(selectedBeteckning) async {
     // hämtar sammanfattningen av förslaget från HTML-api
@@ -48,148 +149,100 @@ class ProviderInfoView extends ChangeNotifier {
 
     _partiVoteringar.removeWhere((partiVotering) => partiVotering.party == '-');
 
-    replaceNullValues();
-
     notifyListeners();
+  }
+
+  Future<void> fetchPunktList() async {
+    _punktList = await apiFetchPunktList(_beteckning);
   }
 
   //Fetch from api function.
   void fetchVotingresult() async {
-    var partiVotering = await getVotingResult(beteckning);
-    _partiVoteringar = partiVotering;
+    List<voteringar> partiVotering =
+        await apiGetPartiVote('2022%2F23', beteckning, _punkt);
+    int voteJaNum = 0;
+    int voteNejNum = 0;
+    int voteAvsNum = 0;
+    int voteFrNum = 0;
 
-    //Remove where party name == '-', blank non existent party in the parlament.
-    _partiVoteringar.removeWhere((partiVotering) => partiVotering.party == '-');
+    Map partiVoteNum = {
+      '-': {
+        'Ja': 0,
+        'Nej': 0,
+        'Avstår': 0,
+        'Frånvarande': 0,
+      },
+      'C': {
+        'Ja': 0,
+        'Nej': 0,
+        'Avstår': 0,
+        'Frånvarande': 0,
+      },
+      'KD': {
+        'Ja': 0,
+        'Nej': 0,
+        'Avstår': 0,
+        'Frånvarande': 0,
+      },
+      'L': {
+        'Ja': 0,
+        'Nej': 0,
+        'Avstår': 0,
+        'Frånvarande': 0,
+      },
+      'M': {
+        'Ja': 0,
+        'Nej': 0,
+        'Avstår': 0,
+        'Frånvarande': 0,
+      },
+      'MP': {
+        'Ja': 0,
+        'Nej': 0,
+        'Avstår': 0,
+        'Frånvarande': 0,
+      },
+      'S': {
+        'Ja': 0,
+        'Nej': 0,
+        'Avstår': 0,
+        'Frånvarande': 0,
+      },
+      'SD': {
+        'Ja': 0,
+        'Nej': 0,
+        'Avstår': 0,
+        'Frånvarande': 0,
+      },
+      'V': {
+        'Ja': 0,
+        'Nej': 0,
+        'Avstår': 0,
+        'Frånvarande': 0,
+      },
+    };
 
-    //Replace instance values of null to 0
-    replaceNullValues();
+    partiVotering.forEach((vote) {
+      if (vote.rost == 'Ja') {
+        voteJaNum += 1;
+      } else if (vote.rost == 'Nej') {
+        voteNejNum += 1;
+      } else if (vote.rost == 'Frånvarande') {
+        voteFrNum += 1;
+      } else if (vote.rost == 'Avstår') {
+        voteAvsNum += 1;
+      }
 
-    //Idea: before, the values of highestValue and majorityResult in the api call is set as null.
-    //I want to replace the highestValue and majorityResult null values with the return of sortVotevalues(PartiVotering partiVotering).
-    //This will help the presentation of the partyvVote_widget.
-    //For loop for all PartiVotering partiVotering in _partiVoteringar:
-    //
-    for (PartiVotering partiVotering in _partiVoteringar) {
-      Map<String, dynamic> voteValues = sortVotevalues(partiVotering);
-      partiVotering.highestValue = voteValues['highestVoteCount'];
-      partiVotering.majorityResult = voteValues['majorityResult'];
-    }
-    for (PartiVotering partiVotering in _partiVoteringar) {
-      setPartyColorAndImage(partiVotering);
-    }
+      partiVoteNum[vote.parti][vote.rost] += 1;
+    });
+    _partiVoteNum = partiVoteNum;
+
+    _partiVotetotal['ja'] = voteJaNum.toDouble();
+    _partiVotetotal['nej'] = voteNejNum.toDouble();
+    _partiVotetotal['avs'] = voteAvsNum.toDouble();
+    _partiVotetotal['fr'] = voteFrNum.toDouble();
 
     notifyListeners();
-  }
-
-  //Replace instance values of null to 0
-  void replaceNullValues() {
-    for (PartiVotering partiVotering in _partiVoteringar) {
-      if (partiVotering.yes == '') {
-        partiVotering.yes = '0';
-      }
-      if (partiVotering.no == '') {
-        partiVotering.no = '0';
-      }
-      if (partiVotering.abscent == '') {
-        partiVotering.abscent = '0';
-      }
-      if (partiVotering.pass == '') {
-        partiVotering.pass = '0';
-      }
-    }
-  }
-
-  //Takes in a object or instance as input.
-  //Returns two values 'highestVoteCount' and 'majorityResult'. The highestVoteCount variable shows the highest amount od vote for each party.
-  //highestVoteCount returns 'JA', 'NEJ', 'AVSTÅR', 'FRÅNVARANDE' as in figma design.
-
-  Map<String, dynamic> sortVotevalues(PartiVotering partiVotering) {
-    List<int> sortList = [
-      int.parse(partiVotering.yes),
-      int.parse(partiVotering.no),
-      int.parse(partiVotering.abscent),
-      int.parse(partiVotering.pass),
-    ];
-
-    sortList.sort((a, b) => b.compareTo(a));
-
-    int highestVoteCount = sortList[0];
-
-    String majorityResult = '';
-
-    if (int.parse(partiVotering.yes) == highestVoteCount) {
-      majorityResult = 'JA';
-    } else if (int.parse(partiVotering.no) == highestVoteCount) {
-      majorityResult = 'NEJ';
-    } else if (int.parse(partiVotering.abscent) == highestVoteCount) {
-      majorityResult = 'FRÅNVARANDE';
-    } else if (int.parse(partiVotering.pass) == highestVoteCount) {
-      majorityResult = 'AVSTÅR';
-    }
-
-    return {
-      'highestVoteCount': highestVoteCount,
-      'majorityResult': majorityResult
-    };
-  }
-
-//Setting partycolors and images to class.
-  setPartyColorAndImage(PartiVotering partiVotering) {
-    switch (partiVotering.party) {
-      case 'SD':
-        partiVotering.partyColor = AppColors.sverigedemokraternaBlue;
-        partiVotering.partyImage = AppImages.imageSverigedemokraterna;
-        break;
-      case 'C':
-        partiVotering.partyColor = AppColors.centerpartietGreen;
-        partiVotering.partyImage = AppImages.imageCenterpartietWhite;
-        break;
-      case 'KD':
-        partiVotering.partyColor = AppColors.kristdemokraternaBlue;
-        partiVotering.partyImage = AppImages.imageKristdemokraterna;
-        break;
-      case 'S':
-        partiVotering.partyColor = AppColors.socialdemokraternaRed;
-        partiVotering.partyImage = AppImages.imageSocialdemokraterna;
-        break;
-      case 'L':
-        partiVotering.partyColor = AppColors.liberalernaBlue;
-        partiVotering.partyImage = AppImages.imageLiberalerna;
-        break;
-      case 'MP':
-        partiVotering.partyColor = AppColors.miljopartietGreen;
-        partiVotering.partyImage = AppImages.imageMiljopartiet;
-        break;
-      case 'V':
-        partiVotering.partyColor = AppColors.vansterpartietRed;
-        partiVotering.partyImage = AppImages.imageVansterpartiet;
-        break;
-      case 'M':
-        partiVotering.partyColor = AppColors.moderaternaBlue;
-        partiVotering.partyImage = AppImages.imageModeraterna;
-        break;
-      default:
-      // Handle the case where the party value is not recognized or return a default value.
-    }
-  }
-
-  //Print instance in list partiVoteringar
-  void printPartiVotering() {
-    for (PartiVotering partiVotering in _partiVoteringar) {
-      print('Party: ${partiVotering.party}');
-      print('Yes: ${partiVotering.yes}');
-      print('No: ${partiVotering.no}');
-      print('Absent: ${partiVotering.abscent}');
-      print('Pass: ${partiVotering.pass}');
-
-      print('Highestvote: ${partiVotering.highestValue}');
-      print('majorityResult: ${partiVotering.majorityResult}');
-
-      print('partyColor: ${partiVotering.partyColor}');
-      print('PartyImage: ${partiVotering.partyImage}');
-
-      print('\n');
-    }
   }
 
   // Get instances of PartiVotering for selected party in partyview
