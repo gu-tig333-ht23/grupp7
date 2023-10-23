@@ -82,7 +82,11 @@ class ProviderInfoView extends ChangeNotifier {
   };
 
   //whene home>>infoview
-  toInfoview({required beteckning, required title, required context}) async {
+  toInfoview(
+      {required beteckning,
+      required title,
+      required context,
+      bool goBack = false}) async {
     fetchBeteckning(beteckning);
     fetchTitle(title);
     fetchSummary(beteckning);
@@ -93,12 +97,22 @@ class ProviderInfoView extends ChangeNotifier {
       print(_punktList);
     }
     fetchVotingresult();
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => InfoView(),
-      ),
-    );
+
+    if (goBack == true) {
+      int timesToPop = 2;
+      for (var i = 0; i < timesToPop; i++) {
+        if (Navigator.canPop(context)) {
+          Navigator.of(context).pop();
+        }
+      }
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => InfoView(),
+        ),
+      );
+    }
   }
 
   //ny punkt
