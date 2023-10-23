@@ -32,45 +32,43 @@ class CalendarView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: AppColors.black),
         centerTitle: true,
-        backgroundColor: AppColors.lightGrey,
-        title: Text('Kalender', style: AppFonts.header),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text('Kalender', style: AppFonts.headerBlack),
         actions: [
           Padding(
             padding: const EdgeInsets.only(top: 5, bottom: 5, right: 10),
-            child: FloatingActionButton(
-              shape: CircleBorder(),
+            child: IconButton(
               tooltip: 'Om appen',
-              backgroundColor: AppColors.lightGrey,
               onPressed: () async {
                 aboutAppAlert(context);
               },
-              child: const Icon(Icons.info),
+              icon: Icon(Icons.info, color: AppColors.black),
             ),
           ),
         ],
       ),
-      body: Container(
-        height: MediaQuery.of(context).copyWith().size.height,
-        color: AppColors.backgroundColor,
+      body: SingleChildScrollView(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 10, bottom: 10),
               child: Image.asset('assets/images/kollkollen_logo.png',
                   width: 75, height: 75),
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: calendarEvents.length,
-                itemBuilder: (context, index) {
-                  return CalendarEvents(
-                    title: calendarEvents[index].title,
-                    description: calendarEvents[index].description,
-                    decisionDate: calendarEvents[index].decisionDate,
-                  );
-                },
-              ),
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: calendarEvents.length,
+              itemBuilder: (context, index) {
+                return CalendarEvents(
+                  title: calendarEvents[index].title,
+                  description: calendarEvents[index].description,
+                  decisionDate: calendarEvents[index].decisionDate,
+                );
+              },
             ),
           ],
         ),
