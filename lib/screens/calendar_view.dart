@@ -60,6 +60,7 @@ class CalendarView extends StatelessWidget {
                   width: 75, height: 75),
             ),
             ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: calendarEvents.length,
               itemBuilder: (context, index) {
