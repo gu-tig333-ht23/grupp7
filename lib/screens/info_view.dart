@@ -38,6 +38,7 @@ class InfoView extends StatelessWidget {
           children: [
             InfoCard(),
             VoteResult(
+              titel: 'TBA',
               ja: context.read<ProviderInfoView>().partiVotetotal['ja'],
               nej: context.read<ProviderInfoView>().partiVotetotal['nej'],
               avstar: context.read<ProviderInfoView>().partiVotetotal['avs'],

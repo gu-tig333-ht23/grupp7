@@ -61,7 +61,7 @@ class Voteringar extends StatelessWidget {
                           : isAccepted == 'Nej'
                               ? AppColors.red
                               : isAccepted == 'Avstår'
-                                  ? AppColors.purple
+                                  ? AppColors.yellow
                                   : isAccepted == 'Frånvarande'
                                       ? AppColors.blue
                                       : AppColors.black,
