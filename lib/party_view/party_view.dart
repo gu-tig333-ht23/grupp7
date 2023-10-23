@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:template/api/api_infoview/api_single_votes.dart';
 import 'package:template/widgets/widget_voteresult_piechart.dart';
 import '../provider/provider_homeview.dart';
 import '../provider/provider_infoview.dart';
@@ -30,6 +31,12 @@ class PartyView extends StatelessWidget {
     var selectedTitle = context
         .watch<ProviderInfoView>()
         .title; // gets title from selected proposal
+
+    var beteckning = context.watch<ProviderInfoView>().beteckning;
+
+    var punkt = context.watch<ProviderInfoView>().punkt;
+
+    var punktTitle = context.watch<PartyViewState>().punktTitle;
 
     // Find the corresponding PartyAppBarTheme
     PartyAppBarTheme selectedTheme = partyList.firstWhere(
@@ -70,17 +77,7 @@ class PartyView extends StatelessWidget {
         elevation: 0,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          //  fetchPlaceHolder();
-
-          var partySInstances = context
-              .read<ProviderInfoView>()
-              .getPartiVoteringForParty(selectedParty);
-          print(partySInstances);
-
-          print(_textEditingController.text);
-          print("hej");
-        },
+        onPressed: () async {},
       ),
       body: ListView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -141,7 +138,7 @@ class PartyView extends StatelessWidget {
                       ),
                       VoteResult(
                         titel:
-                            'Resultat för punkt ${context.watch<ProviderInfoView>().punkt}',
+                            'Resultat för punkt ${context.watch<ProviderInfoView>().punkt}: ${context.watch<PartyViewState>().punktTitle}',
                         ja: context.watch<PartyViewState>().PieChartValues[0],
                         nej: context.watch<PartyViewState>().PieChartValues[1],
                         avstar:

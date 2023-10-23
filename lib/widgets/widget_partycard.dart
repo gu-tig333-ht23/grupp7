@@ -46,6 +46,8 @@ class PartyVotes extends StatelessWidget {
               .read<PartyViewState>()
               .fetchPartyMemberVotes(selection, beteckning, punkt);
 
+          context.read<PartyViewState>().setPunktTitle(beteckning, punkt);
+
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => PartyView()));
         },

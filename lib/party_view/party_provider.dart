@@ -2,6 +2,7 @@ import 'package:provider/provider.dart';
 import 'package:template/party_view/api_ledamot_list.dart';
 import 'package:flutter/material.dart';
 import 'package:template/provider/provider_infoview.dart';
+import 'package:template/api/api_infoview/api_single_votes.dart';
 
 class PartyViewState extends ChangeNotifier {
   List<Ledamot> _ledamotList = [];
@@ -104,6 +105,18 @@ class PartyViewState extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> setPunktTitle(beteckning, punkt) async {
+    String url = 'https://data.riksdagen.se/utskottsforslag/HA01${beteckning}';
+    var data = await fetchTitle(url, punkt);
+
+    _punktTitle =
+        data?['rubrik'] ?? ''; // Provide a default value if 'rubrik' is null
+
+    notifyListeners();
+  }
+
   Ledamot? _partiLedare;
   Ledamot? get partiLedare => _partiLedare;
+  String _punktTitle = '';
+  String get punktTitle => _punktTitle;
 }
