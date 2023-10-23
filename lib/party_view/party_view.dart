@@ -43,24 +43,29 @@ class PartyView extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            selectedTheme.assetImage.isNotEmpty
-                ? Image.asset(
-                    selectedTheme.assetImage,
-                    width: 40,
-                    height: 40,
-                    fit: BoxFit.cover,
-                  )
-                : Container(),
-            SizedBox(width: 15),
             Text(
               selectedTheme.name,
-              style: AppFonts.title.copyWith(
+              style: AppFonts.headerBlack.copyWith(
                 color: Colors.white,
               ),
             ),
+            selectedTheme.assetImage.isNotEmpty
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Image.asset(
+                        selectedTheme.assetImage,
+                        width: 40,
+                        height: 40,
+                        fit: BoxFit.cover,
+                      ),
+                    ],
+                  )
+                : Container(),
           ],
         ),
         backgroundColor: selectedTheme.color,
+        leadingWidth: 30,
         centerTitle: true,
         elevation: 0,
       ),
@@ -227,7 +232,7 @@ class LedamotItem extends StatelessWidget {
     final String imageUrl = ledamotImage.bildUrl80;
 
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 3),
         child: GestureDetector(
           // Set iid for provider_ledamot and jump to page LedamotVy
           onTap: () {
@@ -245,48 +250,44 @@ class LedamotItem extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(10.0), // Rounded corners
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: ClipOval(
-                        child: CachedNetworkImage(
-                          imageUrl: imageUrl,
-                          placeholder: (context, url) =>
-                              CircularProgressIndicator(),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
-                          width: 40,
-                          height: 40,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: ClipOval(
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                      width: 40,
+                      height: 40,
+                      fit: BoxFit.cover,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Text(
-                        ledamot.namn,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            "Punkt ${ledamot.punkt}: ${ledamot.vote}",
-                            style: AppFonts.normalTextWhite,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
+                  ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Expanded(
+                    child: Text(
+                      ledamot.namn,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(Icons.circle,
+                            color: getVoteColor(ledamot.vote)),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
@@ -343,4 +344,20 @@ Widget buildPartyLeaderImage(BuildContext context) {
   } else {
     return CircularProgressIndicator();
   }
+}
+
+Color getVoteColor(String vote) {
+  // Customize this function based on your specific logic
+  if (vote == 'Ja') {
+    return AppColors.green;
+  } else if (vote == 'Nej') {
+    return AppColors.red;
+  } else if (vote == 'Avstår') {
+    return AppColors.yellow; // Default color for other cases
+  } else if (vote == 'Frånvarande') {
+    return AppColors.blue;
+  } else {
+    return AppColors.black;
+  }
+  ;
 }
