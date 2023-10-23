@@ -25,12 +25,13 @@ class InfoView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'InfoView',
-          style: TextStyle(color: Colors.black),
+          'Information om votering',
+          style: TextStyle(color: AppColors.black),
         ),
         backgroundColor: Colors.transparent,
         centerTitle: true,
         elevation: 0,
+        iconTheme: IconThemeData(color: AppColors.black),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -38,14 +39,6 @@ class InfoView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             InfoCard(),
-            VoteResult(
-              titel: 'TBA',
-              ja: context.read<ProviderInfoView>().partiVotetotal['ja'],
-              nej: context.read<ProviderInfoView>().partiVotetotal['nej'],
-              avstar: context.read<ProviderInfoView>().partiVotetotal['avs'],
-              franvarande:
-                  context.read<ProviderInfoView>().partiVotetotal['fr'],
-            ),
             Text('Voterings punkter'),
             Row(
               mainAxisAlignment:
@@ -71,7 +64,14 @@ class InfoView extends StatelessWidget {
                 );
               }).toList(),
             ),
-            Text('Resultet för punkt $aktuellPunkt'),
+            VoteResult(
+              titel: 'Resultat för $aktuellPunkt',
+              ja: context.read<ProviderInfoView>().partiVotetotal['ja'],
+              nej: context.read<ProviderInfoView>().partiVotetotal['nej'],
+              avstar: context.read<ProviderInfoView>().partiVotetotal['avs'],
+              franvarande:
+                  context.read<ProviderInfoView>().partiVotetotal['fr'],
+            ),
             PartyVotesListWidget(),
           ],
         ),
