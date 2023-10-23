@@ -37,16 +37,13 @@ class LedamotVy extends StatelessWidget {
           return Scaffold(
             appBar: LedamortAppBar(ledamot: ledamot),
             body: ListView.builder(
-              itemCount: snapshot.data!.length + 2,
+              itemCount: snapshot.data!.length + 3,
               itemBuilder: (context, index) {
                 if (index == 0) {
                   return LedamotVyInfo(
                     ledamot: ledamot,
                   );
                 } else if (index == 1) {
-                  Map votesNumbers =
-                      context.watch<ProviderLedamot>().antalSvarMap;
-
                   return VoteResult(
                     titel: 'Historiska röster',
                     ja: context.watch<ProviderLedamot>().antalJa,
@@ -55,8 +52,15 @@ class LedamotVy extends StatelessWidget {
                     franvarande:
                         context.watch<ProviderLedamot>().antalFranvarande,
                   );
+                } else if (index == 2) {
+                  return Center(
+                      child: Text(
+                    '\nTidigare röster på förslagspunkter\n',
+                    style: TextStyle(fontSize: 18),
+                  ));
                 }
-                int adjustedIndex = index - 2;
+
+                int adjustedIndex = index - 3;
 
                 String rawDatum = '2020-20-20 00 00';
                 String datum = (rawDatum != null && rawDatum.length >= 10)
