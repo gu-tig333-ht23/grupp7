@@ -8,6 +8,7 @@ import './ledamot_vy_info.dart';
 import '../../widgets/widget_voteresult_piechart.dart';
 import '../../models/model_ledarmot_info.dart';
 import '../../widgets/widget_ledamot_app_bar.dart';
+import '../../widgets/widget_loadscreen.dart';
 
 class LedamotVy extends StatelessWidget {
   @override
@@ -26,8 +27,7 @@ class LedamotVy extends StatelessWidget {
       future: fetchData(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-              child: CircularProgressIndicator(color: AppColors.blue));
+          return Loadscreen();
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
