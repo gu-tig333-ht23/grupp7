@@ -135,7 +135,8 @@ class PartyView extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                       VoteResult(
-                        titel: 'TBA',
+                        titel:
+                            'Resultat för punkt ${context.watch<ProviderInfoView>().punkt}',
                         ja: context.watch<PartyViewState>().PieChartValues[0],
                         nej: context.watch<PartyViewState>().PieChartValues[1],
                         avstar:
@@ -192,60 +193,16 @@ class ListViewBuilder extends StatelessWidget {
     final List<LedamotResult> ledamotList =
         context.watch<PartyViewState>().ledamotResultList;
 
-    // Group the list by 'namn'
-    final Map<String, List<LedamotResult>> groupedByName =
-        groupByName(ledamotList);
+    final itemCount = ledamotList.length;
 
-    // Flatten the grouped data to create a list for the ListView
-    final List<Widget> items = [];
-
-    groupedByName.forEach((namn, results) {
-      items.add(
-        Column(
-          children: [
-            LedamotItem(results.first), // Display the common 'namn' and 'image'
-            for (var result in results)
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text(
-                        "Punkt ${result.punkt}: ${result.vote}",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-          ],
-        ),
-      );
-    });
-
-    return ListView(
-      children: items,
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return LedamotItem(ledamotList[index]);
+      },
+      itemCount: itemCount,
       shrinkWrap: true,
       physics: ScrollPhysics(),
     );
-  }
-
-  Map<String, List<LedamotResult>> groupByName(
-      List<LedamotResult> ledamotList) {
-    Map<String, List<LedamotResult>> groupedMap = {};
-
-    for (var result in ledamotList) {
-      if (groupedMap.containsKey(result.namn)) {
-        groupedMap[result.namn]!.add(result);
-      } else {
-        groupedMap[result.namn] = [result];
-      }
-    }
-
-    return groupedMap;
   }
 }
 
@@ -284,7 +241,7 @@ class LedamotItem extends StatelessWidget {
               color: AppColors.primaryBlue,
               border: Border.all(
                 color: AppColors.yellow, // Outline color
-                width: 1.0, // Outline width
+                width: 2.0, // Outline width
               ),
               borderRadius: BorderRadius.circular(10.0), // Rounded corners
             ),
@@ -309,18 +266,12 @@ class LedamotItem extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: 50,
-                    ),
-                    SizedBox(
-                      width: 200,
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
                       child: Text(
                         ledamot.namn,
                         style: TextStyle(color: Colors.white),
                       ),
-                    ),
-                    SizedBox(
-                      width: 100,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,

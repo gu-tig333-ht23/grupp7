@@ -1,5 +1,7 @@
+import 'package:provider/provider.dart';
 import 'package:template/party_view/api_ledamot_list.dart';
 import 'package:flutter/material.dart';
+import 'package:template/provider/provider_infoview.dart';
 
 class PartyViewState extends ChangeNotifier {
   List<Ledamot> _ledamotList = [];
@@ -13,9 +15,9 @@ class PartyViewState extends ChangeNotifier {
   String get selectedParty => _selectedParty;
   List get PieChartValues => _PieChartValues;
 
-  Future<void> fetchPartyMemberVotes(selectedParty, beteckning) async {
+  Future<void> fetchPartyMemberVotes(selectedParty, beteckning, punkt) async {
     var ledamotResultList =
-        await fetchLedamotListVotes(selectedParty, beteckning);
+        await fetchLedamotListVotes(selectedParty, beteckning, punkt);
 
     // Preserve the original unfiltered list
     _originalLedamotResultList = ledamotResultList;
@@ -27,7 +29,10 @@ class PartyViewState extends ChangeNotifier {
     notifyListeners();
   }
 
+  ProviderInfoView providerInfoView = ProviderInfoView();
   List<LedamotResult> get ledamotResultList => _ledamotResultList;
+  //  .where((result) => result.punkt == providerInfoView.punkt)
+  //  .toList();
 
   List<LedamotResult> sortLedamotResultList(
       List<LedamotResult> ledamotResultList) {
