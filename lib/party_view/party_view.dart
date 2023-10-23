@@ -301,11 +301,9 @@ class LedamotItem extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: Expanded(
-                    child: Text(
-                      ledamot.namn,
-                      style: TextStyle(color: Colors.white),
-                    ),
+                  child: Text(
+                    ledamot.namn,
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
                 Expanded(
