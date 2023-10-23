@@ -10,6 +10,8 @@ class PartyViewState extends ChangeNotifier {
   List<double> _PieChartValues = [0, 0, 0, 0];
   List<LedamotResult> _ledamotResultList = [];
   List<LedamotResult> _originalLedamotResultList = [];
+  List<Ledamot> _partiLedareList = [];
+  List<Ledamot> get partiLedareList => _partiLedareList;
 
   String _selectedParty = 'S';
 
@@ -72,6 +74,8 @@ class PartyViewState extends ChangeNotifier {
   Future<void> fetchPartyMembers(selectedParty) async {
     var ledamotList = await fetchLedamotList(selectedParty);
     _partiLedare = ledamotList.firstWhere((ledamot) => ledamot.partiLedare);
+    _partiLedareList =
+        ledamotList.where((ledamot) => ledamot.partiLedare).toList();
     _ledamotList = sortLedamotList(ledamotList);
     notifyListeners();
   }
@@ -117,6 +121,7 @@ class PartyViewState extends ChangeNotifier {
 
   Ledamot? _partiLedare;
   Ledamot? get partiLedare => _partiLedare;
+
   String _punktTitle = '';
   String get punktTitle => _punktTitle;
 }

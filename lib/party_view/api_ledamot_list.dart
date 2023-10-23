@@ -7,9 +7,6 @@ Future<List<Ledamot>> fetchLedamotList(selectedParty) async {
   final String party;
 
   final url = Uri.parse(
-
-//'https://data.riksdagen.se/personlista/?iid=&fnamn=&enamn=&f_ar=&kn=&parti=$selectedParty&valkrets=&org=&utformat=json');
-
       'https://data.riksdagen.se/personlista/?iid=&fnamn=&enamn=&f_ar=&kn=&parti=$selectedParty&valkrets=&rdlstatus=samtliga&org=&utformat=json&sort=sorteringsnamn&sortorder=asc&termlista=');
 
   try {
@@ -22,12 +19,7 @@ Future<List<Ledamot>> fetchLedamotList(selectedParty) async {
 
 // Convert the list of persons into a list of Ledamot
 
-      List<Ledamot> ledamotList = persons
-          //  .where((person) =>
-          //      person['status'].contains("jänstgörande") ||
-          //      (person['status'].contains("minister") &&
-          //          !person['status'].contains("Tidigare")))
-          .map((person) {
+      List<Ledamot> ledamotList = persons.map((person) {
         return Ledamot.fromJson(person);
       }).toList();
 
@@ -64,7 +56,7 @@ class Ledamot {
     // Extracting the list of "uppdrag" from "personuppdrag"
     final List<dynamic> uppdragList = json['personuppdrag']['uppdrag'] ?? [];
 
-    // Check if any "uppdrag" has "roll_kod" = "Partiledare"
+    // Check if any "uppdrag" has "roll_kod" = "Partiledare" or "Språkrör"
     final bool isPartiLedare = uppdragList.any((uppdrag) =>
         (uppdrag['roll_kod'] == 'Partiledare' ||
             uppdrag['roll_kod'] == 'Språkrör') &&

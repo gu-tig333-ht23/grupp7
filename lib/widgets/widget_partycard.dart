@@ -34,9 +34,12 @@ class PartyVotes extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           context.read<PartyViewState>().setSelectedParty(parti);
-          context
-              .read<PartyViewState>()
-              .setPieChartValues(antalJa, antalNej, antalFr, antalAvs);
+          context.read<PartyViewState>().setPieChartValues(
+                antalJa,
+                antalNej,
+                antalAvs,
+                antalFr,
+              );
 
           String selection = context.read<PartyViewState>().selectedParty;
           context.read<PartyViewState>().fetchPartyMembers(selection);

@@ -24,6 +24,35 @@ class PartyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _initializeData(
+          context), // Add a function to initialize your data asynchronously
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          // Data is loaded, show the page
+          return _buildPartyView(context);
+        } else {
+          // Data is still loading, show a loading indicator
+          return CircularProgressIndicator();
+        }
+      },
+    );
+  }
+
+  Future<void> _initializeData(BuildContext context) async {
+    String selection = context.read<PartyViewState>().selectedParty;
+    var beteckning = context.read<ProviderInfoView>().beteckning;
+    var punkt = context.read<ProviderInfoView>().punkt;
+    await context.read<PartyViewState>().fetchPartyMembers(selection);
+
+    await context
+        .read<PartyViewState>()
+        .fetchPartyMemberVotes(selection, beteckning, punkt);
+
+    await context.read<PartyViewState>().setPunktTitle(beteckning, punkt);
+  }
+
+  Widget _buildPartyView(BuildContext context) {
     final partyViewState = context.watch<PartyViewState>();
 
     final String selectedParty = context.watch<PartyViewState>().selectedParty;
@@ -32,11 +61,7 @@ class PartyView extends StatelessWidget {
         .watch<ProviderInfoView>()
         .title; // gets title from selected proposal
 
-    var beteckning = context.watch<ProviderInfoView>().beteckning;
-
-    var punkt = context.watch<ProviderInfoView>().punkt;
-
-    var punktTitle = context.watch<PartyViewState>().punktTitle;
+    final partiLedareList = context.watch<PartyViewState>().partiLedareList;
 
     // Find the corresponding PartyAppBarTheme
     PartyAppBarTheme selectedTheme = partyList.firstWhere(
@@ -92,7 +117,7 @@ class PartyView extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          buildPartyLeaderImage(context),
+                          buildPartyLeaderImages(context),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -103,9 +128,19 @@ class PartyView extends StatelessWidget {
                                 textAlign: TextAlign.left,
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Text(
-                                '${context.watch<PartyViewState>().partiLedare?.tilltalsnamn ?? ''} ${context.watch<PartyViewState>().partiLedare?.efternamn ?? ''}',
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: partiLedareList
+                                    .map(
+                                      (partiLedare) => Text(
+                                        '${partiLedare.tilltalsnamn ?? ''} ${partiLedare.efternamn ?? ''}',
+                                      ),
+                                    )
+                                    .toList(),
                               ),
+                              //Text(
+                              //  '${context.watch<PartyViewState>().partiLedare?.tilltalsnamn ?? ''} ${context.watch<PartyViewState>().partiLedare?.efternamn ?? ''}',
+                              //),
                               SizedBox(height: 16),
                               RichText(
                                 text: TextSpan(
@@ -337,6 +372,30 @@ Widget buildPartyLeaderImage(BuildContext context) {
         height: 60,
         fit: BoxFit.cover,
       ),
+    );
+  } else {
+    return CircularProgressIndicator();
+  }
+}
+
+Widget buildPartyLeaderImages(BuildContext context) {
+  final partiLedareList = context.watch<PartyViewState>().partiLedareList;
+
+  if (partiLedareList.isNotEmpty) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: partiLedareList
+          .map(
+            (partiLedare) => ClipOval(
+              child: Image.network(
+                partiLedare.bildUrl80,
+                width: 60,
+                height: 60,
+                fit: BoxFit.cover,
+              ),
+            ),
+          )
+          .toList(),
     );
   } else {
     return CircularProgressIndicator();
