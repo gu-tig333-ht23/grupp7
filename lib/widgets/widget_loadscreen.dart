@@ -9,6 +9,10 @@ class Loadscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: AppColors.lightGrey,
+      ),
       body: Center(
         child: Container(
           width: double.infinity,

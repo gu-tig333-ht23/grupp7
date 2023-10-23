@@ -13,6 +13,7 @@ import 'api_ledamot_list.dart';
 import 'party_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../provider/provider_ledamot.dart';
+import '.././widgets/widget_loadscreen.dart';
 
 class PartyView extends StatelessWidget {
   PartyView(
@@ -33,7 +34,7 @@ class PartyView extends StatelessWidget {
           return _buildPartyView(context);
         } else {
           // Data is still loading, show a loading indicator
-          return CircularProgressIndicator();
+          return Loadscreen();
         }
       },
     );
