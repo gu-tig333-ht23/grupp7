@@ -11,21 +11,21 @@ class PartyVotesListWidget extends StatelessWidget {
     'M': AppColors.moderaternaBlue,
     'SD': AppColors.sverigedemokraternaBlue,
     'C': AppColors.centerpartietGreen,
-    'V': AppColors.sverigedemokraternaBlue,
+    'V': AppColors.vansterpartietRed,
     'MP': AppColors.miljopartietGreen,
     'KD': AppColors.kristdemokraternaBlue,
     'L': AppColors.liberalernaBlue,
   };
 
   final Map<String, String> partyImages = {
-    'S': 'assets/images/socialdemokraterna.png',
-    'M': 'assets/images/moderaterna.png',
-    'SD': 'assets/images/sverigedemokraterna.png',
-    'C': 'assets/images/centerpartiet_white.png',
-    'V': 'assets/images/vansterpartiet.png',
-    'MP': 'assets/images/miljopartiet.png',
-    'KD': 'assets/images/sverigedemokraterna.png',
-    'L': 'assets/images/liberalerna.webp',
+    'S': AppImages.imageSocialdemokraterna,
+    'M': AppImages.imageModeraterna,
+    'SD': AppImages.imageSverigedemokraterna,
+    'C': AppImages.imageCenterpartietWhite,
+    'V': AppImages.imageVansterpartiet,
+    'MP': AppImages.imageMiljopartiet,
+    'KD': AppImages.imageKristdemokraterna,
+    'L': AppImages.imageLiberalerna,
   };
 
   String getPartyImage(String party) =>
