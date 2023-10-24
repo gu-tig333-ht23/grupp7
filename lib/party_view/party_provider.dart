@@ -1,4 +1,3 @@
-import 'package:provider/provider.dart';
 import 'package:template/party_view/api_ledamot_list.dart';
 import 'package:flutter/material.dart';
 import 'package:template/provider/provider_infoview.dart';
@@ -23,7 +22,7 @@ class PartyViewState extends ChangeNotifier {
         await fetchLedamotListVotes(selectedParty, beteckning, punkt);
 
     // Preserve the original unfiltered list
-    _originalLedamotResultList = ledamotResultList;
+    _originalLedamotResultList = sortLedamotResultList(ledamotResultList);
 
     // Set the filtered list initially to the original list
     _ledamotResultList = _originalLedamotResultList;
@@ -32,17 +31,17 @@ class PartyViewState extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<LedamotResult> sortLedamotResultList(
+      List<LedamotResult> ledamotResultList) {
+    // sort on last name
+    ledamotResultList.sort((a, b) => a.namn.compareTo(b.namn));
+    return ledamotResultList;
+  }
+
   ProviderInfoView providerInfoView = ProviderInfoView();
   List<LedamotResult> get ledamotResultList => _ledamotResultList;
   //  .where((result) => result.punkt == providerInfoView.punkt)
   //  .toList();
-
-  List<LedamotResult> sortLedamotResultList(
-      List<LedamotResult> ledamotResultList) {
-    // sort on last name
-    ledamotResultList.sort();
-    return ledamotResultList;
-  }
 
   Ledamot findLedamotByIntressentId(String intressentId) {
     // returns instance of ledamot matched on iid
@@ -88,15 +87,7 @@ class PartyViewState extends ChangeNotifier {
     return ledamotList;
   }
 
-  //Future<void> getPartiLedare(selectedParty) async {
-  //  await fetchPartyMembers(selectedParty); // Ensure data is loaded
-  //  _partiLedare = _ledamotList.firstWhere((ledamot) => ledamot.partiLedare);
-  //  notifyListeners();
-  //  //    orElse: () => null);
-  //}
-
   void getLedamotListSearch(String searchTerm) {
-    // Implement the logic to filter the list based on the searchTerm
     // Update _ledamotResultList based on the search term and then notify listeners.
 
     searchTerm = searchTerm.toLowerCase();

@@ -41,16 +41,6 @@ class PartyVotes extends StatelessWidget {
                 antalFr,
               );
 
-          String selection = context.read<PartyViewState>().selectedParty;
-          context.read<PartyViewState>().fetchPartyMembers(selection);
-          var beteckning = context.read<ProviderInfoView>().beteckning;
-          var punkt = context.read<ProviderInfoView>().punkt;
-          context
-              .read<PartyViewState>()
-              .fetchPartyMemberVotes(selection, beteckning, punkt);
-
-          context.read<PartyViewState>().setPunktTitle(beteckning, punkt);
-
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => PartyView()));
         },
@@ -75,11 +65,21 @@ class PartyVotes extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 10, right: 25),
                   child: Container(
-                    child: Image.asset(
+                      height: 50,
+                      width: 50,
+                      child: Image.asset(
                         partyImage ?? 'assets/images/kollkollen_logo.png',
-                        width: 50,
-                        height: 50),
-                  ),
+                        cacheHeight: 150,
+                        cacheWidth: 150,
+                      )
+                      //Image(
+                      //    image: ResizeImage(
+                      //  AssetImage(
+                      //      partyImage ?? 'assets/images/kollkollen_logo.png'),
+                      //  width: 150,
+                      //  height: 150,
+                      //))
+                      ),
                 ),
                 Expanded(
                     child: Padding(

@@ -1,11 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
-import 'package:template/provider/provider_infoview.dart';
 
 Future<List<Ledamot>> fetchLedamotList(selectedParty) async {
-  final String party;
-
   final url = Uri.parse(
       'https://data.riksdagen.se/personlista/?iid=&fnamn=&enamn=&f_ar=&kn=&parti=$selectedParty&valkrets=&rdlstatus=samtliga&org=&utformat=json&sort=sorteringsnamn&sortorder=asc&termlista=');
 
@@ -32,7 +28,7 @@ Future<List<Ledamot>> fetchLedamotList(selectedParty) async {
 
     print('Error: $error');
 
-    throw error;
+    rethrow;
   }
 }
 
@@ -125,6 +121,6 @@ Future<List<LedamotResult>> fetchLedamotListVotes(
 
     print('Error: $error');
 
-    throw error;
+    rethrow;
   }
 }

@@ -1,10 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:template/api/api_infoview/api_single_votes.dart';
 import 'package:template/widgets/widget_voteresult_piechart.dart';
-import '../provider/provider_homeview.dart';
 import '../provider/provider_infoview.dart';
-import '../screens/home_view.dart';
 import '../screens/ledarmot_vy/ledamot_vy.dart';
 import '../theme.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -16,10 +13,7 @@ import '../provider/provider_ledamot.dart';
 import '.././widgets/widget_loadscreen.dart';
 
 class PartyView extends StatelessWidget {
-  PartyView(
-      {
-      // required this.selectedProposal,
-      super.key});
+  PartyView({super.key});
 
   final TextEditingController _textEditingController = TextEditingController();
 
@@ -44,13 +38,12 @@ class PartyView extends StatelessWidget {
     String selection = context.read<PartyViewState>().selectedParty;
     var beteckning = context.read<ProviderInfoView>().beteckning;
     var punkt = context.read<ProviderInfoView>().punkt;
-    await context.read<PartyViewState>().fetchPartyMembers(selection);
 
+    await context.read<PartyViewState>().setPunktTitle(beteckning, punkt);
+    await context.read<PartyViewState>().fetchPartyMembers(selection);
     await context
         .read<PartyViewState>()
         .fetchPartyMemberVotes(selection, beteckning, punkt);
-
-    await context.read<PartyViewState>().setPunktTitle(beteckning, punkt);
   }
 
   Widget _buildPartyView(BuildContext context) {
@@ -61,6 +54,7 @@ class PartyView extends StatelessWidget {
     var selectedTitle = context
         .watch<ProviderInfoView>()
         .title; // gets title from selected proposal
+    var beteckning = context.read<ProviderInfoView>().beteckning;
 
     final partiLedareList = context.watch<PartyViewState>().partiLedareList;
 
@@ -86,11 +80,15 @@ class PartyView extends StatelessWidget {
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Image.asset(
-                        selectedTheme.assetImage,
-                        width: 40,
+                      SizedBox(
                         height: 40,
-                        fit: BoxFit.cover,
+                        width: 40,
+                        child: Image.asset(
+                          selectedTheme.assetImage,
+                          cacheHeight: 150,
+                          cacheWidth: 150,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ],
                   )
@@ -162,28 +160,55 @@ class PartyView extends StatelessWidget {
                         ],
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.only(
+                            left: 16.0, right: 16, top: 8.0, bottom: 0),
                         child: Divider(
                           thickness: 1,
                           color: Colors.black,
                         ),
                       ),
-                      Text(
-                        "Partiets reslutat i frågan: $selectedTitle.",
-                        textAlign: TextAlign.center,
-                      ),
-                      VoteResult(
-                        titel:
-                            'Resultat för punkt ${context.watch<ProviderInfoView>().punkt}: ${context.watch<PartyViewState>().punktTitle}',
-                        ja: context.watch<PartyViewState>().PieChartValues[0],
-                        nej: context.watch<PartyViewState>().PieChartValues[1],
-                        avstar:
-                            context.watch<PartyViewState>().PieChartValues[2],
-                        franvarande:
-                            context.watch<PartyViewState>().PieChartValues[3],
+                      //Padding(
+                      //  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      //  child: Column(
+                      //    children: [
+                      //      Text(
+                      //        'Beteckning: ${beteckning}',
+                      //        textAlign: TextAlign.center,
+                      //      ),
+                      //      Text(
+                      //        'Titel: $selectedTitle',
+                      //        textAlign: TextAlign.center,
+                      //      ),
+                      //      Text(
+                      //        'Punkt ${context.watch<ProviderInfoView>().punkt}: ${context.watch<PartyViewState>().punktTitle}',
+                      //        textAlign: TextAlign.center,
+                      //      )
+                      //    ],
+                      //  ),
+                      //),
+                      //Text(
+                      //  "Partiets reslutat i frågan: $selectedTitle.",
+                      //  textAlign: TextAlign.center,
+                      //),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: VoteResult(
+                          titel:
+                              "Partiets resultat för punkt ${context.watch<ProviderInfoView>().punkt}: ${context.watch<PartyViewState>().punktTitle}",
+                          titleSize: 20,
+                          //'Resultat för punkt ${context.watch<ProviderInfoView>().punkt}: ${context.watch<PartyViewState>().punktTitle}',
+                          ja: context.watch<PartyViewState>().PieChartValues[0],
+                          nej:
+                              context.watch<PartyViewState>().PieChartValues[1],
+                          avstar:
+                              context.watch<PartyViewState>().PieChartValues[2],
+                          franvarande:
+                              context.watch<PartyViewState>().PieChartValues[3],
+                        ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 8.0),
                         child: TextField(
                           controller: _textEditingController,
                           onChanged: (searchTerm) {
@@ -265,7 +290,7 @@ class LedamotItem extends StatelessWidget {
     final String imageUrl = ledamotImage.bildUrl80;
 
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 3),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 3),
         child: GestureDetector(
           // Set iid for provider_ledamot and jump to page LedamotVy
           onTap: () {
@@ -414,5 +439,4 @@ Color getVoteColor(String vote) {
   } else {
     return AppColors.black;
   }
-  ;
 }
