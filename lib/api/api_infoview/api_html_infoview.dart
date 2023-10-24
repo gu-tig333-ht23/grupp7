@@ -33,12 +33,18 @@ Future<String> getSummary(beteckning) async {
                 .join(' ');
 
             if (spans.length == 1) {
-              if (text.isNotEmpty) {
-                summary += '$text\n';
+              if (text == 'Behandlade förslag') {
+                isParsing = false;
+                return;
+              }
+              if (text.isNotEmpty && text != 'Behandlade förslag') {
+                summary += '$text';
+                summary += '\n\n';
               }
             } else {
               if (text != '&nbsp;' || text != '&shy;') {
-                summary += '$text\n';
+                summary += '$text';
+                summary += '\n\n';
               }
             }
           }
