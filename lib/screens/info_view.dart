@@ -64,13 +64,51 @@ class InfoView extends StatelessWidget {
                 );
               }).toList(),
             ),
-            VoteResult(
-              titel: 'Resultat för $aktuellPunkt',
-              ja: context.read<ProviderInfoView>().partiVotetotal['ja'],
-              nej: context.read<ProviderInfoView>().partiVotetotal['nej'],
-              avstar: context.read<ProviderInfoView>().partiVotetotal['avs'],
-              franvarande:
-                  context.read<ProviderInfoView>().partiVotetotal['fr'],
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: VoteResult(
+                    titel: 'Voteringspunkt $aktuellPunkt',
+                    ja: context.read<ProviderInfoView>().partiVotetotal['ja'],
+                    nej: context.read<ProviderInfoView>().partiVotetotal['nej'],
+                    avstar:
+                        context.read<ProviderInfoView>().partiVotetotal['avs'],
+                    franvarande:
+                        context.read<ProviderInfoView>().partiVotetotal['fr'],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: IconButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text('Vad är voteringspunkter i riksdagen?'),
+                            content: Text(
+                              'En "voteringspunkt" i riksdagen representerar ett specifikt ärende som kräver ett formellt beslut från dess ledamöter. Dessa ärenden kan vara varierande och inkluderar lagförslag, motioner, propositioner och andra viktiga frågor som måste avgöras. Riksdagens medlemmar röstar för att antingen godkänna eller avvisa dessa ärenden.\n\n'
+                              'Voteringspunkter tas upp i riksdagens sammanträden när det finns oenighet, diskussion eller behov av att ta ett officiellt ställningstagande. Ärenden som är särskilt kontroversiella eller av stor allmän eller politisk betydelse prioriteras för att bli voteringspunkter. Detta är nödvändigt eftersom riksdagen hanterar en bred mängd ärenden, och att rösta om varje enskilt ärende skulle vara tidskrävande.',
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('Stäng'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    icon: Icon(Icons.info),
+                  ),
+                ),
+              ],
             ),
             PartyVotesListWidget(),
           ],
