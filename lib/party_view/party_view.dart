@@ -100,9 +100,6 @@ class PartyView extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {},
-      ),
       body: ListView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         children: [
