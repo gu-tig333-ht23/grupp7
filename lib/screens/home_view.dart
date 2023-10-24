@@ -77,7 +77,7 @@ class HomeView extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text('Voteringar', style: AppFonts.headerBlack),
+        title: Text('Beslutade voteringar', style: AppFonts.headerBlack),
         actions: [
           Padding(
             padding: const EdgeInsets.only(top: 5, bottom: 5, right: 10),
