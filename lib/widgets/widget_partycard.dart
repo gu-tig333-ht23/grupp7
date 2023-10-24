@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:template/party_view/party_view.dart';
+import 'package:template/screens/party_view/party_view.dart';
 import 'package:template/theme.dart';
 import 'package:template/widgets/wiget_ball.dart';
 import '../models/model_infoview.dart';
-import '../party_view/party_provider.dart';
+import '../provider/provider_party_view.dart';
 import '../provider/provider_infoview.dart';
 
 class PartyVotes extends StatelessWidget {
@@ -34,8 +34,8 @@ class PartyVotes extends StatelessWidget {
       padding: EdgeInsets.only(left: 25, right: 25, top: 5, bottom: 5),
       child: GestureDetector(
         onTap: () {
-          context.read<PartyViewState>().setSelectedParty(parti);
-          context.read<PartyViewState>().setPieChartValues(
+          context.read<ProviderPartyView>().setSelectedParty(parti);
+          context.read<ProviderPartyView>().setPieChartValues(
                 antalJa,
                 antalNej,
                 antalAvs,
