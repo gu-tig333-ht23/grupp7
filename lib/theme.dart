@@ -31,11 +31,11 @@ class AppFonts {
   static final pageHeader =
       GoogleFonts.roboto(fontSize: 28, color: HexColor('ffffff'));
   static final header =
-      GoogleFonts.roboto(fontSize: 24, color: HexColor('ffffff'));
+      GoogleFonts.roboto(fontSize: 20, color: HexColor('ffffff'));
   static final headerBlack =
-      GoogleFonts.roboto(fontSize: 24, color: HexColor('000000'));
-  static final numberBlack = GoogleFonts.roboto(
-      fontSize: 20, color: HexColor('000000'));
+      GoogleFonts.roboto(fontSize: 20, color: HexColor('000000'));
+  static final numberBlack =
+      GoogleFonts.roboto(fontSize: 20, color: HexColor('000000'));
   static final headerRed =
       GoogleFonts.roboto(fontSize: 24, color: HexColor('d1382b'));
   static final headerGreen =
