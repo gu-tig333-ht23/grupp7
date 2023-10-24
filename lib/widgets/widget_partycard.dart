@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:template/party_view/party_view.dart';
 import 'package:template/theme.dart';
+import 'package:template/widgets/wiget_ball.dart';
 import '../models/model_infoview.dart';
 import '../party_view/party_provider.dart';
 import '../provider/provider_infoview.dart';
@@ -71,6 +72,7 @@ class PartyVotes extends StatelessWidget {
             padding: const EdgeInsets.all(5.0),
             child: Row(
               mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 10, right: 25),
@@ -87,134 +89,22 @@ class PartyVotes extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.white, // Color of the border
-                            width: 2.0, // Width of the border
-                          ),
-                          borderRadius: BorderRadius.circular(voteBallSize),
-                          color: Colors.white,
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: AppColors.green, // Color of the border
-                              width: 2.0, // Width of the border
-                            ),
-                            borderRadius: BorderRadius.circular(voteBallSize),
-                            color: Colors.white,
-                          ),
-                          width: voteBallSize,
-                          height: voteBallSize,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '$antalJa',
-                                style: TextStyle(
-                                    color: AppColors.green, fontSize: 24),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.white, // Color of the border
-                            width: 2.0, // Width of the border
-                          ),
-                          borderRadius: BorderRadius.circular(voteBallSize),
-                          color: Colors.white,
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: AppColors.red, // Color of the border
-                              width: 2.0, // Width of the border
-                            ),
-                            borderRadius: BorderRadius.circular(voteBallSize),
-                            color: Colors.white,
-                          ),
-                          width: voteBallSize,
-                          height: voteBallSize,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '$antalNej',
-                                style: TextStyle(
-                                    color: AppColors.red, fontSize: 24),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.white, // Color of the border
-                            width: 2.0, // Width of the border
-                          ),
-                          borderRadius: BorderRadius.circular(voteBallSize),
-                          color: Colors.white,
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: AppColors.yellow, // Color of the border
-                              width: 2.0, // Width of the border
-                            ),
-                            borderRadius: BorderRadius.circular(voteBallSize),
-                            color: Colors.white,
-                          ),
-                          width: voteBallSize,
-                          height: voteBallSize,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '$antalAvs',
-                                style: TextStyle(
-                                    color: AppColors.yellow, fontSize: 24),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.white, // Color of the border
-                            width: 2.0, // Width of the border
-                          ),
-                          borderRadius: BorderRadius.circular(voteBallSize),
-                          color: Colors.white,
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: AppColors.blue, // Color of the border
-                              width: 2.0, // Width of the border
-                            ),
-                            borderRadius: BorderRadius.circular(voteBallSize),
-                            color: Colors.white,
-                          ),
-                          width: voteBallSize,
-                          height: voteBallSize,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '$antalFr',
-                                style: TextStyle(
-                                    color: AppColors.blue, fontSize: 24),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      BallWidget(
+                          voteBallSize: voteBallSize,
+                          statusColor: AppColors.green,
+                          antal: antalJa),
+                      BallWidget(
+                          voteBallSize: voteBallSize,
+                          statusColor: AppColors.red,
+                          antal: antalNej),
+                      BallWidget(
+                          voteBallSize: voteBallSize,
+                          statusColor: AppColors.yellow,
+                          antal: antalAvs),
+                      BallWidget(
+                          voteBallSize: voteBallSize,
+                          statusColor: AppColors.blue,
+                          antal: antalFr)
                     ],
                   ),
                 ))
