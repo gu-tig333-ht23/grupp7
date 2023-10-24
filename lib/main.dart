@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './party_view/party_provider.dart';
 import './provider/provider_infoview.dart';
-import 'package:template/screens/info_view.dart';
 import './provider/provider_ledamot.dart';
 import './provider/provider_calendar.dart';
 import 'provider/provider_homeview.dart';

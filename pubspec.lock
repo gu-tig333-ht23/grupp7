@@ -328,14 +328,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.5"
-  read_more_text:
+  readmore:
     dependency: "direct main"
     description:
-      name: read_more_text
-      sha256: "769750959f26a71408eb912e1b1e714713f72bf3efcc3f89e53c31b11101376c"
+      name: readmore
+      sha256: "99c2483202f7c7e98c50834d72be2b119aefecf4497ca1960ae9d5f418eb1481"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.5"
+    version: "2.2.0"
   rxdart:
     dependency: transitive
     description:
