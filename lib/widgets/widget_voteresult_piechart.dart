@@ -10,7 +10,7 @@ class VoteResult extends StatelessWidget {
   final double avstar;
   final double franvarande;
   final String titel;
-  double titleSize = 24;
+  double titleSize;
 
   VoteResult(
       {required this.ja,
@@ -18,7 +18,7 @@ class VoteResult extends StatelessWidget {
       required this.avstar,
       required this.franvarande,
       required this.titel,
-      this.titleSize = 24});
+      this.titleSize = 20});
 
   @override
   Widget build(BuildContext context) {
