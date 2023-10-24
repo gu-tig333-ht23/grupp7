@@ -63,6 +63,17 @@ class HomeView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CalendarView(),
+              ),
+            );
+          },
+          icon: Icon(Icons.calendar_month, color: AppColors.black),
+        ),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -107,17 +118,6 @@ class HomeView extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CalendarView(),
-            ),
-          );
-        },
-        child: Icon(Icons.calendar_month, color: AppColors.black),
       ),
     );
   }
