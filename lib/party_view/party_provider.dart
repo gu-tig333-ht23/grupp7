@@ -1,5 +1,8 @@
+import 'package:provider/provider.dart';
 import 'package:template/party_view/api_ledamot_list.dart';
 import 'package:flutter/material.dart';
+import 'package:template/provider/provider_infoview.dart';
+import 'package:template/api/api_infoview/api_single_votes.dart';
 
 class PartyViewState extends ChangeNotifier {
   List<Ledamot> _ledamotList = [];
@@ -7,15 +10,17 @@ class PartyViewState extends ChangeNotifier {
   List<double> _PieChartValues = [0, 0, 0, 0];
   List<LedamotResult> _ledamotResultList = [];
   List<LedamotResult> _originalLedamotResultList = [];
+  List<Ledamot> _partiLedareList = [];
+  List<Ledamot> get partiLedareList => _partiLedareList;
 
   String _selectedParty = 'S';
 
   String get selectedParty => _selectedParty;
   List get PieChartValues => _PieChartValues;
 
-  Future<void> fetchPartyMemberVotes(selectedParty, beteckning) async {
+  Future<void> fetchPartyMemberVotes(selectedParty, beteckning, punkt) async {
     var ledamotResultList =
-        await fetchLedamotListVotes(selectedParty, beteckning);
+        await fetchLedamotListVotes(selectedParty, beteckning, punkt);
 
     // Preserve the original unfiltered list
     _originalLedamotResultList = ledamotResultList;
@@ -27,7 +32,10 @@ class PartyViewState extends ChangeNotifier {
     notifyListeners();
   }
 
+  ProviderInfoView providerInfoView = ProviderInfoView();
   List<LedamotResult> get ledamotResultList => _ledamotResultList;
+  //  .where((result) => result.punkt == providerInfoView.punkt)
+  //  .toList();
 
   List<LedamotResult> sortLedamotResultList(
       List<LedamotResult> ledamotResultList) {
@@ -66,6 +74,8 @@ class PartyViewState extends ChangeNotifier {
   Future<void> fetchPartyMembers(selectedParty) async {
     var ledamotList = await fetchLedamotList(selectedParty);
     _partiLedare = ledamotList.firstWhere((ledamot) => ledamot.partiLedare);
+    _partiLedareList =
+        ledamotList.where((ledamot) => ledamot.partiLedare).toList();
     _ledamotList = sortLedamotList(ledamotList);
     notifyListeners();
   }
@@ -99,6 +109,19 @@ class PartyViewState extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> setPunktTitle(beteckning, punkt) async {
+    String url = 'https://data.riksdagen.se/utskottsforslag/HA01${beteckning}';
+    var data = await fetchTitle(url, punkt);
+
+    _punktTitle =
+        data?['rubrik'] ?? ''; // Provide a default value if 'rubrik' is null
+
+    notifyListeners();
+  }
+
   Ledamot? _partiLedare;
   Ledamot? get partiLedare => _partiLedare;
+
+  String _punktTitle = '';
+  String get punktTitle => _punktTitle;
 }

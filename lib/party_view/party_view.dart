@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:template/api/api_infoview/api_single_votes.dart';
 import 'package:template/widgets/widget_voteresult_piechart.dart';
 import '../provider/provider_homeview.dart';
 import '../provider/provider_infoview.dart';
@@ -12,6 +13,7 @@ import 'api_ledamot_list.dart';
 import 'party_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../provider/provider_ledamot.dart';
+import '.././widgets/widget_loadscreen.dart';
 
 class PartyView extends StatelessWidget {
   PartyView(
@@ -23,6 +25,35 @@ class PartyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _initializeData(
+          context), // Add a function to initialize your data asynchronously
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          // Data is loaded, show the page
+          return _buildPartyView(context);
+        } else {
+          // Data is still loading, show a loading indicator
+          return Loadscreen();
+        }
+      },
+    );
+  }
+
+  Future<void> _initializeData(BuildContext context) async {
+    String selection = context.read<PartyViewState>().selectedParty;
+    var beteckning = context.read<ProviderInfoView>().beteckning;
+    var punkt = context.read<ProviderInfoView>().punkt;
+    await context.read<PartyViewState>().fetchPartyMembers(selection);
+
+    await context
+        .read<PartyViewState>()
+        .fetchPartyMemberVotes(selection, beteckning, punkt);
+
+    await context.read<PartyViewState>().setPunktTitle(beteckning, punkt);
+  }
+
+  Widget _buildPartyView(BuildContext context) {
     final partyViewState = context.watch<PartyViewState>();
 
     final String selectedParty = context.watch<PartyViewState>().selectedParty;
@@ -30,6 +61,8 @@ class PartyView extends StatelessWidget {
     var selectedTitle = context
         .watch<ProviderInfoView>()
         .title; // gets title from selected proposal
+
+    final partiLedareList = context.watch<PartyViewState>().partiLedareList;
 
     // Find the corresponding PartyAppBarTheme
     PartyAppBarTheme selectedTheme = partyList.firstWhere(
@@ -43,39 +76,34 @@ class PartyView extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            selectedTheme.assetImage.isNotEmpty
-                ? Image.asset(
-                    selectedTheme.assetImage,
-                    width: 40,
-                    height: 40,
-                    fit: BoxFit.cover,
-                  )
-                : Container(),
-            SizedBox(width: 15),
             Text(
               selectedTheme.name,
-              style: AppFonts.title.copyWith(
+              style: AppFonts.headerBlack.copyWith(
                 color: Colors.white,
               ),
             ),
+            selectedTheme.assetImage.isNotEmpty
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Image.asset(
+                        selectedTheme.assetImage,
+                        width: 40,
+                        height: 40,
+                        fit: BoxFit.cover,
+                      ),
+                    ],
+                  )
+                : Container(),
           ],
         ),
         backgroundColor: selectedTheme.color,
+        leadingWidth: 30,
         centerTitle: true,
         elevation: 0,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          //  fetchPlaceHolder();
-
-          var partySInstances = context
-              .read<ProviderInfoView>()
-              .getPartiVoteringForParty(selectedParty);
-          print(partySInstances);
-
-          print(_textEditingController.text);
-          print("hej");
-        },
+        onPressed: () async {},
       ),
       body: ListView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -90,7 +118,7 @@ class PartyView extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          buildPartyLeaderImage(context),
+                          buildPartyLeaderImages(context),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -101,9 +129,19 @@ class PartyView extends StatelessWidget {
                                 textAlign: TextAlign.left,
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Text(
-                                '${context.watch<PartyViewState>().partiLedare?.tilltalsnamn ?? ''} ${context.watch<PartyViewState>().partiLedare?.efternamn ?? ''}',
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: partiLedareList
+                                    .map(
+                                      (partiLedare) => Text(
+                                        '${partiLedare.tilltalsnamn ?? ''} ${partiLedare.efternamn ?? ''}',
+                                      ),
+                                    )
+                                    .toList(),
                               ),
+                              //Text(
+                              //  '${context.watch<PartyViewState>().partiLedare?.tilltalsnamn ?? ''} ${context.watch<PartyViewState>().partiLedare?.efternamn ?? ''}',
+                              //),
                               SizedBox(height: 16),
                               RichText(
                                 text: TextSpan(
@@ -135,7 +173,8 @@ class PartyView extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                       VoteResult(
-                        titel: 'TBA',
+                        titel:
+                            'Resultat för punkt ${context.watch<ProviderInfoView>().punkt}: ${context.watch<PartyViewState>().punktTitle}',
                         ja: context.watch<PartyViewState>().PieChartValues[0],
                         nej: context.watch<PartyViewState>().PieChartValues[1],
                         avstar:
@@ -192,60 +231,16 @@ class ListViewBuilder extends StatelessWidget {
     final List<LedamotResult> ledamotList =
         context.watch<PartyViewState>().ledamotResultList;
 
-    // Group the list by 'namn'
-    final Map<String, List<LedamotResult>> groupedByName =
-        groupByName(ledamotList);
+    final itemCount = ledamotList.length;
 
-    // Flatten the grouped data to create a list for the ListView
-    final List<Widget> items = [];
-
-    groupedByName.forEach((namn, results) {
-      items.add(
-        Column(
-          children: [
-            LedamotItem(results.first), // Display the common 'namn' and 'image'
-            for (var result in results)
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text(
-                        "Punkt ${result.punkt}: ${result.vote}",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-          ],
-        ),
-      );
-    });
-
-    return ListView(
-      children: items,
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return LedamotItem(ledamotList[index]);
+      },
+      itemCount: itemCount,
       shrinkWrap: true,
       physics: ScrollPhysics(),
     );
-  }
-
-  Map<String, List<LedamotResult>> groupByName(
-      List<LedamotResult> ledamotList) {
-    Map<String, List<LedamotResult>> groupedMap = {};
-
-    for (var result in ledamotList) {
-      if (groupedMap.containsKey(result.namn)) {
-        groupedMap[result.namn]!.add(result);
-      } else {
-        groupedMap[result.namn] = [result];
-      }
-    }
-
-    return groupedMap;
   }
 }
 
@@ -270,7 +265,7 @@ class LedamotItem extends StatelessWidget {
     final String imageUrl = ledamotImage.bildUrl80;
 
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 3),
         child: GestureDetector(
           // Set iid for provider_ledamot and jump to page LedamotVy
           onTap: () {
@@ -284,58 +279,46 @@ class LedamotItem extends StatelessWidget {
               color: AppColors.primaryBlue,
               border: Border.all(
                 color: AppColors.yellow, // Outline color
-                width: 1.0, // Outline width
+                width: 2.0, // Outline width
               ),
               borderRadius: BorderRadius.circular(10.0), // Rounded corners
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: ClipOval(
-                        child: CachedNetworkImage(
-                          imageUrl: imageUrl,
-                          placeholder: (context, url) =>
-                              CircularProgressIndicator(),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
-                          width: 40,
-                          height: 40,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: ClipOval(
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                      width: 40,
+                      height: 40,
+                      fit: BoxFit.cover,
                     ),
-                    SizedBox(
-                      width: 50,
-                    ),
-                    SizedBox(
-                      width: 200,
-                      child: Text(
-                        ledamot.namn,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 100,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            "Punkt ${ledamot.punkt}: ${ledamot.vote}",
-                            style: AppFonts.normalTextWhite,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
+                  ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Text(
+                    ledamot.namn,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(Icons.circle,
+                            color: getVoteColor(ledamot.vote)),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
@@ -392,4 +375,44 @@ Widget buildPartyLeaderImage(BuildContext context) {
   } else {
     return CircularProgressIndicator();
   }
+}
+
+Widget buildPartyLeaderImages(BuildContext context) {
+  final partiLedareList = context.watch<PartyViewState>().partiLedareList;
+
+  if (partiLedareList.isNotEmpty) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: partiLedareList
+          .map(
+            (partiLedare) => ClipOval(
+              child: Image.network(
+                partiLedare.bildUrl80,
+                width: 60,
+                height: 60,
+                fit: BoxFit.cover,
+              ),
+            ),
+          )
+          .toList(),
+    );
+  } else {
+    return CircularProgressIndicator();
+  }
+}
+
+Color getVoteColor(String vote) {
+  // Customize this function based on your specific logic
+  if (vote == 'Ja') {
+    return AppColors.green;
+  } else if (vote == 'Nej') {
+    return AppColors.red;
+  } else if (vote == 'Avstår') {
+    return AppColors.yellow; // Default color for other cases
+  } else if (vote == 'Frånvarande') {
+    return AppColors.blue;
+  } else {
+    return AppColors.black;
+  }
+  ;
 }

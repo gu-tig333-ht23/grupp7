@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import '../theme.dart';
+import '../provider/provider_infoview.dart';
+import 'package:provider/provider.dart';
+import '../api/api_infoview/api_single_votes.dart';
+import '../screens/info_view.dart';
+import '.././provider/provider_infoview.dart';
 
 class Voteringar extends StatelessWidget {
   final String identification;
@@ -19,7 +24,15 @@ class Voteringar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(left: 25, right: 25, top: 0, bottom: 0),
+      padding: EdgeInsets.only(left: 25, right: 25, top: 0, bottom: 0),
+      child: GestureDetector(
+        onTap: () {
+          context.read<ProviderInfoView>().toInfoview(
+              beteckning: identification,
+              title: title,
+              context: context,
+              goBack: true);
+        },
         child: Column(
           children: [
             Container(
@@ -72,6 +85,8 @@ class Voteringar extends StatelessWidget {
             ),
             Divider(),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

@@ -4,7 +4,6 @@ import 'package:template/provider/provider_infoview.dart';
 import 'package:template/screens/calendar_view.dart';
 import 'package:template/widgets/widget_vote_card.dart';
 import '../widgets/widget_about_app.dart';
-import 'info_view.dart';
 import '../theme.dart';
 import '../provider/provider_homeview.dart';
 
@@ -65,65 +64,60 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: AppColors.lightGrey,
-        title: Text('Voteringar', style: AppFonts.header),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text('Voteringar', style: AppFonts.headerBlack),
         actions: [
           Padding(
             padding: const EdgeInsets.only(top: 5, bottom: 5, right: 10),
-            child: FloatingActionButton(
-              shape: CircleBorder(),
+            child: IconButton(
               tooltip: 'Om appen',
-              backgroundColor: AppColors.lightGrey,
               onPressed: () {
                 aboutAppAlert(context);
               },
-              child: const Icon(Icons.info),
+              icon: Icon(Icons.info, color: AppColors.black),
             ),
           ),
         ],
       ),
-      body: Container(
-        height: MediaQuery.of(context).copyWith().size.height,
-        color: AppColors.backgroundColor,
+      body: SingleChildScrollView(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 10, bottom: 10),
               child: Image.asset('assets/images/kollkollen_logo.png',
                   width: 75, height: 75),
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: voteringar.length,
-                itemBuilder: (context, index) {
-                  return Voteringar(
-                    identificationYear: voteringar[index].identificationYear,
-                    beteckning: voteringar[index].beteckning,
-                    title: voteringar[index].title,
-                    decisionDate: voteringar[index].decisionDate,
-                    organ: voteringar[index].organ,
-                    utskott: voteringar[index].utskott,
-                    index: index,
-                  );
-                },
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 10, bottom: 10),
-              child: FilledButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CalendarView(),
-                    ),
-                  );
-                },
-                child: Text('Kalendervy'),
-              ),
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: voteringar.length,
+              itemBuilder: (context, index) {
+                return Voteringar(
+                  identificationYear: voteringar[index].identificationYear,
+                  beteckning: voteringar[index].beteckning,
+                  title: voteringar[index].title,
+                  decisionDate: voteringar[index].decisionDate,
+                  organ: voteringar[index].organ,
+                  utskott: voteringar[index].utskott,
+                  index: index,
+                );
+              },
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CalendarView(),
+            ),
+          );
+        },
+        child: Icon(Icons.calendar_month, color: AppColors.black),
       ),
     );
   }
