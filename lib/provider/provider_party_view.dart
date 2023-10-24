@@ -1,10 +1,12 @@
-import 'package:provider/provider.dart';
-import 'package:template/party_view/api_ledamot_list.dart';
+import 'package:template/api/api_party_view/api_party_view.dart';
 import 'package:flutter/material.dart';
 import 'package:template/provider/provider_infoview.dart';
 import 'package:template/api/api_infoview/api_single_votes.dart';
 
-class PartyViewState extends ChangeNotifier {
+import '../models/model_partyview_ledamot.dart';
+import '../models/model_partyview_ledamotresult.dart';
+
+class ProviderPartyView extends ChangeNotifier {
   List<Ledamot> _ledamotList = [];
 
   List<double> _PieChartValues = [0, 0, 0, 0];
@@ -22,14 +24,19 @@ class PartyViewState extends ChangeNotifier {
     var ledamotResultList =
         await fetchLedamotListVotes(selectedParty, beteckning, punkt);
 
-    // Preserve the original unfiltered list
-    _originalLedamotResultList = ledamotResultList;
+    // Preserve the original unfiltered list sorted by name
+    _originalLedamotResultList = sortLedamotResultList(ledamotResultList);
 
     // Set the filtered list initially to the original list
     _ledamotResultList = _originalLedamotResultList;
-
-    // Notify listeners to update the UI
     notifyListeners();
+  }
+
+  List<LedamotResult> sortLedamotResultList(
+      List<LedamotResult> ledamotResultList) {
+    // sort on last name
+    ledamotResultList.sort((a, b) => a.namn.compareTo(b.namn));
+    return ledamotResultList;
   }
 
   ProviderInfoView providerInfoView = ProviderInfoView();
@@ -37,15 +44,9 @@ class PartyViewState extends ChangeNotifier {
   //  .where((result) => result.punkt == providerInfoView.punkt)
   //  .toList();
 
-  List<LedamotResult> sortLedamotResultList(
-      List<LedamotResult> ledamotResultList) {
-    // sort on last name
-    ledamotResultList.sort();
-    return ledamotResultList;
-  }
-
   Ledamot findLedamotByIntressentId(String intressentId) {
     // returns instance of ledamot matched on iid
+    // used to get image for each leadmot in ledamotresultlist
     return ledamotList.firstWhere(
       (ledamot) => ledamot.intressentId == intressentId,
       orElse: () => Ledamot(
@@ -76,40 +77,23 @@ class PartyViewState extends ChangeNotifier {
     _partiLedare = ledamotList.firstWhere((ledamot) => ledamot.partiLedare);
     _partiLedareList =
         ledamotList.where((ledamot) => ledamot.partiLedare).toList();
-    _ledamotList = sortLedamotList(ledamotList);
+    _ledamotList = ledamotList;
     notifyListeners();
   }
 
   List<Ledamot> get ledamotList => _ledamotList; // Returns sorted list
 
-  List<Ledamot> sortLedamotList(List<Ledamot> ledamotList) {
-    // sort on last name
-    ledamotList.sort((a, b) => a.efternamn.compareTo(b.efternamn));
-    return ledamotList;
-  }
-
-  //Future<void> getPartiLedare(selectedParty) async {
-  //  await fetchPartyMembers(selectedParty); // Ensure data is loaded
-  //  _partiLedare = _ledamotList.firstWhere((ledamot) => ledamot.partiLedare);
-  //  notifyListeners();
-  //  //    orElse: () => null);
-  //}
-
-  void getLedamotListSearch(String searchTerm) {
-    // Implement the logic to filter the list based on the searchTerm
-    // Update _ledamotResultList based on the search term and then notify listeners.
-
+  void searchLedamot(String searchTerm) {
+    // filters Listview of party members
     searchTerm = searchTerm.toLowerCase();
-
     _ledamotResultList = _originalLedamotResultList
         .where((ledamot) => ledamot.namn.toLowerCase().contains(searchTerm))
         .toList();
-
-    // Notify listeners to update the UI
     notifyListeners();
   }
 
   Future<void> setPunktTitle(beteckning, punkt) async {
+    // Setter for notion point title
     String url = 'https://data.riksdagen.se/utskottsforslag/HA01${beteckning}';
     var data = await fetchTitle(url, punkt);
 

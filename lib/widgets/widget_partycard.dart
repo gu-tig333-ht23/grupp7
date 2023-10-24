@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:template/party_view/party_view.dart';
+import 'package:template/screens/party_view/party_view.dart';
 import 'package:template/theme.dart';
 import 'package:template/widgets/wiget_ball.dart';
 import '../models/model_infoview.dart';
-import '../party_view/party_provider.dart';
+import '../provider/provider_party_view.dart';
 import '../provider/provider_infoview.dart';
 
 class PartyVotes extends StatelessWidget {
@@ -34,23 +34,13 @@ class PartyVotes extends StatelessWidget {
       padding: EdgeInsets.only(left: 25, right: 25, top: 5, bottom: 5),
       child: GestureDetector(
         onTap: () {
-          context.read<PartyViewState>().setSelectedParty(parti);
-          context.read<PartyViewState>().setPieChartValues(
+          context.read<ProviderPartyView>().setSelectedParty(parti);
+          context.read<ProviderPartyView>().setPieChartValues(
                 antalJa,
                 antalNej,
                 antalAvs,
                 antalFr,
               );
-
-          String selection = context.read<PartyViewState>().selectedParty;
-          context.read<PartyViewState>().fetchPartyMembers(selection);
-          var beteckning = context.read<ProviderInfoView>().beteckning;
-          var punkt = context.read<ProviderInfoView>().punkt;
-          context
-              .read<PartyViewState>()
-              .fetchPartyMemberVotes(selection, beteckning, punkt);
-
-          context.read<PartyViewState>().setPunktTitle(beteckning, punkt);
 
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => PartyView()));
@@ -77,11 +67,21 @@ class PartyVotes extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 10, right: 25),
                   child: Container(
-                    child: Image.asset(
+                      height: 50,
+                      width: 50,
+                      child: Image.asset(
                         partyImage ?? 'assets/images/kollkollen_logo.png',
-                        width: 50,
-                        height: 50),
-                  ),
+                        cacheHeight: 150,
+                        cacheWidth: 150,
+                      )
+                      //Image(
+                      //    image: ResizeImage(
+                      //  AssetImage(
+                      //      partyImage ?? 'assets/images/kollkollen_logo.png'),
+                      //  width: 150,
+                      //  height: 150,
+                      //))
+                      ),
                 ),
                 Expanded(
                     child: Padding(

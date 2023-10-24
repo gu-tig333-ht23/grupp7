@@ -10,14 +10,15 @@ class VoteResult extends StatelessWidget {
   final double avstar;
   final double franvarande;
   final String titel;
+  double titleSize = 24;
 
-  VoteResult({
-    required this.ja,
-    required this.nej,
-    required this.avstar,
-    required this.franvarande,
-    required this.titel,
-  });
+  VoteResult(
+      {required this.ja,
+      required this.nej,
+      required this.avstar,
+      required this.franvarande,
+      required this.titel,
+      this.titleSize = 24});
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +37,15 @@ class VoteResult extends StatelessWidget {
     ];
 
     return Padding(
-      padding: const EdgeInsets.only(top: 20, bottom: 20),
+      padding: const EdgeInsets.only(top: 10, bottom: 20),
       child: Container(
         child: Column(
           children: [
             Text(
               titel,
-              style: AppFonts.headerBlack,
+              style: AppFonts.headerBlack.copyWith(fontSize: titleSize),
+              //style: AppFonts.headerBlack,
+              textAlign: TextAlign.center,
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20),
