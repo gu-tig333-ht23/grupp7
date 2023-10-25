@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:template/theme/theme.dart';
 import '../widgets/widget_votesummary.dart';
 import '../widgets/widget_voteresult_piechart.dart';
-import '../provider/provider_infoview.dart';
-import '.././widgets/widget_party_votes_list.dart';
+import '../widgets/widget_party_votes_list.dart';
+import '../provider/provider_info_view.dart';
 
 class InfoView extends StatelessWidget {
   InfoView({super.key});

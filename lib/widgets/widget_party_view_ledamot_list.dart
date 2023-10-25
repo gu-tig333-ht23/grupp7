@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:template/provider/provider_ledamot.dart';
 
-import '../models/model_partyview_ledamot.dart';
-import '../models/model_partyview_ledamotresult.dart';
+import '../models/model_party_view_ledamot.dart';
+import '../models/model_party_view_ledamotresult.dart';
 import '../provider/provider_party_view.dart';
 import '../theme/theme.dart';
-import '../screens/ledamot_vy.dart';
+import '../screens/ledamot_view.dart';
 
 class ListViewBuilder extends StatelessWidget {
   const ListViewBuilder({
@@ -61,8 +61,8 @@ class LedamotItem extends StatelessWidget {
           // Set iid for provider_ledamot and jump to page LedamotVy
           onTap: () {
             context.read<ProviderLedamot>().setIid(ledamot.intressentId);
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => LedamotVy()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => LedamotView()));
           },
           child: Container(
             decoration: BoxDecoration(

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../../models/model_partyview_ledamot.dart';
-import '../../models/model_partyview_ledamotresult.dart';
+import '../../models/model_party_view_ledamot.dart';
+import '../../models/model_party_view_ledamotresult.dart';
 import 'cache_manager.dart';
 
 Future<List<Ledamot>> fetchLedamotList(selectedParty) async {

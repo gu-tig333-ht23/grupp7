@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../../models/model_ledamotview_votering.dart';
+import '../../models/model_ledamot_view_votering.dart';
 
 Future<List<voteringar>> apiGetPartiVote(rm, bet, punkt) async {
   final String url =

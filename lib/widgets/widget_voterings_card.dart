@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/theme.dart';
-import '../provider/provider_infoview.dart';
+import '../provider/provider_info_view.dart';
 import 'package:provider/provider.dart';
 
 class Voteringar extends StatelessWidget {
