@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template/widgets/widget_vote_card.dart';
+import '../../widgets/widget_vote_card.dart';
 
 class CalendarEvents extends StatelessWidget {
   final String title;

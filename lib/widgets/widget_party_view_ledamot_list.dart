@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:template/provider/provider_ledamot.dart';
+import '../../provider/provider_ledamot.dart';
 
 import '../models/model_party_view_ledamot.dart';
 import '../models/model_party_view_ledamotresult.dart';

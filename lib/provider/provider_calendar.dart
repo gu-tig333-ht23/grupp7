@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template/api/api_calendar/api_calendar.dart';
+import '../../api/api_calendar/api_calendar.dart';
 import '.././models/model_claendarevents.dart';
 
 class ProviderCalendarView extends ChangeNotifier {

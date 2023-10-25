@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template/theme/theme.dart';
+import '../../theme/theme.dart';
 import '../../models/model_ledarmot_info.dart';
 
 class LedamortAppBar extends StatelessWidget implements PreferredSizeWidget {

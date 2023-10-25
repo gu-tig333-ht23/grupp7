@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template/theme/theme.dart';
+import '../../theme/theme.dart';
 
 Widget aboutAppAlert(context) {
   // Pop-up window (About the app with reference to riksdag.se)
