@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:template/theme.dart';
+import 'package:template/theme/theme.dart';
 import '../widgets/widget_votesummary.dart';
 import '../models/model_infoview.dart';
 import '../widgets/widget_voteresult_piechart.dart';

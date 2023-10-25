@@ -1,27 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:template/provider/provider_calendar.dart';
-import 'package:template/theme.dart';
+import 'package:template/theme/theme.dart';
 import 'package:template/widgets/widget_vote_card.dart';
 import '../widgets/widget_about_app.dart';
-
-class CalendarEvents extends StatelessWidget {
-  final String title;
-  final String description;
-  final String decisionDate;
-
-  CalendarEvents({
-    super.key,
-    required this.title,
-    required this.description,
-    required this.decisionDate,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return voteCard(context, title, decisionDate, description);
-  }
-}
+import '.././models/model_claendarevents.dart';
 
 class CalendarView extends StatelessWidget {
   const CalendarView({super.key});

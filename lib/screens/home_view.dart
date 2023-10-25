@@ -1,58 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:template/provider/provider_infoview.dart';
 import 'package:template/screens/calendar_view.dart';
-import 'package:template/widgets/widget_vote_card.dart';
 import '../widgets/widget_about_app.dart';
-import '../theme.dart';
+import '../theme/theme.dart';
 import '../provider/provider_homeview.dart';
-
-class Voteringar extends StatelessWidget {
-  final String identificationYear;
-  final String beteckning;
-  final String title;
-  final String decisionDate;
-  final String organ;
-  String utskott;
-  final int index;
-
-  Voteringar({
-    super.key,
-    this.identificationYear = '',
-    required this.beteckning,
-    required this.title,
-    required this.decisionDate,
-    required this.organ,
-    this.utskott = '',
-    this.index = 0,
-  });
-
-  factory Voteringar.fromJson(Map<String, dynamic> json) {
-    return Voteringar(
-        identificationYear: json['rm'],
-        beteckning: json['beteckning'],
-        title: json['undertitel'],
-        decisionDate: json['datum'],
-        organ: json['organ']);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Voteringar selectedVote =
-            context.read<ProviderHomeView>().voteringar[index];
-        String selectedBeteckning = selectedVote.beteckning;
-        String selectedTitle = selectedVote.title;
-        context.read<ProviderInfoView>().toInfoview(
-            beteckning: selectedBeteckning,
-            title: selectedTitle,
-            context: context);
-      },
-      child: voteCard(context, utskott, decisionDate, title, beteckning),
-    );
-  }
-}
+import '.././models/model_dokument.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -105,7 +57,7 @@ class HomeView extends StatelessWidget {
               shrinkWrap: true,
               itemCount: voteringar.length,
               itemBuilder: (context, index) {
-                return Voteringar(
+                return Dokument(
                   identificationYear: voteringar[index].identificationYear,
                   beteckning: voteringar[index].beteckning,
                   title: voteringar[index].title,

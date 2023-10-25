@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:template/theme.dart';
-import '../../models/model_ledamotview_votering.dart';
-import '../../provider/provider_ledamot.dart';
-import '../../widgets/widget_voterings_card.dart';
-import './ledamot_vy_info.dart';
-import '../../widgets/widget_voteresult_piechart.dart';
-import '../../models/model_ledarmot_info.dart';
-import '../../widgets/widget_ledamot_app_bar.dart';
-import '../../widgets/widget_loadscreen.dart';
+import 'package:template/theme/theme.dart';
+import '../models/model_ledamotview_votering.dart';
+import '../provider/provider_ledamot.dart';
+import '../widgets/widget_voterings_card.dart';
+import '../widgets/widget_ledamot_vy_info.dart';
+import '../widgets/widget_voteresult_piechart.dart';
+import '../models/model_ledarmot_info.dart';
+import '../widgets/widget_ledamot_app_bar.dart';
+import '../widgets/widget_loadscreen.dart';
 
 class LedamotVy extends StatelessWidget {
   @override
