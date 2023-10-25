@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -44,5 +43,4 @@ Future<List> apiFetchPunktList(beteckning) async {
     print('Error: $error');
     return [];
   }
-  return [];
 }

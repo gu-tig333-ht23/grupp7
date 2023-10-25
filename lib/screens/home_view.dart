@@ -9,16 +9,14 @@ import '.././models/model_dokument.dart';
 class HomeView extends StatelessWidget {
   HomeView({super.key});
 
-  bool _aboutAppAlertShown = false;
-
   @override
   Widget build(BuildContext context) {
     var voteringar = context.watch<ProviderHomeView>().voteringar;
 
-    if (!_aboutAppAlertShown) {
+    if (!context.read<ProviderHomeView>().aboutAppAlertShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         aboutAppAlert(context);
-        _aboutAppAlertShown = true;
+        context.read<ProviderHomeView>().aboutAppAlertShown = true;
       });
     }
 
@@ -72,7 +70,6 @@ class HomeView extends StatelessWidget {
                   title: voteringar[index].title,
                   decisionDate: voteringar[index].decisionDate,
                   organ: voteringar[index].organ,
-                  utskott: voteringar[index].utskott,
                   index: index,
                 );
               },

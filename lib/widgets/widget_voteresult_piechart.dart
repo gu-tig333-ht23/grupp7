@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
-import 'package:provider/provider.dart';
-import 'package:template/provider/provider_infoview.dart';
+
 import '../theme/theme.dart';
 
 class VoteResult extends StatelessWidget {
@@ -10,7 +9,7 @@ class VoteResult extends StatelessWidget {
   final double avstar;
   final double franvarande;
   final String titel;
-  double titleSize;
+  final double titleSize;
 
   VoteResult(
       {required this.ja,

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:template/provider/provider_ledamot.dart';
 
-import 'package:template/screens/party_view.dart';
-
 import '../models/model_partyview_ledamot.dart';
 import '../models/model_partyview_ledamotresult.dart';
 import '../provider/provider_party_view.dart';

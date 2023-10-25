@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:template/theme/theme.dart';
 import '../models/model_ledamotview_votering.dart';
 import '../provider/provider_ledamot.dart';
 import '../widgets/widget_voterings_card.dart';
@@ -13,8 +12,6 @@ import '../widgets/widget_loadscreen.dart';
 class LedamotVy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final List<voteringar> theList = context.watch<ProviderLedamot>().theList;
-
     Future<List<voteringar>> fetchData() async {
       final List<voteringar> data =
           await context.read<ProviderLedamot>().getList();
@@ -62,8 +59,12 @@ class LedamotVy extends StatelessWidget {
 
                 int adjustedIndex = index - 3;
 
+                String rawDatum = '2020-20-20 00 00';
+                String datum = (rawDatum.length >= 10)
+
                 String rawDatum = snapshot.data![adjustedIndex].systemdatum;
-                String datum = (rawDatum != null && rawDatum.length >= 10)
+                String datum = (rawDatum.length >= 10)
+
                     ? rawDatum.substring(0, 10)
                     : rawDatum;
 

@@ -4,7 +4,6 @@ import 'package:template/api/api_infoview/api_html_infoview.dart';
 import '../api/api_infoview/api_all_votes.dart';
 import '../models/model_infoview.dart';
 import '../api/api_infoview/api_single_votes.dart';
-import '../theme/theme.dart';
 import '../models/model_ledamotview_votering.dart';
 import '../api/api_infoview/api_punkt_list.dart';
 import '../screens/info_view.dart';

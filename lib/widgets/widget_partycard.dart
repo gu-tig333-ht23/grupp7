@@ -3,20 +3,18 @@ import 'package:provider/provider.dart';
 import 'package:template/screens/party_view.dart';
 import 'package:template/theme/theme.dart';
 import 'package:template/widgets/wiget_ball.dart';
-import '../models/model_infoview.dart';
 import '../provider/provider_party_view.dart';
-import '../provider/provider_infoview.dart';
 
 class PartyVotes extends StatelessWidget {
-  double voteBallSize = 50;
+  final double voteBallSize = 50;
 
-  String parti;
-  String antalJa;
-  String antalNej;
-  String antalFr;
-  String antalAvs;
-  var partiColor;
-  var partyImage;
+  final String parti;
+  final String antalJa;
+  final String antalNej;
+  final String antalFr;
+  final String antalAvs;
+  final partiColor;
+  final partyImage;
 
   PartyVotes({
     required this.parti,

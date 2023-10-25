@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:xml/xml.dart';
 import '../../models/model_ledamotview_votering.dart';
 
 Future<List<voteringar>> apiGetPartiVote(rm, bet, punkt) async {
@@ -13,14 +12,9 @@ Future<List<voteringar>> apiGetPartiVote(rm, bet, punkt) async {
       Map<String, dynamic> jsonData = jsonDecode(response.body);
       List<dynamic> voteringlista = jsonData['voteringlista']['votering'];
 
-      if (voteringlista != null && voteringlista is List) {
-        List<voteringar> partiVotes =
-            voteringlista.map((json) => voteringar.fromJson(json)).toList();
-        return partiVotes;
-      } else {
-        print('voteringlista is not a List.');
-        return [];
-      }
+      List<voteringar> partiVotes =
+          voteringlista.map((json) => voteringar.fromJson(json)).toList();
+      return partiVotes;
     } else {
       print('Failed to get data. Error: ${response.statusCode}');
       return [];

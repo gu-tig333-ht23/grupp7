@@ -11,14 +11,9 @@ Future<List<voteringar>> apiGetList(iid, antal) async {
       Map<String, dynamic> jsonData = jsonDecode(response.body);
       List<dynamic> voteringlista = jsonData['voteringlista']['votering'];
 
-      if (voteringlista != null && voteringlista is List) {
-        List<voteringar> datapoints =
-            voteringlista.map((json) => voteringar.fromJson(json)).toList();
-        return datapoints;
-      } else {
-        print('voteringlista is not a List.');
-        return [];
-      }
+      List<voteringar> datapoints =
+          voteringlista.map((json) => voteringar.fromJson(json)).toList();
+      return datapoints;
     } else {
       print('Failed to get data. Error: ${response.statusCode}');
       return [];
