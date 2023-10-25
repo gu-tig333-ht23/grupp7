@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:template/screens/party_view/party_view.dart';
+import 'package:template/screens/party_view.dart';
 import 'package:template/theme/theme.dart';
 import 'package:template/widgets/wiget_ball.dart';
 import '../models/model_infoview.dart';

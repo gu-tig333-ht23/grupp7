@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:template/screens/party_view/widgets/ledamot_list_view.dart';
+import 'package:template/widgets/widget_party_view_ledamot_list.dart';
 import 'package:template/widgets/widget_voteresult_piechart.dart';
-import '../../provider/provider_infoview.dart';
-import '../../theme/theme.dart';
+import '../provider/provider_infoview.dart';
+import '../theme/theme.dart';
 import 'package:provider/provider.dart';
-import '../../provider/provider_party_view.dart';
-import '../../widgets/widget_loadscreen.dart';
-import 'party_view_theme.dart';
-import 'widgets/party_leader_widget.dart';
-import 'widgets/party_view_divider.dart';
-import 'widgets/search_field.dart';
+import '../provider/provider_party_view.dart';
+import '../widgets/widget_loadscreen.dart';
+import '../theme/theme_party_view.dart';
+import '../widgets/widget_party_view_party_leader.dart';
+import '../widgets/widget_party_view_divider.dart';
+import '../widgets/widget_party_view_search_field.dart';
 
 class PartyView extends StatelessWidget {
   PartyView({super.key});

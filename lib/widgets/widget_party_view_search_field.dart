@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../provider/provider_party_view.dart';
+import '../provider/provider_party_view.dart';
 
 class SearchField extends StatelessWidget {
   const SearchField({
