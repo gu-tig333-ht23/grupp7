@@ -38,12 +38,12 @@ Future<String> getSummary(beteckning) async {
                 return;
               }
               if (text.isNotEmpty && text != 'Behandlade förslag') {
-                summary += '$text';
+                summary += text;
                 summary += '\n\n';
               }
             } else {
               if (text != '&nbsp;' || text != '&shy;') {
-                summary += '$text';
+                summary += text;
                 summary += '\n\n';
               }
             }

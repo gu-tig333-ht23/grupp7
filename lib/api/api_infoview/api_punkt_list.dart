@@ -2,7 +2,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 Future<List> apiFetchPunktList(beteckning) async {
-  print('punktlist');
   final String url =
       'https://data.riksdagen.se/voteringlista/?rm=2022%2F23&bet=$beteckning&punkt=&valkrets=&rost=&iid=&sz=500&utformat=json&gruppering=bet';
 
@@ -10,7 +9,7 @@ Future<List> apiFetchPunktList(beteckning) async {
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       String jsonData = response.body;
-      print('R:' + response.body);
+
       // Parse the JSON data
       Map<String, dynamic> jsonDataMap = json.decode(jsonData);
 
@@ -32,8 +31,6 @@ Future<List> apiFetchPunktList(beteckning) async {
         return votering['punkt'];
       }).toList();
 
-      // Print the list of "punkt" values
-      print(punktList);
       return punktList;
     } else {
       print('Failed to get data. Error: ${response.statusCode}');

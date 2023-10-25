@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:template/api/api_infoview/api_html_info_view.dart';
 import '../api/api_infoview/api_all_votes.dart';
@@ -10,7 +9,7 @@ import '../screens/info_view.dart';
 
 class ProviderInfoView extends ChangeNotifier {
   //VAR
-  List<PartiVotering> _partiVoteringar = [];
+  final List<PartiVotering> _partiVoteringar = [];
   List<AllPartiVotering> _allPartiVoteringar = [];
   String _beteckning = '';
   String _title = '';
@@ -73,7 +72,7 @@ class ProviderInfoView extends ChangeNotifier {
       'Frånvarande': 0,
     },
   };
-  Map _partiVotetotal = {
+  final Map _partiVotetotal = {
     'ja': 0.0,
     'nej': 0.0,
     'avs': 0.0,
@@ -235,7 +234,7 @@ class ProviderInfoView extends ChangeNotifier {
       },
     };
 
-    partiVotering.forEach((vote) {
+    for (var vote in partiVotering) {
       if (vote.rost == 'Ja') {
         voteJaNum += 1;
       } else if (vote.rost == 'Nej') {
@@ -247,7 +246,7 @@ class ProviderInfoView extends ChangeNotifier {
       }
 
       partiVoteNum[vote.parti][vote.rost] += 1;
-    });
+    }
     _partiVoteNum = partiVoteNum;
 
     _partiVotetotal['ja'] = voteJaNum.toDouble();

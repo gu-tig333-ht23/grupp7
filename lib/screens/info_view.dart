@@ -52,10 +52,10 @@ class InfoView extends StatelessWidget {
                     onPressed: () {
                       context.read<ProviderInfoView>().nypunkt(buttonLabel);
                     },
-                    child: Text(buttonLabel),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(color),
                     ),
+                    child: Text(buttonLabel),
                   ),
                 );
               }).toList(),

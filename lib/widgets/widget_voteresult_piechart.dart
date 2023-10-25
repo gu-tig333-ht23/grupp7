@@ -12,7 +12,7 @@ class VoteResult extends StatelessWidget {
   final double titleSize;
 
   VoteResult(
-      {required this.ja,
+      {super.key, required this.ja,
       required this.nej,
       required this.avstar,
       required this.franvarande,

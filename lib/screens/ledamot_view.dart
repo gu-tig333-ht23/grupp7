@@ -10,6 +10,8 @@ import '../widgets/widget_ledamot_app_bar.dart';
 import '../widgets/widget_loadscreen.dart';
 
 class LedamotView extends StatelessWidget {
+  const LedamotView({super.key});
+
   @override
   Widget build(BuildContext context) {
     Future<List<voteringar>> fetchData() async {

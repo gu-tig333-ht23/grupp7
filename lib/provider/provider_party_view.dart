@@ -8,7 +8,7 @@ import '../models/model_party_view_ledamotresult.dart';
 class ProviderPartyView extends ChangeNotifier {
   List<Ledamot> _ledamotList = [];
 
-  List<double> _PieChartValues = [0, 0, 0, 0];
+  final List<double> _PieChartValues = [0, 0, 0, 0];
   List<LedamotResult> _ledamotResultList = [];
   List<LedamotResult> _originalLedamotResultList = [];
   List<Ledamot> _partiLedareList = [];
@@ -93,7 +93,7 @@ class ProviderPartyView extends ChangeNotifier {
 
   Future<void> setPunktTitle(beteckning, punkt) async {
     // Setter for notion point title
-    String url = 'https://data.riksdagen.se/utskottsforslag/HA01${beteckning}';
+    String url = 'https://data.riksdagen.se/utskottsforslag/HA01$beteckning';
     var data = await fetchTitle(url, punkt);
 
     _punktTitle =

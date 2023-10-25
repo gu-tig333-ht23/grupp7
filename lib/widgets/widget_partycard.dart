@@ -16,7 +16,7 @@ class PartyVotes extends StatelessWidget {
   final partiColor;
   final partyImage;
 
-  PartyVotes({
+  PartyVotes({super.key, 
     required this.parti,
     required this.antalJa,
     required this.antalNej,
@@ -64,7 +64,7 @@ class PartyVotes extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 10, right: 25),
-                  child: Container(
+                  child: SizedBox(
                       height: 50,
                       width: 50,
                       child: Image.asset(
