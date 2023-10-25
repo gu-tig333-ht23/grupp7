@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'provider/provider_party_view.dart';
-import './provider/provider_infoview.dart';
+import 'provider/provider_info_view.dart';
 import './provider/provider_ledamot.dart';
 import './provider/provider_calendar.dart';
-import 'provider/provider_homeview.dart';
+import 'provider/provider_home_view.dart';
 import 'screens/home_view.dart';
 
 void main() {

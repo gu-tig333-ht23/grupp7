@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:template/api/api_infoview/api_html_infoview.dart';
+import 'package:template/api/api_infoview/api_html_info_view.dart';
 import '../api/api_infoview/api_all_votes.dart';
 import '../models/model_infoview.dart';
 import '../api/api_infoview/api_single_votes.dart';
-import '../models/model_ledamotview_votering.dart';
+import '../models/model_ledamot_view_votering.dart';
 import '../api/api_infoview/api_punkt_list.dart';
 import '../screens/info_view.dart';
 

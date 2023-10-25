@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../models/model_partyview_ledamot.dart';
+import '../../models/model_party_view_ledamot.dart';
 
 class CacheManager {
   // used to cache list of Ledamot

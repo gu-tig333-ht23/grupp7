@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/model_ledamotview_votering.dart';
+import '../models/model_ledamot_view_votering.dart';
 import '../api/api_ledamotview/api_ledarmot_vy_votering.dart';
 import '../api/api_ledamotview/api_ledarmot_vy_ledarmot.dart';
 import '.././models/model_ledarmot_info.dart';

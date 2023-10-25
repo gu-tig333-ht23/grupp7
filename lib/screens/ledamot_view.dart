@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/model_ledamotview_votering.dart';
+import '../models/model_ledamot_view_votering.dart';
+import '../models/model_ledarmot_info.dart';
 import '../provider/provider_ledamot.dart';
 import '../widgets/widget_voterings_card.dart';
-import '../widgets/widget_ledamot_vy_info.dart';
+import '../widgets/widget_ledamot_view_info.dart';
 import '../widgets/widget_voteresult_piechart.dart';
-import '../models/model_ledarmot_info.dart';
 import '../widgets/widget_ledamot_app_bar.dart';
 import '../widgets/widget_loadscreen.dart';
 
-class LedamotVy extends StatelessWidget {
+class LedamotView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<List<voteringar>> fetchData() async {
@@ -37,7 +37,7 @@ class LedamotVy extends StatelessWidget {
               itemCount: snapshot.data!.length + 3,
               itemBuilder: (context, index) {
                 if (index == 0) {
-                  return LedamotVyInfo(
+                  return LedamotViewInfo(
                     ledamot: ledamot,
                   );
                 } else if (index == 1) {

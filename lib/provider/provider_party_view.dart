@@ -1,10 +1,9 @@
 import 'package:template/api/api_party_view/api_party_view.dart';
 import 'package:flutter/material.dart';
-import 'package:template/provider/provider_infoview.dart';
+import 'package:template/provider/provider_info_view.dart';
 import '.././api/api_get_title_from_xml.dart';
-
-import '../models/model_partyview_ledamot.dart';
-import '../models/model_partyview_ledamotresult.dart';
+import '../models/model_party_view_ledamot.dart';
+import '../models/model_party_view_ledamotresult.dart';
 
 class ProviderPartyView extends ChangeNotifier {
   List<Ledamot> _ledamotList = [];

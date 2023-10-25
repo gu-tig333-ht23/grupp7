@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../models/model_partyview_ledamot.dart';
+import '../models/model_party_view_ledamot.dart';
 import '../provider/provider_party_view.dart';
 import '../theme/theme_party_view.dart';
 

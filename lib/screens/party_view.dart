@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:template/widgets/widget_party_view_ledamot_list.dart';
 import 'package:template/widgets/widget_voteresult_piechart.dart';
-import '../provider/provider_infoview.dart';
+import '../provider/provider_info_view.dart';
 import '../theme/theme.dart';
 import 'package:provider/provider.dart';
 import '../provider/provider_party_view.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import '../models/model_ledarmot_info.dart';
 
-class LedamotVyInfo extends StatelessWidget {
+class LedamotViewInfo extends StatelessWidget {
   final LedamotInfo ledamot;
 
-  LedamotVyInfo({
+  LedamotViewInfo({
     Key? key,
     required this.ledamot,
   }) : super(key: key);
