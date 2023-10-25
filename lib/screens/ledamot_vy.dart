@@ -61,6 +61,10 @@ class LedamotVy extends StatelessWidget {
 
                 String rawDatum = '2020-20-20 00 00';
                 String datum = (rawDatum.length >= 10)
+
+                String rawDatum = snapshot.data![adjustedIndex].systemdatum;
+                String datum = (rawDatum.length >= 10)
+
                     ? rawDatum.substring(0, 10)
                     : rawDatum;
 
