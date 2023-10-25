@@ -8,7 +8,7 @@ import 'package:template/screens/party_view/party_view.dart';
 import '../../../models/model_partyview_ledamot.dart';
 import '../../../models/model_partyview_ledamotresult.dart';
 import '../../../provider/provider_party_view.dart';
-import '../../../theme.dart';
+import '../../../theme/theme.dart';
 import '../../ledamot_vy.dart';
 
 class ListViewBuilder extends StatelessWidget {

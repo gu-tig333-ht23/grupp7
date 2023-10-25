@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:template/theme.dart';
+import 'package:template/theme/theme.dart';
 import '../models/model_ledamotview_votering.dart';
 import '../provider/provider_ledamot.dart';
 import '../widgets/widget_voterings_card.dart';

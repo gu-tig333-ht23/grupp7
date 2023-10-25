@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme.dart';
+import '../theme/theme.dart';
 
 Widget voteCard(context, title, decisionDate, description,
     [subtitle = '', fifth = 'default']) {

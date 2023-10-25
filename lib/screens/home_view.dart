@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:template/screens/calendar_view.dart';
 import '../widgets/widget_about_app.dart';
-import '../theme.dart';
+import '../theme/theme.dart';
 import '../provider/provider_homeview.dart';
 import '.././models/model_dokument.dart';
 

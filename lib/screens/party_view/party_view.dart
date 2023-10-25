@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:template/screens/party_view/widgets/ledamot_list_view.dart';
 import 'package:template/widgets/widget_voteresult_piechart.dart';
 import '../../provider/provider_infoview.dart';
-import '../../theme.dart';
+import '../../theme/theme.dart';
 import 'package:provider/provider.dart';
 import '../../provider/provider_party_view.dart';
 import '../../widgets/widget_loadscreen.dart';
