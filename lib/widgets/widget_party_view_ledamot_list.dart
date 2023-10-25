@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:template/provider/provider_ledamot.dart';
 
-import 'package:template/screens/party_view/party_view.dart';
+import 'package:template/screens/party_view.dart';
 
-import '../../../models/model_partyview_ledamot.dart';
-import '../../../models/model_partyview_ledamotresult.dart';
-import '../../../provider/provider_party_view.dart';
-import '../../../theme/theme.dart';
-import '../../ledamot_vy.dart';
+import '../models/model_partyview_ledamot.dart';
+import '../models/model_partyview_ledamotresult.dart';
+import '../provider/provider_party_view.dart';
+import '../theme/theme.dart';
+import '../screens/ledamot_vy.dart';
 
 class ListViewBuilder extends StatelessWidget {
   const ListViewBuilder({
