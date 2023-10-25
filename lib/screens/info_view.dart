@@ -40,9 +40,9 @@ class InfoView extends StatelessWidget {
           children: [
             InfoCard(),
             Text('Voterings punkter'),
-            Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.center, // center the buttons horizontally
+            Wrap(
+              alignment:
+                  WrapAlignment.center, // center the buttons horizontally
               children: buttonList.map((buttonLabel) {
                 String punkt = context.read<ProviderInfoView>().punkt;
                 Color color = AppColors.lightGrey;
