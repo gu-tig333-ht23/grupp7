@@ -7,11 +7,20 @@ import '../provider/provider_homeview.dart';
 import '.././models/model_dokument.dart';
 
 class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+  HomeView({super.key});
+
+  bool _aboutAppAlertShown = false;
 
   @override
   Widget build(BuildContext context) {
     var voteringar = context.watch<ProviderHomeView>().voteringar;
+
+    if (!_aboutAppAlertShown) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        aboutAppAlert(context);
+        _aboutAppAlertShown = true;
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(
