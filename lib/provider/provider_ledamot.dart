@@ -41,7 +41,7 @@ class ProviderLedamot extends ChangeNotifier {
           antalSvar += 1;
         }
       }
-      print('$rostTyp $antalSvar');
+
       return antalSvar;
     }
 
@@ -72,7 +72,7 @@ class ProviderLedamot extends ChangeNotifier {
 
   Future<voteringar> setTitle(item) async {
     final String url =
-        'https://data.riksdagen.se/utskottsforslag/HA01' + item.beteckning;
+        'https://data.riksdagen.se/utskottsforslag/HA01${item.beteckning}';
     final punkt = item.punkt;
 
     if (item.titel == '' || item.underTitel == '') {

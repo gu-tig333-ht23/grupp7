@@ -132,9 +132,9 @@ class ProviderInfoView extends ChangeNotifier {
   Map get partiVotetotal => _partiVotetotal;
   List get punktList => _punktList;
   String get punkt => _punkt;
-  set punkt(String value) {
-    _punkt = value;
-  }
+  //set punkt(String value) {
+  //  _punkt = value;
+  //}
 
   void fetchSummary(selectedBeteckning) async {
     // hämtar sammanfattningen av förslaget från HTML-api

@@ -8,7 +8,7 @@ import '../models/model_party_view_ledamotresult.dart';
 class ProviderPartyView extends ChangeNotifier {
   List<Ledamot> _ledamotList = [];
 
-  final List<double> _PieChartValues = [0, 0, 0, 0];
+  final List<double> _pieChartValues = [0, 0, 0, 0];
   List<LedamotResult> _ledamotResultList = [];
   List<LedamotResult> _originalLedamotResultList = [];
   List<Ledamot> _partiLedareList = [];
@@ -17,7 +17,7 @@ class ProviderPartyView extends ChangeNotifier {
   String _selectedParty = 'S';
 
   String get selectedParty => _selectedParty;
-  List get PieChartValues => _PieChartValues;
+  List get pieChartValues => _pieChartValues;
 
   Future<void> fetchPartyMemberVotes(selectedParty, beteckning, punkt) async {
     var ledamotResultList =
@@ -65,10 +65,10 @@ class ProviderPartyView extends ChangeNotifier {
   }
 
   void setPieChartValues(yes, no, pass, abscent) {
-    _PieChartValues[0] = double.parse(yes);
-    _PieChartValues[1] = double.parse(no);
-    _PieChartValues[2] = double.parse(pass);
-    _PieChartValues[3] = double.parse(abscent);
+    _pieChartValues[0] = double.parse(yes);
+    _pieChartValues[1] = double.parse(no);
+    _pieChartValues[2] = double.parse(pass);
+    _pieChartValues[3] = double.parse(abscent);
   }
 
   Future<void> fetchPartyMembers(selectedParty) async {

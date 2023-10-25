@@ -142,16 +142,16 @@ class PartyView extends StatelessWidget {
                           //'Resultat för punkt ${context.watch<ProviderInfoView>().punkt}: ${context.watch<ProviderPartyView>().punktTitle}',
                           ja: context
                               .watch<ProviderPartyView>()
-                              .PieChartValues[0],
+                              .pieChartValues[0],
                           nej: context
                               .watch<ProviderPartyView>()
-                              .PieChartValues[1],
+                              .pieChartValues[1],
                           avstar: context
                               .watch<ProviderPartyView>()
-                              .PieChartValues[2],
+                              .pieChartValues[2],
                           franvarande: context
                               .watch<ProviderPartyView>()
-                              .PieChartValues[3],
+                              .pieChartValues[3],
                         ),
                       ),
                       SearchField(
