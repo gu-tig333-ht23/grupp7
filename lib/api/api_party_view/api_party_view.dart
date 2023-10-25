@@ -8,7 +8,8 @@ Future<List<Ledamot>> fetchLedamotList(selectedParty) async {
   // Gets all active party members including party leader
   final cacheKey = 'party_$selectedParty';
 
-  await CacheManager().clearCache(cacheKey);
+  // clear cache for test purposes
+  //await CacheManager().clearCache(cacheKey);
 
   // Try to get data from cache
   print('Trying to get data from cache');
