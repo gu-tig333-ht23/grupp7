@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../models/model_ledarmot_info.dart';
+import '../models/model_ledarmot_info.dart';
 
 class LedamotVyInfo extends StatelessWidget {
   final LedamotInfo ledamot;

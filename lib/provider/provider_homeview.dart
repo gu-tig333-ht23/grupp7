@@ -1,88 +1,89 @@
 import 'package:flutter/material.dart';
 import '../api/api_homeview/api_home_view.dart';
 import '../screens/home_view.dart';
+import '.././models/model_dokument.dart';
 
 class ProviderHomeView extends ChangeNotifier {
-  List<Voteringar> _voteringar = [];
-  List<Voteringar> get voteringar => _voteringar;
+  List<Dokument> _dokument = [];
+  List<Dokument> get voteringar => _dokument;
 
   ProviderHomeView() {
-    fetchVotes();
+    fetchDokuments();
   }
 
-  Voteringar fetchUtskott(Voteringar voteringar) {
-    switch (voteringar.organ) {
+  Dokument fetchUtskott(Dokument dokument) {
+    switch (dokument.organ) {
       case 'JuU':
-        voteringar.utskott = 'Justitieutskottet';
-        return voteringar;
+        dokument.utskott = 'Justitieutskottet';
+        return dokument;
       case 'AU':
-        voteringar.utskott = 'Arbetsmarknadsutskottet';
-        return voteringar;
+        dokument.utskott = 'Arbetsmarknadsutskottet';
+        return dokument;
       case 'CU':
-        voteringar.utskott = 'Civilutskottet';
-        return voteringar;
+        dokument.utskott = 'Civilutskottet';
+        return dokument;
       case 'FiU':
-        voteringar.utskott = 'Finansutskottet';
-        return voteringar;
+        dokument.utskott = 'Finansutskottet';
+        return dokument;
       case 'UU':
-        voteringar.utskott = 'Utrikesutskottet';
-        return voteringar;
+        dokument.utskott = 'Utrikesutskottet';
+        return dokument;
       case 'SoU':
-        voteringar.utskott = 'Social­utskottet';
-        return voteringar;
+        dokument.utskott = 'Social­utskottet';
+        return dokument;
       case 'FöU':
-        voteringar.utskott = 'Försvars­utskottet';
-        return voteringar;
+        dokument.utskott = 'Försvars­utskottet';
+        return dokument;
       case 'KU':
-        voteringar.utskott = 'Konstitutions­utskottet';
-        return voteringar;
+        dokument.utskott = 'Konstitutions­utskottet';
+        return dokument;
       case 'KrU':
-        voteringar.utskott = 'Kultur­utskottet';
-        return voteringar;
+        dokument.utskott = 'Kultur­utskottet';
+        return dokument;
       case 'MJU':
-        voteringar.utskott = 'Miljö- och jordbruksutskottet';
-        return voteringar;
+        dokument.utskott = 'Miljö- och jordbruksutskottet';
+        return dokument;
       case 'NU':
-        voteringar.utskott = 'Närings­utskottet';
-        return voteringar;
+        dokument.utskott = 'Närings­utskottet';
+        return dokument;
       case 'SkU':
-        voteringar.utskott = 'Skatte­utskottet';
-        return voteringar;
+        dokument.utskott = 'Skatte­utskottet';
+        return dokument;
       case 'SfU':
-        voteringar.utskott = 'Socialförsäkrings­utskottet';
-        return voteringar;
+        dokument.utskott = 'Socialförsäkrings­utskottet';
+        return dokument;
       case 'TU':
-        voteringar.utskott = 'Trafik­utskottet';
-        return voteringar;
+        dokument.utskott = 'Trafik­utskottet';
+        return dokument;
       case 'UbU':
-        voteringar.utskott = 'Utbildnings­utskottet';
-        return voteringar;
+        dokument.utskott = 'Utbildnings­utskottet';
+        return dokument;
       case 'EU':
-        voteringar.utskott = 'EU-nämnden';
-        return voteringar;
+        dokument.utskott = 'EU-nämnden';
+        return dokument;
       default:
         print('Hittade inte utskottet');
-        voteringar.utskott = '';
-        return voteringar;
+        dokument.utskott = '';
+        return dokument;
     }
   }
 
-  void fetchVotes() async {
-    List<Voteringar> voteringar = await apiGetVotes();
-    List<Voteringar> uniqueVoteringar = getUniqueTiles(voteringar);
-    List<Voteringar> updatedVoteringar = [];
+  void fetchDokuments() async {
+    List<Dokument> dokument = await apiGetDokuments();
+    List<Dokument> uniqueDokument = getUniqueTiles(dokument);
+    List<Dokument> updatedDokument = [];
 
-    for (var voteringarItem in uniqueVoteringar) {
-      updatedVoteringar.add(fetchUtskott(voteringarItem));
+    for (var voteringarItem in uniqueDokument) {
+      updatedDokument.add(fetchUtskott(voteringarItem));
     }
 
-    _voteringar = updatedVoteringar;
+    _dokument = updatedDokument;
     notifyListeners();
   }
 
-  List<Voteringar> getUniqueTiles(List<Voteringar> list) {
+  List<Dokument> getUniqueTiles(List<Dokument> list) {
     Set<String> uniqueSignatures = {};
-    List<Voteringar> uniqueList = [];
+    List<Dokument> uniqueList = [];
 
     for (var item in list) {
       String signature = "${item.identificationYear}-${item.beteckning}";

@@ -3,6 +3,7 @@ import '../models/model_ledamotview_votering.dart';
 import '../api/api_ledamotview/api_ledarmot_vy_votering.dart';
 import '../api/api_ledamotview/api_ledarmot_vy_ledarmot.dart';
 import '.././models/model_ledarmot_info.dart';
+import '.././api/api_get_title_from_xml.dart';
 
 class ProviderLedamot extends ChangeNotifier {
   List<voteringar> _list = [];

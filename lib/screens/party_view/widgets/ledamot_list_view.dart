@@ -9,7 +9,7 @@ import '../../../models/model_partyview_ledamot.dart';
 import '../../../models/model_partyview_ledamotresult.dart';
 import '../../../provider/provider_party_view.dart';
 import '../../../theme.dart';
-import '../../ledarmot_vy/ledamot_vy.dart';
+import '../../ledamot_vy.dart';
 
 class ListViewBuilder extends StatelessWidget {
   const ListViewBuilder({
