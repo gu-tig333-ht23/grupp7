@@ -15,21 +15,43 @@ class Ledamot {
       this.partiLedare = false});
 
   factory Ledamot.fromJson(Map<String, dynamic> json) {
-    // Extracting the list of "uppdrag" from "personuppdrag"
-    final List<dynamic> uppdragList = json['personuppdrag']['uppdrag'] ?? [];
+    if (json.containsKey('personuppdrag')) {
+      // Extracting the list of "uppdrag" from "personuppdrag"
+      final List<dynamic> uppdragList = json['personuppdrag']['uppdrag'] ?? [];
 
-    // Check if any "uppdrag" has "roll_kod" = "Partiledare" or "Språkrör"
-    final bool isPartiLedare = uppdragList.any((uppdrag) =>
-        (uppdrag['roll_kod'] == 'Partiledare' ||
-            uppdrag['roll_kod'] == 'Språkrör') &&
-        uppdrag['tom'] == "");
+      // Check if any "uppdrag" has "roll_kod" = "Partiledare" or "Språkrör"
+      final bool isPartiLedare = uppdragList.any((uppdrag) =>
+          (uppdrag['roll_kod'] == 'Partiledare' ||
+              uppdrag['roll_kod'] == 'Språkrör') &&
+          uppdrag['tom'] == "");
 
-    return Ledamot(
-        tilltalsnamn: json['tilltalsnamn'] ?? '',
-        efternamn: json['efternamn'] ?? '',
-        bildUrl80: json['bild_url_80'] ?? '',
-        party: json['party'] ?? '',
-        intressentId: json['intressent_id'],
-        partiLedare: isPartiLedare);
+      return Ledamot(
+          tilltalsnamn: json['tilltalsnamn'] ?? '',
+          efternamn: json['efternamn'] ?? '',
+          bildUrl80: json['bild_url_80'] ?? '',
+          party: json['party'] ?? '',
+          intressentId: json['intressent_id'],
+          partiLedare: isPartiLedare);
+    } else {
+      // runs on cached data
+      return Ledamot(
+          tilltalsnamn: json['tilltalsnamn'] ?? '',
+          efternamn: json['efternamn'] ?? '',
+          bildUrl80: json['bildUrl80'] ?? '',
+          party: json['party'] ?? '',
+          intressentId: json['intressentId'],
+          partiLedare: json['partiLedare']);
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'tilltalsnamn': tilltalsnamn,
+      'efternamn': efternamn,
+      'bildUrl80': bildUrl80,
+      'party': party,
+      'intressentId': intressentId,
+      'partiLedare': partiLedare,
+    };
   }
 }
