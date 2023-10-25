@@ -68,7 +68,7 @@ class Voteringar extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(right: 5, left: 5),
                     child: Icon(
-                      Icons.radio_button_checked,
+                      Icons.circle,
                       color: isAccepted == 'Ja'
                           ? AppColors.green
                           : isAccepted == 'Nej'
