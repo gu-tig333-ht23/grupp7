@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:template/theme/theme.dart';
 
 class BallWidget extends StatelessWidget {
-  var voteBallSize;
-  var statusColor;
-  String antal;
+  final double voteBallSize;
+  final Color statusColor;
+  final String antal;
 
   BallWidget(
       {required this.voteBallSize,

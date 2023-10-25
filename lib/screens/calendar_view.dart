@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:template/provider/provider_calendar.dart';
 import 'package:template/theme/theme.dart';
-import 'package:template/widgets/widget_vote_card.dart';
 import '../widgets/widget_about_app.dart';
 import '.././models/model_claendarevents.dart';
 
