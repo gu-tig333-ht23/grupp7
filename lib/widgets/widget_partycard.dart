@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:template/screens/party_view.dart';
-import 'package:template/theme/theme.dart';
-import 'package:template/widgets/widget_ball.dart';
+import '../../screens/party_view.dart';
+import '../../theme/theme.dart';
+import '../../widgets/widget_ball.dart';
 import '../provider/provider_party_view.dart';
 
 class PartyVotes extends StatelessWidget {

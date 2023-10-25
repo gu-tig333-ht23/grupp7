@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:template/provider/provider_info_view.dart';
-import 'package:template/widgets/widget_vote_card.dart';
+import '../../provider/provider_info_view.dart';
+import '../../widgets/widget_vote_card.dart';
 import '../provider/provider_home_view.dart';
 
 class Dokument extends StatelessWidget {

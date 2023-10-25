@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:template/screens/calendar_view.dart';
+import '../../screens/calendar_view.dart';
 import '../widgets/widget_about_app.dart';
 import '../theme/theme.dart';
 import '../provider/provider_home_view.dart';
