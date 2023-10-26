@@ -94,6 +94,7 @@ class ProviderPartyView extends ChangeNotifier {
   Future<void> setPunktTitle(beteckning, punkt) async {
     // Setter for notion point title
     String url = 'https://data.riksdagen.se/utskottsforslag/HA01$beteckning';
+
     var data = await fetchTitle(url, punkt);
 
     _punktTitle =

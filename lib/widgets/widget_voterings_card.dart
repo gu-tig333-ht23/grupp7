@@ -55,8 +55,7 @@ class Voteringar extends StatelessWidget {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('$identification $title',
-                              style: AppFonts.title),
+                          Text('$identification $title', style: AppFonts.title),
                           Text(subTitle, style: AppFonts.normalTextWhite),
                           Text('Beslut $decisionDate',
                               style: AppFonts.smallText)

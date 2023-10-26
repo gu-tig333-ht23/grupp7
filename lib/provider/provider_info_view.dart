@@ -1,4 +1,6 @@
+import 'package:Voteringsportalen/provider/provider_party_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../api/api_infoview/api_html_info_view.dart';
 import '../api/api_infoview/api_all_votes.dart';
 import '../models/model_infoview.dart';
@@ -91,9 +93,10 @@ class ProviderInfoView extends ChangeNotifier {
     await fetchPunktList();
     if (_punktList.isNotEmpty) {
       _punkt = _punktList[0];
-    } else {
-      print(_punktList);
-    }
+
+      await Provider.of<ProviderPartyView>(context, listen: false)
+          .setPunktTitle(beteckning, punkt);
+    } else {}
     fetchVotingresult();
 
     if (goBack == true) {
@@ -132,9 +135,6 @@ class ProviderInfoView extends ChangeNotifier {
   Map get partiVotetotal => _partiVotetotal;
   List get punktList => _punktList;
   String get punkt => _punkt;
-  //set punkt(String value) {
-  //  _punkt = value;
-  //}
 
   void fetchSummary(selectedBeteckning) async {
     // hämtar sammanfattningen av förslaget från HTML-api

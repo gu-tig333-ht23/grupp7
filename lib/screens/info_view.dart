@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../theme/theme.dart';
+import '../provider/provider_party_view.dart';
 import '../widgets/widget_votesummary.dart';
 import '../widgets/widget_voteresult_piechart.dart';
 import '../widgets/widget_party_votes_list.dart';
@@ -50,9 +51,11 @@ class InfoView extends StatelessWidget {
                       builder: (context) {
                         return AlertDialog(
                           title: Text('Vad är voteringspunkter i riksdagen?'),
-                          content: Text(
-                            'En "voteringspunkt" i riksdagen representerar ett specifikt ärende som kräver ett formellt beslut från dess ledamöter. Dessa ärenden kan vara varierande och inkluderar lagförslag, motioner, propositioner och andra viktiga frågor som måste avgöras. Riksdagens medlemmar röstar för att antingen godkänna eller avvisa dessa ärenden.\n\n'
-                            'Voteringspunkter tas upp i riksdagens sammanträden när det finns oenighet, diskussion eller behov av att ta ett officiellt ställningstagande. Ärenden som är särskilt kontroversiella eller av stor allmän eller politisk betydelse prioriteras för att bli voteringspunkter. Detta är nödvändigt eftersom riksdagen hanterar en bred mängd ärenden, och att rösta om varje enskilt ärende skulle vara tidskrävande.',
+                          content: SingleChildScrollView(
+                            child: Text(
+                              'En "voteringspunkt" i riksdagen representerar ett specifikt ärende som kräver ett formellt beslut från dess ledamöter. Dessa ärenden kan vara varierande och inkluderar lagförslag, motioner, propositioner och andra viktiga frågor som måste avgöras. Riksdagens medlemmar röstar för att antingen godkänna eller avvisa dessa ärenden.\n\n'
+                              'Voteringspunkter tas upp i riksdagens sammanträden när det finns oenighet, diskussion eller behov av att ta ett officiellt ställningstagande. Ärenden som är särskilt kontroversiella eller av stor allmän eller politisk betydelse prioriteras för att bli voteringspunkter. Detta är nödvändigt eftersom riksdagen hanterar en bred mängd ärenden, och att rösta om varje enskilt ärende skulle vara tidskrävande.',
+                            ),
                           ),
                           actions: <Widget>[
                             TextButton(
@@ -83,8 +86,13 @@ class InfoView extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 4.0), // some spacing between buttons
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       context.read<ProviderInfoView>().nypunkt(buttonLabel);
+                      var beteckning =
+                          context.read<ProviderInfoView>().beteckning;
+                      await context
+                          .read<ProviderPartyView>()
+                          .setPunktTitle(beteckning, buttonLabel);
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(color),
@@ -101,7 +109,9 @@ class InfoView extends StatelessWidget {
               children: [
                 Expanded(
                   child: VoteResult(
-                    titel: 'Voteringspunkt $aktuellPunkt',
+                    titleSize: 18,
+                    titel:
+                        'Voteringspunkt $aktuellPunkt: ${context.watch<ProviderPartyView>().punktTitle}',
                     ja: context.read<ProviderInfoView>().partiVotetotal['ja'],
                     nej: context.read<ProviderInfoView>().partiVotetotal['nej'],
                     avstar:
@@ -110,8 +120,6 @@ class InfoView extends StatelessWidget {
                         context.read<ProviderInfoView>().partiVotetotal['fr'],
                   ),
                 ),
-
-
               ],
             ),
             PartyVotesListWidget(),
