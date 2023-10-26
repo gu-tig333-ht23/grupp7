@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
-import 'package:template/provider/provider_info_view.dart';
+import '../../provider/provider_info_view.dart';
 import '../theme/theme.dart';
 //import 'package:read_more_text/read_more_text.dart';
 

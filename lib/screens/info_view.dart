@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:template/theme/theme.dart';
+import '../../theme/theme.dart';
 import '../widgets/widget_votesummary.dart';
 import '../widgets/widget_voteresult_piechart.dart';
 import '../widgets/widget_party_votes_list.dart';
@@ -110,6 +110,8 @@ class InfoView extends StatelessWidget {
                         context.read<ProviderInfoView>().partiVotetotal['fr'],
                   ),
                 ),
+
+
               ],
             ),
             PartyVotesListWidget(),

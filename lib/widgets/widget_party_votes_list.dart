@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:template/theme/theme.dart';
+import '../../theme/theme.dart';
 
 import '../provider/provider_info_view.dart';
 import 'widget_partycard.dart';
