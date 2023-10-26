@@ -64,13 +64,21 @@ class LedamotItem extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => LedamotView()));
           },
           child: Container(
+            //padding: EdgeInsets.only(top: 5, bottom: 10, left: 10),
             decoration: BoxDecoration(
-              color: AppColors.primaryBlue,
               border: Border.all(
-                color: AppColors.yellow, // Outline color
-                width: 2.0, // Outline width
-              ),
-              borderRadius: BorderRadius.circular(10.0), // Rounded corners
+                  style: BorderStyle.solid,
+                  color: AppColors.yellow,
+                  width: 1.8),
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(0, 3),
+                  blurRadius: 5,
+                  color: Colors.black.withOpacity(0.4),
+                ),
+              ],
+              color: AppColors.primaryBlue,
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
