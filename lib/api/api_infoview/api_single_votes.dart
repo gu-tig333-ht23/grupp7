@@ -5,7 +5,7 @@ import '../../models/model_ledamot_view_votering.dart';
 Future<List<voteringar>> apiGetPartiVote(rm, bet, punkt) async {
   final String url =
       'https://data.riksdagen.se/voteringlista/?rm=$rm&bet=$bet&punkt=$punkt&valkrets=&rost=&iid=&sz=5000&utformat=json&gruppering=';
-  print(url);
+
   try {
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {

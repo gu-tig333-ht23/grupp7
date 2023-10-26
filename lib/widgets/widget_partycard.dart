@@ -13,10 +13,11 @@ class PartyVotes extends StatelessWidget {
   final String antalNej;
   final String antalFr;
   final String antalAvs;
-  final partiColor;
-  final partyImage;
+  final Color partiColor;
+  final String partyImage;
 
   PartyVotes({
+    super.key,
     required this.parti,
     required this.antalJa,
     required this.antalNej,
@@ -64,11 +65,11 @@ class PartyVotes extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 10, right: 25),
-                  child: Container(
+                  child: SizedBox(
                       height: 50,
                       width: 50,
                       child: Image.asset(
-                        partyImage ?? 'assets/images/kollkollen_logo.png',
+                        partyImage,
                         cacheHeight: 150,
                         cacheWidth: 150,
                       )

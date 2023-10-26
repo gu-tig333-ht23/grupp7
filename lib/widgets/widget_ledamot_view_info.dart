@@ -17,7 +17,7 @@ class LedamotViewInfo extends StatelessWidget {
 
     return Column(
       children: [
-        Container(
+        SizedBox(
           width: 100,
           height: 100,
           child: ClipOval(

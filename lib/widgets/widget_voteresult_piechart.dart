@@ -12,7 +12,8 @@ class VoteResult extends StatelessWidget {
   final double titleSize;
 
   VoteResult(
-      {required this.ja,
+      {super.key,
+      required this.ja,
       required this.nej,
       required this.avstar,
       required this.franvarande,
@@ -37,47 +38,45 @@ class VoteResult extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 20),
-      child: Container(
-        child: Column(
-          children: [
-            Text(
-              titel,
-              style: AppFonts.headerBlack.copyWith(fontSize: titleSize),
-              //style: AppFonts.headerBlack,
-              textAlign: TextAlign.center,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: PieChart(
-                dataMap: dataMap,
-                animationDuration: Duration(milliseconds: 800),
-                chartLegendSpacing: 32,
-                chartRadius: MediaQuery.of(context).size.width / 4,
-                colorList: colorList,
-                initialAngleInDegree: 0,
-                chartType: ChartType.ring,
-                ringStrokeWidth: 30,
-                //centerText: "HYBRID",
-                legendOptions: LegendOptions(
-                  showLegendsInRow: false,
-                  legendPosition: LegendPosition.right,
-                  showLegends: true,
-                  legendShape: BoxShape.circle,
-                  legendTextStyle: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                chartValuesOptions: ChartValuesOptions(
-                  showChartValueBackground: true,
-                  showChartValues: true,
-                  showChartValuesInPercentage: true,
-                  showChartValuesOutside: true,
-                  decimalPlaces: 0,
+      child: Column(
+        children: [
+          Text(
+            titel,
+            style: AppFonts.headerBlack.copyWith(fontSize: titleSize),
+            //style: AppFonts.headerBlack,
+            textAlign: TextAlign.center,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: PieChart(
+              dataMap: dataMap,
+              animationDuration: Duration(milliseconds: 800),
+              chartLegendSpacing: 32,
+              chartRadius: MediaQuery.of(context).size.width / 4,
+              colorList: colorList,
+              initialAngleInDegree: 0,
+              chartType: ChartType.ring,
+              ringStrokeWidth: 30,
+              //centerText: "HYBRID",
+              legendOptions: LegendOptions(
+                showLegendsInRow: false,
+                legendPosition: LegendPosition.right,
+                showLegends: true,
+                legendShape: BoxShape.circle,
+                legendTextStyle: TextStyle(
+                  fontWeight: FontWeight.bold,
                 ),
               ),
+              chartValuesOptions: ChartValuesOptions(
+                showChartValueBackground: true,
+                showChartValues: true,
+                showChartValuesInPercentage: true,
+                showChartValuesOutside: true,
+                decimalPlaces: 0,
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -12,16 +12,14 @@ Future<List<Ledamot>> fetchLedamotList(selectedParty) async {
   //await CacheManager().clearCache(cacheKey);
 
   // Try to get data from cache
-  print('Trying to get data from cache');
+
   List<Ledamot> cachedData = await CacheManager().getCache(cacheKey);
   if (cachedData.isNotEmpty) {
     // Use cached data
 
-    print('Using cached data');
     return cachedData;
   }
 
-  print('No cached data. Calling api');
   // If data not in cache, make the API call
   final url = Uri.parse(
       'https://data.riksdagen.se/personlista/?iid=&fnamn=&enamn=&f_ar=&kn=&parti=$selectedParty&valkrets=&rdlstatus=tjanst&org=&utformat=json&sort=sorteringsnamn&sortorder=asc&termlista=');

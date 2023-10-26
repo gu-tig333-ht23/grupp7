@@ -28,6 +28,8 @@ class PartyVotesListWidget extends StatelessWidget {
     'L': AppImages.imageLiberalerna,
   };
 
+  PartyVotesListWidget({super.key});
+
   String getPartyImage(String party) =>
       partyImages[party] ?? 'assets/images/default.png';
 

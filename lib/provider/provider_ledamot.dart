@@ -36,12 +36,12 @@ class ProviderLedamot extends ChangeNotifier {
       List svarLista = _list;
       double antalSvar = 0;
 
-      svarLista.forEach((element) {
+      for (var element in svarLista) {
         if (element.rost == rostTyp) {
           antalSvar += 1;
         }
-      });
-      print('$rostTyp $antalSvar');
+      }
+
       return antalSvar;
     }
 
@@ -71,23 +71,23 @@ class ProviderLedamot extends ChangeNotifier {
   }
 
   Future<voteringar> setTitle(item) async {
-    final String Url =
-        'https://data.riksdagen.se/utskottsforslag/HA01' + item.beteckning;
+    final String url =
+        'https://data.riksdagen.se/utskottsforslag/HA01${item.beteckning}';
     final punkt = item.punkt;
 
     if (item.titel == '' || item.underTitel == '') {
-      final Map<String, String>? data = await fetchTitle(Url, punkt);
+      final Map<String, String>? data = await fetchTitle(url, punkt);
 
       if (data != null) {
         item.titel = data['title'] ?? '';
       } else {
-        print('Error fetching or parsing data for URL: $Url');
+        print('Error fetching or parsing data for url: $url');
       }
 
       if (data != null) {
         item.underTitel = data['rubrik'] ?? '';
       } else {
-        print('Error fetching or parsing data for URL: $Url');
+        print('Error fetching or parsing data for url: $url');
       }
     }
 

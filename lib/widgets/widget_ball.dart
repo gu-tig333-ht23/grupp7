@@ -6,7 +6,7 @@ class BallWidget extends StatelessWidget {
   final String antal;
 
   BallWidget(
-      {required this.voteBallSize,
+      {super.key, required this.voteBallSize,
       required this.statusColor,
       required this.antal});
 
@@ -40,7 +40,7 @@ class BallWidget extends StatelessWidget {
               child: FittedBox(
                 fit: BoxFit.contain,
                 child: Text(
-                  '$antal',
+                  antal,
                   style: TextStyle(color: statusColor),
                 ),
               ),

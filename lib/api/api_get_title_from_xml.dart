@@ -1,9 +1,8 @@
 import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart';
 
-Future<Map<String, String>?> fetchTitle(String URL, String punktNum) async {
-  print('nytt call');
-  final url = URL;
+Future<Map<String, String>?> fetchTitle(String link, String punktNum) async {
+  final url = link;
   final response = await http.get(Uri.parse(url));
 
   if (response.statusCode == 200) {
@@ -22,8 +21,8 @@ Future<Map<String, String>?> fetchTitle(String URL, String punktNum) async {
 
         if (titleElement != null && systemdatumElement != null) {
           final Map<String, String> data = {
-            'title': titleElement.text,
-            'datum': systemdatumElement.text,
+            'title': titleElement.innerText,
+            'datum': systemdatumElement.innerText,
           };
 
           final utskottsforslagElements =
@@ -33,12 +32,12 @@ Future<Map<String, String>?> fetchTitle(String URL, String punktNum) async {
             final punktElement =
                 utskottsforslagElement.findElements('punkt').firstOrNull;
 
-            if (punktElement != null && punktElement.text == punktNum) {
+            if (punktElement != null && punktElement.innerText == punktNum) {
               final rubrikElement =
                   utskottsforslagElement.findElements('rubrik').firstOrNull;
 
               if (rubrikElement != null) {
-                data['rubrik'] = rubrikElement.text;
+                data['rubrik'] = rubrikElement.innerText;
               } else {
                 print('No <rubrik> tag found for punkt $punktNum.');
                 return null;
@@ -66,5 +65,5 @@ Future<Map<String, String>?> fetchTitle(String URL, String punktNum) async {
 }
 
 extension FirstOrNullExtension<E> on Iterable<E> {
-  E? get firstOrNull => isEmpty ? null : this.first;
+  E? get firstOrNull => isEmpty ? null : first;
 }
