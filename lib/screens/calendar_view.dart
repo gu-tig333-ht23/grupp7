@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../../provider/provider_calendar.dart';
 import '../../theme/theme.dart';
 import '../widgets/widget_about_app.dart';
-import '.././models/model_claendarevents.dart';
+import '../models/model_calendarevents.dart';
 
 class CalendarView extends StatelessWidget {
   const CalendarView({super.key});

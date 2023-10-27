@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../api/api_calendar/api_calendar.dart';
-import '.././models/model_claendarevents.dart';
+import '../models/model_calendarevents.dart';
 
 class ProviderCalendarView extends ChangeNotifier {
   List<CalendarEvents> _calendarEvents = [];

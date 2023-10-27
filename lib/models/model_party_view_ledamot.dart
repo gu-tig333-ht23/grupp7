@@ -29,7 +29,7 @@ class Ledamot {
           tilltalsnamn: json['tilltalsnamn'] ?? '',
           efternamn: json['efternamn'] ?? '',
           bildUrl80: json['bild_url_80'] ?? '',
-          party: json['party'] ?? '',
+          party: json['parti'] ?? '',
           intressentId: json['intressent_id'],
           partiLedare: isPartiLedare);
     } else {
@@ -38,7 +38,7 @@ class Ledamot {
           tilltalsnamn: json['tilltalsnamn'] ?? '',
           efternamn: json['efternamn'] ?? '',
           bildUrl80: json['bildUrl80'] ?? '',
-          party: json['party'] ?? '',
+          party: json['parti'] ?? '',
           intressentId: json['intressentId'],
           partiLedare: json['partiLedare']);
     }
@@ -49,7 +49,7 @@ class Ledamot {
       'tilltalsnamn': tilltalsnamn,
       'efternamn': efternamn,
       'bildUrl80': bildUrl80,
-      'party': party,
+      'parti': party,
       'intressentId': intressentId,
       'partiLedare': partiLedare,
     };

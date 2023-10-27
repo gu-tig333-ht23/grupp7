@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart' as xml;
-import '../../models/model_claendarevents.dart';
+import '../../models/model_calendarevents.dart';
 
 DateTime getDate = DateTime.now();
 String todaysDate =
