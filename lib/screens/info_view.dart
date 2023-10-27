@@ -23,7 +23,7 @@ class InfoView extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Information om votering',
-          style: TextStyle(color: AppColors.black),
+          style: AppFonts.headerBlack,
         ),
         backgroundColor: Colors.transparent,
         centerTitle: true,
