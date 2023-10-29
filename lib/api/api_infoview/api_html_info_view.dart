@@ -1,14 +1,19 @@
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 
-const String htmlEndpoint = 'https://data.riksdagen.se/dokument/HA01';
+Future<String> getSummary(selectedYear, beteckning) async {
 
-Future<String> getSummary(beteckning) async {
+  final String htmlEndpoint = selectedYear == '2022/23'
+    ? 'https://data.riksdagen.se/dokument/HA01$beteckning'
+    : selectedYear == '2023/24'
+        ? 'https://data.riksdagen.se/dokument/HB01$beteckning'
+        : '';
+
   String summary = '';
   bool isParsing = false;
   try {
     http.Response response =
-        await http.get(Uri.parse('$htmlEndpoint$beteckning'));
+        await http.get(Uri.parse(htmlEndpoint));
     if (response.statusCode == 200) {
       dom.Document html = dom.Document.html(response.body);
 

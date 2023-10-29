@@ -1,9 +1,9 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-Future<List> apiFetchPunktList(beteckning) async {
+Future<List> apiFetchPunktList(voteYear, beteckning) async {
   final String url =
-      'https://data.riksdagen.se/voteringlista/?rm=2022%2F23&bet=$beteckning&punkt=&valkrets=&rost=&iid=&sz=500&utformat=json&gruppering=bet';
+      'https://data.riksdagen.se/voteringlista/?rm=$voteYear&bet=$beteckning&punkt=&valkrets=&rost=&iid=&sz=500&utformat=json&gruppering=bet';
 
   try {
     final response = await http.get(Uri.parse(url));

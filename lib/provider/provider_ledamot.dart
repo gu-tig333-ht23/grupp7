@@ -71,8 +71,13 @@ class ProviderLedamot extends ChangeNotifier {
   }
 
   Future<voteringar> setTitle(item) async {
-    final String url =
-        'https://data.riksdagen.se/utskottsforslag/HA01${item.beteckning}';
+
+    final String url = item.rm == '2022/23'
+    ? 'https://data.riksdagen.se/utskottsforslag/HA01${item.beteckning}'
+    : item.rm == '2023/24'
+        ? 'https://data.riksdagen.se/utskottsforslag/HB01${item.beteckning}'
+        : '';
+
     final punkt = item.punkt;
 
     if (item.titel == '' || item.underTitel == '') {

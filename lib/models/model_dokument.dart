@@ -81,9 +81,11 @@ class Dokument extends StatelessWidget {
             context.read<ProviderHomeView>().voteringar[index];
         String selectedBeteckning = selectedVote.beteckning;
         String selectedTitle = selectedVote.title;
+        String selectedYear = selectedVote.identificationYear;
         context.read<ProviderInfoView>().toInfoview(
               beteckning: selectedBeteckning,
               title: selectedTitle,
+              voteYear: selectedYear,
               context: context,
             );
       },

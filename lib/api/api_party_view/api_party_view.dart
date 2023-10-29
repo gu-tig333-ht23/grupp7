@@ -53,11 +53,12 @@ Future<List<Ledamot>> fetchLedamotList(selectedParty) async {
 
 Future<List<LedamotResult>> fetchLedamotListVotes(
     // Gets a list of vote results for each ledamot for selected party, proposal, point
+    voteYear,
     selectedParty,
     beteckning,
     punkt) async {
   final url = Uri.parse(
-      "https://data.riksdagen.se/voteringlista/?rm=2022%2F23&bet=$beteckning&punkt=$punkt&parti=$selectedParty&valkrets=&rost=&iid=&sz=10000&utformat=json&gruppering=");
+      "https://data.riksdagen.se/voteringlista/?rm=$voteYear&bet=$beteckning&punkt=$punkt&parti=$selectedParty&valkrets=&rost=&iid=&sz=10000&utformat=json&gruppering=");
   try {
     final response = await http.get(url);
 

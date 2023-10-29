@@ -18,6 +18,7 @@ class InfoView extends StatelessWidget {
   Widget build(BuildContext context) {
     final List buttonList = context.watch<ProviderInfoView>().punktList;
     String aktuellPunkt = context.watch<ProviderInfoView>().punkt;
+    String selectedYear = context.watch<ProviderInfoView>().voteYear;
 
     return Scaffold(
       appBar: AppBar(
@@ -92,7 +93,7 @@ class InfoView extends StatelessWidget {
                           context.read<ProviderInfoView>().beteckning;
                       await context
                           .read<ProviderPartyView>()
-                          .setPunktTitle(beteckning, buttonLabel);
+                          .setPunktTitle(selectedYear, beteckning, buttonLabel);
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(color),

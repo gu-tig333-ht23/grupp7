@@ -16,6 +16,7 @@ class ProviderInfoView extends ChangeNotifier {
   String _beteckning = '';
   String _title = '';
   String _summary = '';
+  String _voteYear = '';
   List _punktList = ['1'];
   String _punkt = '1';
   Map _partiVoteNum = {
@@ -85,17 +86,19 @@ class ProviderInfoView extends ChangeNotifier {
   toInfoview(
       {required beteckning,
       required title,
+      required voteYear,
       required context,
       bool goBack = false}) async {
     fetchBeteckning(beteckning);
     fetchTitle(title);
+    fetchYear(voteYear);
     fetchSummary(beteckning);
     await fetchPunktList();
     if (_punktList.isNotEmpty) {
       _punkt = _punktList[0];
 
       await Provider.of<ProviderPartyView>(context, listen: false)
-          .setPunktTitle(beteckning, punkt);
+          .setPunktTitle(voteYear, beteckning, punkt);
     } else {}
     fetchVotingresult();
 
@@ -131,6 +134,7 @@ class ProviderInfoView extends ChangeNotifier {
   String get beteckning => _beteckning;
   String get title => _title;
   String get summary => _summary;
+  String get voteYear => _voteYear;
   Map get partiVoteNum => _partiVoteNum;
   Map get partiVotetotal => _partiVotetotal;
   List get punktList => _punktList;
@@ -138,7 +142,7 @@ class ProviderInfoView extends ChangeNotifier {
 
   void fetchSummary(selectedBeteckning) async {
     // hämtar sammanfattningen av förslaget från HTML-api
-    _summary = await getSummary(selectedBeteckning);
+    _summary = await getSummary(voteYear, selectedBeteckning);
     notifyListeners();
   }
 
@@ -154,9 +158,15 @@ class ProviderInfoView extends ChangeNotifier {
     notifyListeners();
   }
 
+  void fetchYear(String selectedYear) {
+    // hämtar förslagets år från home_view.dart
+    _voteYear = selectedYear;
+    notifyListeners();
+  }
+
   //Fetch all party votes
   void fetchAllPartyVotes() async {
-    var allPartiVoteringar = await getAllVotingResult(beteckning);
+    var allPartiVoteringar = await getAllVotingResult(voteYear, beteckning);
     _allPartiVoteringar = allPartiVoteringar;
 
     _partiVoteringar.removeWhere((partiVotering) => partiVotering.party == '-');
@@ -165,13 +175,13 @@ class ProviderInfoView extends ChangeNotifier {
   }
 
   Future<void> fetchPunktList() async {
-    _punktList = await apiFetchPunktList(_beteckning);
+    _punktList = await apiFetchPunktList(voteYear, _beteckning);
   }
 
   //Fetch from api function.
   void fetchVotingresult() async {
     List<voteringar> partiVotering =
-        await apiGetPartiVote('2022%2F23', beteckning, _punkt);
+        await apiGetPartiVote(voteYear, beteckning, _punkt);
     int voteJaNum = 0;
     int voteNejNum = 0;
     int voteAvsNum = 0;

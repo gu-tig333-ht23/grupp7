@@ -79,6 +79,7 @@ class LedamotView extends StatelessWidget {
                         subTitle: '',
                         decisionDate: '',
                         isAccepted: '',
+                        voteYear: '',
                       );
                     } else if (cardSnapshot.hasError) {
                       return Text('Error: ${cardSnapshot.error}');
@@ -94,6 +95,7 @@ class LedamotView extends StatelessWidget {
                         subTitle: snapshot.data![adjustedIndex].underTitel,
                         decisionDate: datum,
                         isAccepted: snapshot.data![adjustedIndex].rost,
+                        voteYear: snapshot.data![adjustedIndex].rm,
                       );
                     }
                   },

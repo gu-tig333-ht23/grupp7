@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../models/model_ledamot_view_votering.dart';
 
-Future<List<voteringar>> apiGetPartiVote(rm, bet, punkt) async {
+Future<List<voteringar>> apiGetPartiVote(voteYear, bet, punkt) async {
   final String url =
-      'https://data.riksdagen.se/voteringlista/?rm=$rm&bet=$bet&punkt=$punkt&valkrets=&rost=&iid=&sz=5000&utformat=json&gruppering=';
+      'https://data.riksdagen.se/voteringlista/?rm=$voteYear&bet=$bet&punkt=$punkt&valkrets=&rost=&iid=&sz=5000&utformat=json&gruppering=';
 
   try {
     final response = await http.get(Uri.parse(url));
