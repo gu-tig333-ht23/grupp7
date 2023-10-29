@@ -34,15 +34,16 @@ class PartyView extends StatelessWidget {
   }
 
   Future<void> _initializeData(BuildContext context) async {
+    String selectedYear = context.watch<ProviderInfoView>().voteYear;
     String selection = context.read<ProviderPartyView>().selectedParty;
     var beteckning = context.read<ProviderInfoView>().beteckning;
     var punkt = context.read<ProviderInfoView>().punkt;
 
-    await context.read<ProviderPartyView>().setPunktTitle(beteckning, punkt);
+    await context.read<ProviderPartyView>().setPunktTitle(selectedYear, beteckning, punkt);
     await context.read<ProviderPartyView>().fetchPartyMembers(selection);
     await context
         .read<ProviderPartyView>()
-        .fetchPartyMemberVotes(selection, beteckning, punkt);
+        .fetchPartyMemberVotes(selectedYear, selection, beteckning, punkt);
   }
 
   Widget _buildPartyView(BuildContext context) {

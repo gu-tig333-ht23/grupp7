@@ -19,9 +19,9 @@ class ProviderPartyView extends ChangeNotifier {
   String get selectedParty => _selectedParty;
   List get pieChartValues => _pieChartValues;
 
-  Future<void> fetchPartyMemberVotes(selectedParty, beteckning, punkt) async {
+  Future<void> fetchPartyMemberVotes(voteYear, selectedParty, beteckning, punkt) async {
     var ledamotResultList =
-        await fetchLedamotListVotes(selectedParty, beteckning, punkt);
+        await fetchLedamotListVotes(voteYear, selectedParty, beteckning, punkt);
 
     // Preserve the original unfiltered list sorted by name
     _originalLedamotResultList = sortLedamotResultList(ledamotResultList);
@@ -91,9 +91,14 @@ class ProviderPartyView extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> setPunktTitle(beteckning, punkt) async {
+  Future<void> setPunktTitle(voteYear, beteckning, punkt) async {
     // Setter for notion point title
-    String url = 'https://data.riksdagen.se/utskottsforslag/HA01$beteckning';
+
+    String url = voteYear == '2022/23'
+    ? 'https://data.riksdagen.se/utskottsforslag/HA01$beteckning'
+    : voteYear == '2023/24'
+        ? 'https://data.riksdagen.se/utskottsforslag/HB01$beteckning'
+        : '';
 
     var data = await fetchTitle(url, punkt);
 

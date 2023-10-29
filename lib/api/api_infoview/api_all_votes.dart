@@ -2,11 +2,6 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-const String endPoint =
-    'https://data.riksdagen.se/voteringlista/?rm=2022%2F23&parti=C&parti=FP&parti=L&parti=KD&parti=MP&parti=M&parti=S&parti=SD&parti=V&valkrets=&rost=&iid=&sz=500&utformat=json&gruppering=bet&bet=';
-
-//const String forslagspunkt = '2'; placeholder om vi ska använda oss av förslagspunkt senare
-
 class AllPartiVotering {
   String yes;
   String no;
@@ -30,7 +25,13 @@ class AllPartiVotering {
   }
 }
 
-Future<List<AllPartiVotering>> getAllVotingResult(String beteckning) async {
+Future<List<AllPartiVotering>> getAllVotingResult(voteYear, beteckning) async {
+
+  String endPoint =
+    'https://data.riksdagen.se/voteringlista/?rm=$voteYear&parti=C&parti=FP&parti=L&parti=KD&parti=MP&parti=M&parti=S&parti=SD&parti=V&valkrets=&rost=&iid=&sz=500&utformat=json&gruppering=bet&bet=';
+
+//const String forslagspunkt = '2'; placeholder om vi ska använda oss av förslagspunkt senare
+
   final response = await http.get(Uri.parse('$endPoint$beteckning'));
   if (response.statusCode == 200) {
     String body = response.body;

@@ -9,6 +9,7 @@ class Voteringar extends StatelessWidget {
   final String subTitle;
   final String decisionDate;
   final String isAccepted;
+  final String voteYear;
 
   Voteringar(
       {required this.identification,
@@ -16,6 +17,7 @@ class Voteringar extends StatelessWidget {
       required this.subTitle,
       required this.decisionDate,
       required this.isAccepted,
+      this.voteYear = '',
       super.key});
 
   @override
@@ -27,6 +29,7 @@ class Voteringar extends StatelessWidget {
           context.read<ProviderInfoView>().toInfoview(
               beteckning: identification,
               title: title,
+              voteYear: voteYear,
               context: context,
               goBack: true);
         },
