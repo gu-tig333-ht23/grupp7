@@ -34,7 +34,7 @@ class PartyView extends StatelessWidget {
   }
 
   Future<void> _initializeData(BuildContext context) async {
-    String selectedYear = context.watch<ProviderInfoView>().voteYear;
+    String selectedYear = context.read<ProviderInfoView>().voteYear;
     String selection = context.read<ProviderPartyView>().selectedParty;
     var beteckning = context.read<ProviderInfoView>().beteckning;
     var punkt = context.read<ProviderInfoView>().punkt;
