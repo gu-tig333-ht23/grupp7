@@ -42,9 +42,6 @@ class PartyLeaderWidget extends StatelessWidget {
                   )
                   .toList(),
             ),
-            //Text(
-            //  '${context.watch<ProviderPartyView>().partiLedare?.tilltalsnamn ?? ''} ${context.watch<ProviderPartyView>().partiLedare?.efternamn ?? ''}',
-            //),
             SizedBox(height: 16),
             RichText(
               text: TextSpan(

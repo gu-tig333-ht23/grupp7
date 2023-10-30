@@ -48,7 +48,6 @@ class LedamotItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProviderPartyView providerPartyView = context.watch<ProviderPartyView>();
-    //final String fullName = '${ledamot.tilltalsnamn} ${ledamot.efternamn}';
     final Ledamot ledamotImage =
         providerPartyView.findLedamotByIntressentId(ledamot.intressentId);
 
@@ -64,7 +63,6 @@ class LedamotItem extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => LedamotView()));
           },
           child: Container(
-            //padding: EdgeInsets.only(top: 5, bottom: 10, left: 10),
             decoration: BoxDecoration(
               border: Border.all(
                   style: BorderStyle.solid,
@@ -81,7 +79,6 @@ class LedamotItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(4.0),

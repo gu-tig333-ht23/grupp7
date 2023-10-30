@@ -39,7 +39,9 @@ class PartyView extends StatelessWidget {
     var beteckning = context.read<ProviderInfoView>().beteckning;
     var punkt = context.read<ProviderInfoView>().punkt;
 
-    await context.read<ProviderPartyView>().setPunktTitle(selectedYear, beteckning, punkt);
+    await context
+        .read<ProviderPartyView>()
+        .setPunktTitle(selectedYear, beteckning, punkt);
     await context.read<ProviderPartyView>().fetchPartyMembers(selection);
     await context
         .read<ProviderPartyView>()
@@ -111,36 +113,12 @@ class PartyView extends StatelessWidget {
                           partiLedareList: partiLedareList,
                           selectedTheme: selectedTheme),
                       PartyViewDivider(),
-                      //Padding(
-                      //  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      //  child: Column(
-                      //    children: [
-                      //      Text(
-                      //        'Beteckning: ${beteckning}',
-                      //        textAlign: TextAlign.center,
-                      //      ),
-                      //      Text(
-                      //        'Titel: $selectedTitle',
-                      //        textAlign: TextAlign.center,
-                      //      ),
-                      //      Text(
-                      //        'Punkt ${context.watch<ProviderInfoView>().punkt}: ${context.watch<ProviderPartyView>().punktTitle}',
-                      //        textAlign: TextAlign.center,
-                      //      )
-                      //    ],
-                      //  ),
-                      //),
-                      //Text(
-                      //  "Partiets reslutat i frågan: $selectedTitle.",
-                      //  textAlign: TextAlign.center,
-                      //),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: VoteResult(
                           titel:
                               "Partiets resultat för punkt ${context.watch<ProviderInfoView>().punkt}: ${context.watch<ProviderPartyView>().punktTitle}",
                           titleSize: 20,
-                          //'Resultat för punkt ${context.watch<ProviderInfoView>().punkt}: ${context.watch<ProviderPartyView>().punktTitle}',
                           ja: context
                               .watch<ProviderPartyView>()
                               .pieChartValues[0],
